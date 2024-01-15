@@ -218,7 +218,7 @@ fi
 #OFFICE INSTALLATION
 if [ $OFFICE == "1" ]
 then
-    pacman -S wps-office --noconfirm --needed
+    pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
 elif [ $OFFICE == "2" ]
 then
     pacman -S onlyoffice-bin --noconfirm --needed
