@@ -71,6 +71,11 @@ echo "3. I Don't want To Install"
 echo "="
 read OFFICE
 echo "="
+echo "Will you Gaming: "
+echo "1. for Yes"
+echo "2. for No"
+read GAME
+echo "="
 echo "Do You Want To Install Virtualbox: "
 echo "1. for Yes"
 echo "2. for No"
@@ -170,16 +175,16 @@ systemctl enable fstrim.timer
 #DESKTOP ENVIRONMENT
 if [ $DESKTOP == "1" ]
 then
-    pacman -S cinnamon nemo nemo-fileroller xed gnome-terminal fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter blueman numlockx exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk geary gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan firefox kdenlive mediainfo shotwell gimp xournalpp redshift openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity vlc mplayer obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala steam --noconfirm --needed
+    pacman -S cinnamon nemo nemo-fileroller xed gnome-terminal fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter blueman numlockx exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk geary gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan firefox kdenlive mediainfo shotwell gimp xournalpp redshift openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity vlc mplayer obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala kvantum-git --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [ $DESKTOP == "2" ]
 then
-    pacman -S gnome-shell gnome-control-center gnome-terminal fish gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-shell-extensions gnome-browser-connector gnome-text-editor nautilus file-roller gdm exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk geary gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan firefox kdenlive mediainfo shotwell gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity vlc mplayer obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala steam --noconfirm --needed
+    pacman -S gnome-shell gnome-control-center gnome-terminal fish gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-shell-extensions gnome-browser-connector gnome-text-editor nautilus file-roller gdm exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk geary gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan firefox kdenlive mediainfo shotwell gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity vlc mplayer obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala kvantum-git --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "3" ]
 then
-    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gwenview plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm breeze-gtk pamac-tray-icon-plasma kalk kate ksysguard xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro mailspring skanlite firefox kdenlive mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji audacity vlc mplayer obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala steam --noconfirm --needed
+    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gwenview plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm breeze-gtk pamac-tray-icon-plasma kalk kate ksysguard xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro mailspring skanlite firefox kdenlive mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji audacity vlc mplayer obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala --noconfirm --needed
     systemctl enable sddm 
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
 else
@@ -224,6 +229,21 @@ then
     pacman -S onlyoffice-bin --noconfirm --needed
 else
     "Office Will Not Be Installed"
+fi
+
+#GAMING INSTALLATION
+if [ $GAME == "1" ]
+then
+    sudo pacman -S optimus-manager optimus-manager-qt steam lutris wine winetricks giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls \
+    mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error \
+    lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo \
+    sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama \
+    ncurses lib32-ncurses ocl-icd lib32-ocl-icd libxslt lib32-libxslt libva lib32-libva gtk3 \
+    lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader
+    --noconfirm --needed
+    systemctl enable optimus-manager
+else 
+    "Will Not Be Installed any Gaming Apps and Drivers"
 fi
 
 #VIRTUALBOX INSTALLATION
