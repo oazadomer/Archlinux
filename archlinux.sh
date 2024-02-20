@@ -154,7 +154,7 @@ sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
-pacman -Sy pamac-aur brave-bin thorium-browser-bin --noconfirm --needed
+pacman -Sy pamac-aur brave-bin thorium-browser-bin optimus-manager optimus-manager-qt auto-cpufreq --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --noconfirm --needed
@@ -171,6 +171,8 @@ systemctl enable cups
 systemctl enable touchegg
 systemctl enable sshd
 systemctl enable fstrim.timer
+systemctl enable optimus-manager
+systemctl enable auto-cpufreq
 
 #DESKTOP ENVIRONMENT
 if [ $DESKTOP == "1" ]
