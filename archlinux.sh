@@ -163,7 +163,7 @@ echo "================================================================="
 echo "==        Installing Audio, Printer, Bluetooth Drivers         =="
 echo "================================================================="
 
-pacman -S xf86-input-libinput libinput touchegg xdg-user-dirs bash-completion bluez bluez-utils cups pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
+pacman -S xf86-input-libinput libinput touchegg xdg-user-dirs-gtk bash-completion bluez bluez-utils cups pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
 
 systemctl enable NetworkManager
 systemctl enable bluetooth
@@ -196,28 +196,28 @@ fi
 #GRAPGIC CARD INSTALLATION
 if [ $GRAPHIC == "1" ] && [ $KERNEL == "1" ]
 then
-    pacman -Sy xorg-server xorg-xkill xf86-video-amdgpu --noconfirm --needed
+    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu --noconfirm --needed
 elif [ $GRAPHIC == "1" ] && [ $KERNEL == "2" ]
 then
-    pacman -Sy xorg-server xorg-xkill xf86-video-amdgpu --noconfirm --needed
+    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu --noconfirm --needed
 elif [ $GRAPHIC == "2" ] && [ $KERNEL == "1" ]
 then
-    pacman -Sy xorg-server xorg-xkill xf86-video-intel --noconfirm --needed
+    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel --noconfirm --needed
 elif [ $GRAPHIC == "2" ] && [ $KERNEL == "2" ]
 then
-    pacman -Sy xorg-server xorg-xkill xf86-video-amdgpu --noconfirm --needed
+    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "1" ]
 then
-    pacman -Sy xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "2" ]
 then
-    pacman -Sy xorg-server xorg-xkill xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 elif [ $GRAPHIC == "4" ] && [ $KERNEL == "1" ]
 then
-    pacman -Sy xorg-server xorg-xkill xf86-video-intel nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 elif [ $GRAPHIC == "4" ] && [ $KERNEL == "2" ]
 then
-    pacman -Sy xorg-server xorg-xkill xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayla wayland glfw-wayland egl-wayland plasma-wayland-session xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 else
     "Graphic Card Will Not Installed"
 fi
