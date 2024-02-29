@@ -208,7 +208,7 @@ then
     pacman -Sy xorg-server xorg-xkill xf86-video-amdgpu --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "1" ]
 then
-    pacman -Sy xorg-server xorg-xkill xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -Sy xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "2" ]
 then
     pacman -Sy xorg-server xorg-xkill xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
