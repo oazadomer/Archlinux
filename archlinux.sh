@@ -64,16 +64,17 @@ echo "3. for AMD and NVIDIA"
 echo "4. for INTEL and NVIDIA"
 read GRAPHIC
 echo "="
-# echo "Do You Want To Install Office: "
-# echo "1. for WPS-Office"
-# echo "2. for OnlyOffice"
-# echo "3. I Don't want To Install"
-# echo "="
-# read OFFICE
-# echo "="
-# echo "Will you Gaming: "
-# echo "1. for Yes"
-# echo "2. for No"
+echo "Do You Want To Install Office: "
+echo "1. for WPS-Office"
+echo "2. for OnlyOffice"
+echo "3. for LibreOffice"
+echo "4. I Don't want To Install"
+echo "="
+read OFFICE
+echo "="
+echo "Will you Gaming: "
+echo "1. for Yes"
+echo "2. for No"
 read GAME
 echo "="
 echo "Do You Want To Install Virtualbox: "
@@ -186,7 +187,7 @@ then
     systemctl enable gdm
 elif [ $DESKTOP == "3" ]
 then
-    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gwenview plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm breeze-gtk pamac-tray-icon-plasma kalk kate ksysguard xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro mailspring skanlite kdenlive mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji audacity vlc mplayer obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk --noconfirm --needed
+    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gwenview plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm breeze-gtk pamac-tray-icon-plasma kalk kate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro mailspring skanlite kdenlive mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji audacity vlc mplayer obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk --noconfirm --needed
     systemctl enable sddm 
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
 else
@@ -222,16 +223,19 @@ else
     "Graphic Card Will Not Installed"
 fi
 
-# #OFFICE INSTALLATION
-# if [ $OFFICE == "1" ]
-# then
-#     pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
-# elif [ $OFFICE == "2" ]
-# then
-#     pacman -S onlyoffice-bin --noconfirm --needed
-# else
-#     "Office Will Not Be Installed"
-# fi
+#OFFICE INSTALLATION
+if [ $OFFICE == "1" ]
+then
+    pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
+elif [ $OFFICE == "2" ]
+then
+    pacman -S onlyoffice-bin --noconfirm --needed
+elif [ $OFFICE == "3" ]
+then
+    pacman -S libreoffice --noconfirm --needed
+else
+    "Office Will Not Be Installed"
+fi
 
 #GAMING INSTALLATION
 if [ $GAME == "1" ]
