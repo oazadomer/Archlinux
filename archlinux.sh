@@ -64,14 +64,6 @@ echo "3. for AMD and NVIDIA"
 echo "4. for INTEL and NVIDIA"
 read GRAPHIC
 echo "="
-echo "Do You Want To Install Office: "
-echo "1. for WPS-Office"
-echo "2. for OnlyOffice"
-echo "3. for LibreOffice"
-echo "4. I Don't want To Install"
-echo "="
-read OFFICE
-echo "="
 echo "Will you Gaming: "
 echo "1. for Yes"
 echo "2. for No"
@@ -202,30 +194,15 @@ else
     "Graphic Card Will Not Be Installed"
 fi
 
-#OFFICE INSTALLATION
-if [ $OFFICE == "1" ]
-then
-    pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
-elif [ $OFFICE == "2" ]
-then
-    pacman -S onlyoffice-bin --noconfirm --needed
-elif [ $OFFICE == "3" ]
-then
-    pacman -S libreoffice --noconfirm --needed
-else
-    "Office Will Not Be Installed"
-fi
-
 #GAMING INSTALLATION
 if [ $GAME == "1" ]
 then
-    sudo pacman -S optimus-manager-git optimus-manager-qt steam lutris  protonup-qt wine winetricks giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls \
+    sudo pacman -S steam lutris protonup-qt wine winetricks giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls \
     mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error \
     lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo \
     sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama \
     ncurses lib32-ncurses ocl-icd lib32-ocl-icd libxslt lib32-libxslt libva lib32-libva gtk3 \
     lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader --noconfirm --needed
-    systemctl enable optimus-manager
 else 
     "Gaming Apps and Drivers Will Not Be Installed"
 fi
