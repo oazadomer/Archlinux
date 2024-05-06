@@ -137,8 +137,8 @@ echo "================================================================="
 echo "==        Installing Audio, Printer, Bluetooth Drivers         =="
 echo "================================================================="
 
-pacman -Syyuu bluez bluez-utils cups --noconfirm --needed
-pacman -S xf86-input-libinput libinput touchegg bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
+pacman -Sy bluez bluez-utils cups touchegg --noconfirm --needed
+pacman -S xf86-input-libinput libinput bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
 systemctl enable NetworkManager bluetooth cups touchegg sshd fstrim.timer
 sleep 59
 
