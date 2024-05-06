@@ -142,25 +142,6 @@ sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "================================================================="
-echo "==                    Enable Multilib Repo                     =="
-echo "================================================================="
-
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-
-sed -i "s/^#Color/Color/" /etc/pacman.conf
-sed -i "/Color/a ILoveCandy" /etc/pacman.conf
-sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
-
-echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
-echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
-
-pacman -Sy pamac-aur brave-bin optimus-manager-git optimus-manager-qt auto-cpufreq mailspring figma-linux --noconfirm --needed
-sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
-pamac update all --noconfirm --needed
-
-echo "================================================================="
 echo "==        Installing Audio, Printer, Bluetooth Drivers         =="
 echo "================================================================="
 
