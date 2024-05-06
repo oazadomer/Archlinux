@@ -153,18 +153,16 @@ systemctl enable cups
 systemctl enable touchegg
 systemctl enable sshd
 systemctl enable fstrim.timer
-systemctl enable optimus-manager
-systemctl enable auto-cpufreq
 
 #DESKTOP ENVIRONMENT
 if [ $DESKTOP == "1" ]
 then
-    pacman -S cinnamon nemo nemo-fileroller xed gnome-terminal-transparency fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut mediainfo gthumb snapshot gimp xournalpp redshift openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk mint-themes filezilla --noconfirm --needed
+    pacman -S cinnamon nemo nemo-fileroller xed gnome-terminal fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut mediainfo gthumb snapshot gimp xournalpp redshift openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [ $DESKTOP == "2" ]
 then
-    pacman -S gnome-shell gnome-control-center gnome-terminal-transparency fish gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-browser-connector gnome-text-editor nautilus file-roller gdm xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut mediainfo gthumb snapshot gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla --noconfirm --needed
+    pacman -S gnome-shell gnome-control-center gnome-terminal fish gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-browser-connector gnome-text-editor nautilus file-roller gdm xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut mediainfo gthumb snapshot gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "3" ]
 then
