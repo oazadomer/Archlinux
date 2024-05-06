@@ -64,6 +64,14 @@ echo "3. for AMD and NVIDIA"
 echo "4. for INTEL and NVIDIA"
 read GRAPHIC
 echo "="
+echo "Do You Want To Install Office: "
+echo "1. for WPS-Office"
+echo "2. for OnlyOffice"
+echo "3. for LibreOffice"
+echo "4. I Don't want To Install"
+echo "="
+read OFFICE
+echo "="
 echo "Will you Gaming: "
 echo "1. for Yes"
 echo "2. for No"
@@ -205,6 +213,20 @@ then
     pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayla wayland glfw-wayland egl-wayland plasma-wayland-session xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 else
     "Graphic Card Will Not Be Installed"
+fi
+
+#OFFICE INSTALLATION
+if [ $OFFICE == "1" ]
+then
+    pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
+elif [ $OFFICE == "2" ]
+then
+    pacman -S onlyoffice-bin --noconfirm --needed
+elif [ $OFFICE == "3" ]
+then
+    pacman -S libreoffice --noconfirm --needed
+else
+    "Office Will Not Be Installed"
 fi
 
 #GAMING INSTALLATION
