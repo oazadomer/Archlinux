@@ -137,9 +137,10 @@ echo "================================================================="
 echo "==        Installing Audio, Printer, Bluetooth Drivers         =="
 echo "================================================================="
 
-pacman -Syu xf86-input-libinput libinput touchegg bash-completion bluez bluez-utils cups pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
+pacman -Syyuu bluez bluez-utils cups --noconfirm --needed
+pacman -S xf86-input-libinput libinput touchegg bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
 systemctl enable NetworkManager bluetooth cups touchegg sshd fstrim.timer
-sleep 10
+sleep 59
 
 #DESKTOP ENVIRONMENT
 if [ $DESKTOP == "1" ]
