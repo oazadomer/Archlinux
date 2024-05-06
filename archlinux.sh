@@ -151,10 +151,10 @@ pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring
 
 sed -i "s/^#Color/Color/" /etc/pacman.conf
 sed -i "/Color/a ILoveCandy" /etc/pacman.conf
-sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
+sed -i "s/^#ParallelDownloads = /ParallelDownloads = 4/" /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
-echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
+echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
 pacman -Sy pamac-aur brave-bin optimus-manager optimus-manager-qt auto-cpufreq mailspring figma-linux --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
