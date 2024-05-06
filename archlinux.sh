@@ -183,7 +183,7 @@ then
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [ $DESKTOP == "2" ]
 then
-    pacman -S gnome-shell gnome-control-center gnome-terminal-transparency fish gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-shell-extensions gnome-browser-connector gnome-text-editor nautilus file-roller gdm xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan kdenlive mediainfo shotwell snapshot gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk kvantum-git filezilla --noconfirm --needed
+    pacman -S gnome-shell gnome-control-center gnome-terminal-transparency fish gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-shell-extensions gnome-browser-connector gnome-text-editor nautilus file-roller gdm-prime xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar simple-scan kdenlive mediainfo shotwell snapshot gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk kvantum-git filezilla --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "3" ]
 then
@@ -240,7 +240,7 @@ fi
 #GAMING INSTALLATION
 if [ $GAME == "1" ]
 then
-    sudo pacman -S optimus-manager optimus-manager-qt steam lutris  protonup-qt wine winetricks giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls \
+    sudo pacman -S optimus-manager-git optimus-manager-qt steam lutris  protonup-qt wine winetricks giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls \
     mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error \
     lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo \
     sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama \
