@@ -57,6 +57,11 @@ echo "3. KDE"
 echo "4. No Desktop"
 read DESKTOP
 echo "="
+echo "Do You Want To Install Bluetooth & Printer Drivers: "
+echo "1. for Yes"
+echo "2. for No"
+read BLUETOOTHPRİNTER
+echo "="
 echo "Please Choose Your Graphic Card: "
 echo "1. for AMD"
 echo "2. foe INTEL"
@@ -72,6 +77,11 @@ echo "3. for LibreOffice"
 echo "4. Don't Install"
 echo "="
 read OFFICE
+echo "="
+echo "Do You Want To Install Power Optimization Tools: "
+echo "1. for Yes"
+echo "2. for No"
+read POWER
 echo "="
 echo "Will you Gaming: "
 echo "1. for Yes"
@@ -134,6 +144,11 @@ cat <<EOF > /etc/hosts
 EOF
 
 echo "================================================================="
+echo "==                  Enable Network Service                     =="
+echo "================================================================="
+systemctl enable NetworkManager sshd fstrim.timer
+
+echo "================================================================="
 echo "==                     Installing Grub                         =="
 echo "================================================================="
 
@@ -141,7 +156,6 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
 sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
-
 
 echo "================================================================="
 echo "==                    Enable Multilib Repo                     =="
@@ -157,45 +171,44 @@ sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
-pacman -Sy brave-bin pamac-aur --noconfirm --needed
+pacman -Sy pamac-aur --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm
-
-echo "================================================================="
-echo "=  Installing Audio, Printer, Bluetooth Drivers, Power Optimaize ="
-echo "================================================================="
-
-pacman -S bluez bluez-utils cups touchegg optimus-manager-git optimus-manager-qt auto-cpufreq --noconfirm --needed
-sleep 30
-pacman -S xf86-input-libinput libinput bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
-systemctl enable NetworkManager bluetooth cups touchegg optimus-manager sshd fstrim.timer
-
-sleep 60
-
 
 echo "================================================================="
 echo "=                     DESKTOP ENVIRONMENT                       ="
 echo "================================================================="
 if [ $DESKTOP == "1" ]
 then
-    pacman -S cinnamon nemo nemo-fileroller xed mint-themes gnome-terminal-transparency fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan kdenlive mediainfo gthumb snapshot gimp xournalpp redshift openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla kvantum mint-themes mintlocale lightdm-settings --noconfirm --needed
+    pacman -S cinnamon nemo nemo-fileroller xed mint-themes gnome-terminal-transparency fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan kdenlive mediainfo gthumb snapshot gimp xournalpp redshift openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla kvantum mint-themes mintlocale lightdm-settings brave-bin --noconfirm --needed
     pacman -S mailspring timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme figma-linux  --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [ $DESKTOP == "2" ]
 then
-    pacman -S gnome-shell gnome-control-center gnome-terminal-transparency gnome-bluetooth gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-browser-connector gnome-text-editor nautilus file-roller gdm xdg-user-dirs-gtk fish exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan kdenlive mediainfo gthumb snapshot gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla kvantum --noconfirm --needed
+    pacman -S gnome-shell gnome-control-center gnome-terminal-transparency gnome-bluetooth gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-browser-connector gnome-text-editor nautilus file-roller gdm xdg-user-dirs-gtk fish exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan kdenlive mediainfo gthumb snapshot gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla kvantum brave-bin --noconfirm --needed
     pacman -S mailspring timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme figma-linux  --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "3" ]
 then
-    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma kalk kate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro skanlite kdenlive mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji audacity celluloid mplayer bookworm obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla --noconfirm --needed
+    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma kalk kate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro skanlite kdenlive mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji audacity celluloid mplayer bookworm obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla brave-bin --noconfirm --needed
     pacman -S mailspring timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme figma-linux  --noconfirm --needed
     systemctl enable sddm 
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
 else
     echo "Desktop Will Not Be Installed"
+fi
+
+echo "================================================================="
+echo "=                   Bluetooth & Printer Drivers                 ="
+echo "================================================================="
+if [ $BLUETOOTHPRİNTER == "1" ]
+then
+    pacman -S bluez bluez-utils cups touchegg  --noconfirm --needed
+    systemctl enable bluetooth cups touchegg
+else
+    "Bluetooth & Printer Drivers Will Not Be Installed"
 fi
 
 echo "================================================================="
@@ -244,6 +257,19 @@ then
 else
     "Office Will Not Be Installed"
 fi
+
+echo "================================================================="
+echo "=                     Power Optimization Tools                  ="
+echo "================================================================="
+if [ $POWER == "1" ]
+then
+    pacman -S optimus-manager-git optimus-manager-qt auto-cpufreq --noconfirm --needed
+    systemctl enable optimus-manager auto-cpufreq
+else
+    "Power Optimization Tools Will Not Be Installed"
+fi
+
+pacman -S xf86-input-libinput libinput bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
 
 echo "================================================================="
 echo "=                       GAMING INSTALLATION                     ="
