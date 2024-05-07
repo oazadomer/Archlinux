@@ -168,9 +168,11 @@ echo "================================================================="
 pacman -S bluez bluez-utils cups touchegg optimus-manager-git optimus-manager-qt auto-cpufreq --noconfirm --needed
 pacman -S xf86-input-libinput libinput bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
 systemctl enable NetworkManager bluetooth cups touchegg optimus-manager sshd fstrim.timer
-sleep 30
 
-#DESKTOP ENVIRONMENT
+
+echo "================================================================="
+echo "=                     DESKTOP ENVIRONMENT                       ="
+echo "================================================================="
 if [ $DESKTOP == "1" ]
 then
     pacman -S cinnamon nemo nemo-fileroller xed mint-themes gnome-terminal-transparency fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan kdenlive mediainfo gthumb snapshot gimp xournalpp redshift openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla kvantum mint-themes mintlocale lightdm-settings --noconfirm --needed
@@ -192,7 +194,9 @@ else
     echo "Desktop Will Not Be Installed"
 fi
 
-#GRAPGIC CARD INSTALLATION
+echo "================================================================="
+echo "=                    GRAPGIC CARD INSTALLATION                  ="
+echo "================================================================="
 if [ $GRAPHIC == "1" ] && [ $KERNEL == "1" ]
 then
     pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu --noconfirm --needed
@@ -221,7 +225,9 @@ else
     "Graphic Card Will Not Be Installed"
 fi
 
-#OFFICE INSTALLATION
+echo "================================================================="
+echo "=                       OFFICE INSTALLATION                     ="
+echo "================================================================="
 if [ $OFFICE == "1" ]
 then
     pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
@@ -235,7 +241,9 @@ else
     "Office Will Not Be Installed"
 fi
 
-#GAMING INSTALLATION
+echo "================================================================="
+echo "=                       GAMING INSTALLATION                     ="
+echo "================================================================="
 if [ $GAME == "1" ]
 then
     sudo pacman -S steam lutris protonup-qt wine winetricks giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls \
@@ -248,7 +256,9 @@ else
     "Gaming Apps and Drivers Will Not Be Installed"
 fi
 
-#VIRTUALBOX INSTALLATION
+echo "================================================================="
+echo "=                     VIRTUALBOX INSTALLATION                   ="
+echo "================================================================="
 if [ $KERNEL == "1" ] && [ $VIRTUALBOX == "1" ]
 then
     pacman -S virtualbox virtualbox-guest-utils virtualbox-guest-iso virtualbox-host-modules-arch --noconfirm --needed
