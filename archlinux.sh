@@ -39,7 +39,7 @@ echo "="
 echo "Please Enter Your username password:"
 read USERNAMEPASSWORD
 echo "="
-echo "#Enter Your Locale ( Example: en_US.UTF-8 ):"
+echo "Enter Your Locale ( Example: en_US.UTF-8 ):"
 read LOCALE
 echo "="
 echo "Enter Your Keyboard Layout ( Example: us ):"
