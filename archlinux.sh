@@ -5,7 +5,8 @@ echo "==        Welcome To The Arch Linux Installation Script        =="
 echo "================================================================="
 
 timedatectl set-ntp true
-
+"timedatectl | awk '/Time zone/ {print $3}'"
+read TIMEZONE
 echo ""
 echo "================================================================="
 echo "==                     Partition The Drive                     =="
@@ -132,7 +133,7 @@ echo "LANG=$LOCALE" >> /etc/locale.conf
 echo "KEYMAP=$KEYBOARD_LAYOUT" >> /etc/vconsole.conf
 locale-gen
 
-ln -sf /usr/share/zoneinfo/$(timedatectl | awk '/Time zone/ {print $3}') /etc/localtime
+ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 hwclock --systohc
 
 echo "$HOSTNAME" > /etc/hostname
@@ -200,11 +201,11 @@ else
 fi
 
 echo "================================================================="
-echo "=                  Sound, Bluetooth, Printer Drivers                ="
+echo "=                  Sound, Bluetooth, Printer Drivers            ="
 echo "================================================================="
 if [ $SOUNDBLUETOOTHPRINTER == "1" ]
 then
-    pacman -S bluez bluez-utils cups touchegg pipewire pipewire-audio pipewire-alsa pipewire-pulse libpipewire --noconfirm --needed
+    pacman -S bluez bluez-utils cups touchegg pipewire pipewire-audio pipewire-alsa pipewire-pulse libpipewire xf86-input-libinput libinput bash-completion --noconfirm --needed
     systemctl enable bluetooth cups touchegg
 else
     "Bluetooth & Printer Drivers Will Not Be Installed"
@@ -267,8 +268,6 @@ then
 else
     "Power Optimization Tools Will Not Be Installed"
 fi
-
-pacman -S xf86-input-libinput libinput bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
 
 echo "================================================================="
 echo "=                       GAMING INSTALLATION                     ="
