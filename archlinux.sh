@@ -168,6 +168,7 @@ echo "================================================================="
 pacman -S bluez bluez-utils cups touchegg optimus-manager-git optimus-manager-qt auto-cpufreq --noconfirm --needed
 pacman -S xf86-input-libinput libinput bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
 systemctl enable NetworkManager bluetooth cups touchegg optimus-manager sshd fstrim.timer
+sleep 30
 
 #DESKTOP ENVIRONMENT
 if [ $DESKTOP == "1" ]
