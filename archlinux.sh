@@ -70,18 +70,17 @@ echo "4. for INTEL and NVIDIA"
 echo "5. Don't install"
 read GRAPHIC
 echo "="
+echo "Do You Want To Install Power Optimization Tools:"
+echo "1. for Yes"
+echo "2. for No"
+read POWER
+echo "="
 echo "Do You Want To Install Office:"
 echo "1. for WPS-Office"
 echo "2. for OnlyOffice"
 echo "3. for LibreOffice"
 echo "4. Don't Install"
-echo "="
 read OFFICE
-echo "="
-echo "Do You Want To Install Power Optimization Tools:"
-echo "1. for Yes"
-echo "2. for No"
-read POWER
 echo "="
 echo "Will you Gaming:"
 echo "1. for Yes"
@@ -92,7 +91,7 @@ echo "Do You Want To Install Virtualbox:"
 echo "1. for Yes"
 echo "2. for No"
 read VIRTUALBOX
-echo "="
+
 echo "================================================================="
 echo "==                      Format And Mount                       =="
 echo "================================================================="
