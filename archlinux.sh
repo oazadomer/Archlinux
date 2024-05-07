@@ -156,22 +156,18 @@ sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
-pacman -Sy pamac-aur --noconfırm --needed
-sleep 20
+pacman -Sy pamac-aur --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm
-sleep 20
-
 
 echo "================================================================="
 echo "=  Installing Audio, Printer, Bluetooth Drivers, Power Optimaize ="
 echo "================================================================="
 
-pacman -Sy bluez bluez-utils cups touchegg optimus-manager.git optimus-manager-qt auto-cpufreq --noconfirm --needed
-pacman -Sy xf86-input-libinput libinput bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
+pacman -S bluez bluez-utils cups touchegg optimus-manager-git optimus-manager-qt auto-cpufreq --noconfirm --needed
+pacman -S xf86-input-libinput libinput bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
 systemctl enable NetworkManager bluetooth cups touchegg optimus-manager sshd fstrim.timer
-sleep 20
 
 #DESKTOP ENVIRONMENT
 if [ $DESKTOP == "1" ]
