@@ -60,7 +60,7 @@ echo "="
 echo "Do You Want To Install Bluetooth and Printer Drivers: "
 echo "1. for Yes"
 echo "2. for No"
-read BLUETOOTHPRİNTER
+read BLUETOOTHPRINTER
 echo "="
 echo "Please Choose Your Graphic Card: "
 echo "1. for AMD"
@@ -203,7 +203,7 @@ fi
 echo "================================================================="
 echo "=                   Bluetooth and Printer Drivers                 ="
 echo "================================================================="
-if [ $BLUETOOTHPRİNTER == "1" ]
+if [ $BLUETOOTHPRINTER == "1" ]
 then
     pacman -S bluez bluez-utils cups touchegg  --noconfirm --needed
     systemctl enable bluetooth cups touchegg
