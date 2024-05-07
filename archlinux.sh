@@ -57,10 +57,10 @@ echo "3. KDE"
 echo "4. No Desktop"
 read DESKTOP
 echo "="
-echo "Do You Want To Install Bluetooth and Printer Drivers:"
+echo "Do You Want To Install Sound, Bluetooth, Printer Drivers:"
 echo "1. for Yes"
 echo "2. for No"
-read BLUETOOTHPRINTER
+read SOUNDBLUETOOTHPRINTER
 echo "="
 echo "Please Choose Your Graphic Card:"
 echo "1. for AMD"
@@ -181,18 +181,18 @@ echo "=                     DESKTOP ENVIRONMENT                       ="
 echo "================================================================="
 if [ $DESKTOP == "1" ]
 then
-    pacman -S cinnamon nemo nemo-fileroller xed mint-themes gnome-terminal-transparency fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan kdenlive mediainfo gthumb snapshot gimp xournalpp redshift openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla kvantum mint-themes mintlocale lightdm-settings brave-bin --noconfirm --needed
+    pacman -S cinnamon nemo nemo-fileroller xed mint-themes gnome-terminal-transparency fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan kdenlive mediainfo gthumb snapshot gimp xournalpp redshift openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla kvantum mint-themes mintlocale lightdm-settings brave-bin downgrade --noconfirm --needed
     pacman -S mailspring timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme figma-linux  --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [ $DESKTOP == "2" ]
 then
-    pacman -S gnome-shell gnome-control-center gnome-terminal-transparency gnome-bluetooth gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-browser-connector gnome-text-editor nautilus file-roller gdm xdg-user-dirs-gtk fish exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan kdenlive mediainfo gthumb snapshot gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla kvantum brave-bin --noconfirm --needed
+    pacman -S gnome-shell gnome-control-center gnome-terminal-transparency gnome-bluetooth gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-browser-connector gnome-text-editor nautilus file-roller gdm xdg-user-dirs xdg-user-dirs-gtk fish exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan kdenlive mediainfo gthumb snapshot gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster audacity audacious celluloid mplayer bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla kvantum brave-bin downgrade --noconfirm --needed
     pacman -S mailspring timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme figma-linux  --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "3" ]
 then
-    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma kalk kate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro skanlite kdenlive mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji audacity celluloid mplayer bookworm obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla brave-bin --noconfirm --needed
+    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma kalk kate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro skanlite kdenlive mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji audacity celluloid mplayer bookworm obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm python-pip pyenv postgresql mariadb android-tools vala tk filezilla brave-bin downgrade --noconfirm --needed
     pacman -S mailspring timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme figma-linux  --noconfirm --needed
     systemctl enable sddm 
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
@@ -201,11 +201,11 @@ else
 fi
 
 echo "================================================================="
-echo "=                   Bluetooth and Printer Drivers                 ="
+echo "=                  Sound, Bluetooth, Printer Drivers                ="
 echo "================================================================="
-if [ $BLUETOOTHPRINTER == "1" ]
+if [ $SOUNDBLUETOOTHPRINTER == "1" ]
 then
-    pacman -S bluez bluez-utils cups touchegg  --noconfirm --needed
+    pacman -S bluez bluez-utils cups touchegg pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire --noconfirm --needed
     systemctl enable bluetooth cups touchegg
 else
     "Bluetooth & Printer Drivers Will Not Be Installed"
@@ -216,28 +216,28 @@ echo "=                    GRAPGIC CARD INSTALLATION                  ="
 echo "================================================================="
 if [ $GRAPHIC == "1" ] && [ $KERNEL == "1" ]
 then
-    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu --noconfirm --needed
 elif [ $GRAPHIC == "1" ] && [ $KERNEL == "2" ]
 then
-    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu --noconfirm --needed
 elif [ $GRAPHIC == "2" ] && [ $KERNEL == "1" ]
 then
-    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel --noconfirm --needed
 elif [ $GRAPHIC == "2" ] && [ $KERNEL == "2" ]
 then
-    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "1" ]
 then
-    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "2" ]
 then
-    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 elif [ $GRAPHIC == "4" ] && [ $KERNEL == "1" ]
 then
-    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 elif [ $GRAPHIC == "4" ] && [ $KERNEL == "2" ]
 then
-    pacman -Sy xorg-server xorg-xkill xorg-xwayland xorg-xlsclients xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayla wayland glfw-wayland egl-wayland plasma-wayland-session xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayla wayland glfw-wayland egl-wayland plasma-wayland-session xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 else
     "Graphic Card Will Not Be Installed"
 fi
