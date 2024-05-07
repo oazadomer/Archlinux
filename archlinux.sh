@@ -57,7 +57,7 @@ echo "3. KDE"
 echo "4. No Desktop"
 read DESKTOP
 echo "="
-echo "Do You Want To Install Bluetooth & Printer Drivers: "
+echo "Do You Want To Install Bluetooth and Printer Drivers: "
 echo "1. for Yes"
 echo "2. for No"
 read BLUETOOTHPRİNTER
@@ -201,7 +201,7 @@ else
 fi
 
 echo "================================================================="
-echo "=                   Bluetooth & Printer Drivers                 ="
+echo "=                   Bluetooth and Printer Drivers                 ="
 echo "================================================================="
 if [ $BLUETOOTHPRİNTER == "1" ]
 then
