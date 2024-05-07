@@ -15,54 +15,54 @@ echo ""
 echo "Available Disks: "
 lsblk -d -o NAME,SIZE
 echo "="
-echo "##### Enter The Disk To Use ( Example: /dev/sda or /dev/nvme0n1 ): #####"
+echo "Enter The Disk To Use ( Example: /dev/sda or /dev/nvme0n1 ) :"
 read DISK
 # Manual partitioning
-echo "##### Manual Partitioning... #####"
+echo "Manual Partitioning..."
 cfdisk "$DISK"
 echo "="
-echo "##### Please Enter EFI Paritition: ( Example: /dev/sda1 or /dev/nvme0n1p1 ): #####"
+echo "Please Enter EFI Paritition: ( Example: /dev/sda1 or /dev/nvme0n1p1 ):"
 read EFI
 echo "="
-echo "##### Please Enter Root Paritition: ( Example: /dev/sda2 or /dev/nvme0n1p2 ): #####"
+echo "Please Enter Root Paritition: ( Example: /dev/sda2 or /dev/nvme0n1p2 ):"
 read ROOT
 echo "="
-echo "##### Please Enter Your hostname: #####"
+echo "Please Enter Your hostname:"
 read HOSTNAME
 echo "="
-echo "##### Please Enter Your hostname password: #####"
+echo "Please Enter Your hostname password:"
 read HOSTNAMEPASSWORD
 echo "="
-echo "##### Please Enter Your username: #####"
+echo "Please Enter Your username:"
 read USERNAME
 echo "="
-echo "##### Please Enter Your username password: #####"
+echo "Please Enter Your username password:"
 read USERNAMEPASSWORD
 echo "="
-echo "##### Enter Your Locale ( Example: en_US.UTF-8 ): #####"
+echo "#Enter Your Locale ( Example: en_US.UTF-8 ):"
 read LOCALE
 echo "="
-echo "##### Enter Your Keyboard Layout ( Example: us ): #####"
+echo "Enter Your Keyboard Layout ( Example: us ):"
 read KEYBOARD_LAYOUT
 echo "="
-echo "##### Please Chosse The Kernel: #####"
+echo "Please Chosse The Kernel:"
 echo "1. Linux"
 echo "2. Linux-lts"
 read KERNEL
 echo "="
-echo "##### Please Choose Your Desktop Environment: #####"
+echo "Please Choose Your Desktop Environment:"
 echo "1. CINNAMON"
 echo "2. GNOME"
 echo "3. KDE"
 echo "4. No Desktop"
 read DESKTOP
 echo "="
-echo "##### Do You Want To Install Bluetooth and Printer Drivers: #####"
+echo "Do You Want To Install Bluetooth and Printer Drivers:"
 echo "1. for Yes"
 echo "2. for No"
 read BLUETOOTHPRINTER
 echo "="
-echo "##### Please Choose Your Graphic Card: #####"
+echo "Please Choose Your Graphic Card:"
 echo "1. for AMD"
 echo "2. foe INTEL"
 echo "3. for AMD and NVIDIA"
@@ -70,7 +70,7 @@ echo "4. for INTEL and NVIDIA"
 echo "5. Don't install"
 read GRAPHIC
 echo "="
-echo "##### Do You Want To Install Office: #####"
+echo "Do You Want To Install Office:"
 echo "1. for WPS-Office"
 echo "2. for OnlyOffice"
 echo "3. for LibreOffice"
@@ -78,17 +78,17 @@ echo "4. Don't Install"
 echo "="
 read OFFICE
 echo "="
-echo "#####Do You Want To Install Power Optimization Tools: #####"
+echo "Do You Want To Install Power Optimization Tools:"
 echo "1. for Yes"
 echo "2. for No"
 read POWER
 echo "="
-echo "##### Will you Gaming: #####"
+echo "Will you Gaming:"
 echo "1. for Yes"
 echo "2. for No"
 read GAME
 echo "="
-echo "##### Do You Want To Install Virtualbox: #####"
+echo "Do You Want To Install Virtualbox:"
 echo "1. for Yes"
 echo "2. for No"
 read VIRTUALBOX
