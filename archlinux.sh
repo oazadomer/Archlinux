@@ -245,6 +245,17 @@ else
 fi
 
 echo "================================================================="
+echo "=                     Power Optimization Tools                  ="
+echo "================================================================="
+if [ $POWER == "1" ]
+then
+    pacman -S optimus-manager-git optimus-manager-qt auto-cpufreq --noconfirm --needed
+    systemctl enable optimus-manager auto-cpufreq
+else
+    "Power Optimization Tools Will Not Be Installed"
+fi
+
+echo "================================================================="
 echo "=                       OFFICE INSTALLATION                     ="
 echo "================================================================="
 if [ $OFFICE == "1" ]
@@ -258,17 +269,6 @@ then
     pacman -S libreoffice --noconfirm --needed
 else
     "Office Will Not Be Installed"
-fi
-
-echo "================================================================="
-echo "=                     Power Optimization Tools                  ="
-echo "================================================================="
-if [ $POWER == "1" ]
-then
-    pacman -S optimus-manager-git optimus-manager-qt auto-cpufreq --noconfirm --needed
-    systemctl enable optimus-manager auto-cpufreq
-else
-    "Power Optimization Tools Will Not Be Installed"
 fi
 
 echo "================================================================="
