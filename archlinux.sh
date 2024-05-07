@@ -5,8 +5,7 @@ echo "==        Welcome To The Arch Linux Installation Script        =="
 echo "================================================================="
 
 timedatectl set-ntp true
-"timedatectl | awk '/Time zone/ {print $3}'"
-read TIMEZONE
+
 echo ""
 echo "================================================================="
 echo "==                     Partition The Drive                     =="
@@ -45,6 +44,9 @@ read LOCALE
 echo "="
 echo "Enter Your Keyboard Layout ( Example: us ):"
 read KEYBOARD_LAYOUT
+echo "="
+echo "Enter your Time Zone: ( Example: Europe/Istanbul )"
+read TIMEZONE
 echo "="
 echo "Please Chosse The Kernel:"
 echo "1. Linux"
