@@ -62,13 +62,14 @@ echo "1. for AMD"
 echo "2. foe INTEL"
 echo "3. for AMD and NVIDIA"
 echo "4. for INTEL and NVIDIA"
+echo "5. Don't install"
 read GRAPHIC
 echo "="
 echo "Do You Want To Install Office: "
 echo "1. for WPS-Office"
 echo "2. for OnlyOffice"
 echo "3. for LibreOffice"
-echo "4. I Don't want To Install"
+echo "4. Don't Install"
 echo "="
 read OFFICE
 echo "="
@@ -166,8 +167,11 @@ echo "=  Installing Audio, Printer, Bluetooth Drivers, Power Optimaize ="
 echo "================================================================="
 
 pacman -S bluez bluez-utils cups touchegg optimus-manager-git optimus-manager-qt auto-cpufreq --noconfirm --needed
+sleep 30
 pacman -S xf86-input-libinput libinput bash-completion pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire downgrade --noconfirm --needed
 systemctl enable NetworkManager bluetooth cups touchegg optimus-manager sshd fstrim.timer
+
+sleep 60
 
 
 echo "================================================================="
