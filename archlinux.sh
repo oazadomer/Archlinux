@@ -205,7 +205,7 @@ echo "=                  Sound, Bluetooth, Printer Drivers                ="
 echo "================================================================="
 if [ $SOUNDBLUETOOTHPRINTER == "1" ]
 then
-    pacman -S bluez bluez-utils cups touchegg pipewire pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse libpipewire --noconfirm --needed
+    pacman -S bluez bluez-utils cups touchegg pipewire pipewire-audio pipewire-alsa pipewire-pulse libpipewire --noconfirm --needed
     systemctl enable bluetooth cups touchegg
 else
     "Bluetooth & Printer Drivers Will Not Be Installed"
