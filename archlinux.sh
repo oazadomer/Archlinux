@@ -249,8 +249,8 @@ echo "=                     Power Optimization Tools                  ="
 echo "================================================================="
 if [ $POWER == "1" ]
 then
-    pacman -S optimus-manager-git optimus-manager-qt auto-cpufreq --noconfirm --needed
-    systemctl enable optimus-manager auto-cpufreq
+    pacman -S envycontrol auto-cpufreq --noconfirm --needed
+    systemctl enable auto-cpufreq
 else
     "Power Optimization Tools Will Not Be Installed"
 fi
