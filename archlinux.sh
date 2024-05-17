@@ -218,28 +218,28 @@ echo "=                    GRAPGIC CARD INSTALLATION                  ="
 echo "================================================================="
 if [ $GRAPHIC == "1" ] && [ $KERNEL == "1" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "1" ] && [ $KERNEL == "2" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "2" ] && [ $KERNEL == "1" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "2" ] && [ $KERNEL == "2" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "1" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "2" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "4" ] && [ $KERNEL == "1" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "4" ] && [ $KERNEL == "2" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayla wayland glfw-wayland egl-wayland plasma-wayland-session xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayla wayland glfw-wayland egl-wayland plasma-wayland-session xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 else
     "Graphic Card Will Not Be Installed"
 fi
