@@ -56,9 +56,8 @@ echo "="
 echo "Please Choose Your Desktop Environment:"
 echo "1. CINNAMON"
 echo "2. GNOME"
-echo "3. Hyprland"
-echo "4. KDE"
-echo "5. No Desktop"
+echo "3. KDE"
+echo "4. No Desktop"
 read DESKTOP
 echo "="
 echo "Do You Want To Install Sound, Bluetooth, Printer Drivers:"
@@ -194,11 +193,6 @@ then
     pacman -S mailspring timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme figma-linux  --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "3" ]
-then
-    pacman -S  hyprland kitty dolphen ark sddm-git xdg-user-dirs-gtk fish exfatprogs f2fs-tools traceroute cronie gufw gtk3 xdg-desktop-portal-gtk xdg-desktop-portal-hyprland transmission-gtk gnome-calculator gnome-calendar simple-scan kdenlive audacity vlc mplayer shutter-encoder-bin mediainfo gthumb snapshot gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster pencil protonvpn-gui bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 nodejs npm yarn python-pip pyenv postgresql mariadb mongodb android-tools vala tk filezilla kvantum brave-bin downgrade debtap dpkg vscodium colloid-gtk-theme-git xampp --noconfirm --needed
-    pacman -S mailspring timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme figma-linux  --noconfirm --needed
-    systemctl enable sddm
-elif [ $DESKTOP == "4" ]
 then
     pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma kalk kate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro skanlite kdenlive audacity vlc mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji pencil protonvpn-gui bookworm obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv postgresql mariadb mongodb android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp --noconfirm --needed
     pacman -S mailspring timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme figma-linux  --noconfirm --needed
