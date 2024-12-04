@@ -116,7 +116,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 cat <<REALEND > /mnt/next.sh
 echo "$HOSTNAME:$HOSTNAMEPASSWORD" | chpasswd
-useradd -mG wheel $USERNAME
+useradd -mG wheel "($USERNAME)"
 echo "$USERNAME:$USERNAMEPASSWORD" | chpasswd
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
