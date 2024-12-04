@@ -73,11 +73,6 @@ echo "4. for INTEL and NVIDIA"
 echo "5. Don't install"
 read GRAPHIC
 echo "="
-echo "Do You Want To Install Power Optimization Tools:"
-echo "1. for Yes"
-echo "2. for No"
-read POWER
-echo "="
 echo "Do You Want To Install Office:"
 echo "1. for WPS-Office"
 echo "2. for OnlyOffice"
@@ -90,10 +85,6 @@ echo "1. for Yes"
 echo "2. for No"
 read GAME
 echo "="
-echo "Do You Want To Install Virtualbox:"
-echo "1. for Yes"
-echo "2. for No"
-read VIRTUALBOX
 
 echo "================================================================="
 echo "==                      Format And Mount                       =="
@@ -248,17 +239,6 @@ else
 fi
 
 echo "================================================================="
-echo "=                     Power Optimization Tools                  ="
-echo "================================================================="
-if [ $POWER == "1" ]
-then
-    pacman -S envycontrol auto-cpufreq --noconfirm --needed
-    systemctl enable auto-cpufreq
-else
-    "Power Optimization Tools Will Not Be Installed"
-fi
-
-echo "================================================================="
 echo "=                       OFFICE INSTALLATION                     ="
 echo "================================================================="
 if [ $OFFICE == "1" ]
@@ -282,19 +262,6 @@ then
     sudo pacman -S steam protonup-qt lutris wine winetricks vulkan-icd-loader lib32-vulkan-icd-loader --noconfirm --needed
 else 
     "Gaming Apps and Drivers Will Not Be Installed"
-fi
-
-echo "================================================================="
-echo "=                     VIRTUALBOX INSTALLATION                   ="
-echo "================================================================="
-if [ $KERNEL == "1" ] && [ $VIRTUALBOX == "1" ]
-then
-    pacman -S virtualbox virtualbox-guest-utils virtualbox-guest-iso virtualbox-host-modules-arch --noconfirm --needed
-elif [ $KERNEL == "2" ] && [ $VIRTUALBOX == "1" ]
-then
-    pacman -S virtualbox virtualbox-guest-utils virtualbox-guest-iso virtualbox-host-dkms --noconfirm --needed
-else
-    "Virtualbox Will Not Be Installed"
 fi
 
 REALEND
