@@ -99,12 +99,15 @@ echo "================================================================="
 echo "==                      Format And Mount                       =="
 echo "================================================================="
 
-mkfs.vfat -F32 -n "EFISYSTEM" "${EFI}"
-mkfs.ext4 -L "ROOT" "${ROOT}"
+mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
+mkfs.btrfs -L "ROOT" "${ROOT}"
 
-mount -t ext4 "${ROOT}" /mnt
-mkdir /mnt/boot
-mount -t vfat "${EFI}" /mnt/boot/
+mount -t btrfs "${ROOT}" /mnt
+btrfs su cr /mnt/@
+umount /mnt
+mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ /dev/nvme0n1p2 /mnt
+mkdir /mnt/boot/efi
+mount -t fat "${EFI}" /mnt/boot/
 
 echo "================================================================="
 echo "==                    INSTALLING Arch Linux                    =="
@@ -112,9 +115,9 @@ echo "================================================================="
 
 if [ $KERNEL == "1" ]
 then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers nano amd-ucode grub efibootmgr git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers nano amd-ucode grub efibootmgr git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cron
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers nano amd-ucode grub efibootmgr git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers nano amd-ucode grub efibootmgr git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cron
 fi
 
 #fstab
