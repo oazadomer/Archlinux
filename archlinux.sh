@@ -106,8 +106,8 @@ mount -t btrfs "${ROOT}" /mnt
 btrfs su cr /mnt/@
 umount /mnt
 mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ /dev/nvme0n1p2 /mnt
-mkdir /mnt/boot/efi
-mount -t fat "${EFI}" /mnt/boot/
+mkdir -p /mnt/boot/efi
+mount -t fat "${EFI}" /mnt/boot/efi
 
 echo "================================================================="
 echo "==                    INSTALLING Arch Linux                    =="
