@@ -96,7 +96,7 @@ mkfs.btrfs -L "ROOT" "${ROOT}"
 mount -t btrfs "${ROOT}" /mnt
 btrfs su cr /mnt/@
 umount /mnt
-mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ /dev/nvme0n1p2 /mnt
+mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ "${ROOT}" /mnt
 mkdir -p /mnt/boot/efi
 mount -t fat "${EFI}" /mnt/boot/efi
 
@@ -129,7 +129,7 @@ echo "LANG=$LOCALE" >> /etc/locale.conf
 echo "KEYMAP=$KEYBOARD_LAYOUT" >> /etc/vconsole.conf
 locale-gen
 
-ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
+ln -sf /usr/share/zoneinfo/"$(TIMEZONE)" /etc/localtime
 hwclock --systohc
 
 echo "$HOSTNAME" > /etc/hostname
