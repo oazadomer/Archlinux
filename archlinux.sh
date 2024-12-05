@@ -172,7 +172,7 @@ echo -e "\n[cachyos-core-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >
 echo -e "\n[cachyos-extra-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-pacman -Sy pamac-aur --noconfirm --needed
+pacman -Syu pamac-aur --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm --needed
@@ -189,10 +189,10 @@ then
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [ $DESKTOP == "2" ]
 then
-    pacman -S gnome-shell gnome-control-center ptyxis gnome-bluetooth gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector gedit nautilus file-roller sddm xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk qalculate gnome-calendar gnome-clocks simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster pencil protonvpn-gui bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv postgresql mariadb mongodb android-tools vala tk filezilla kvantum brave-bin downgrade debtap dpkg vscodium postman-bin colloid-gtk-theme-git xampp docker --noconfirm --needed
+    pacman -S gnome-shell gnome-control-center ptyxis gnome-bluetooth gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector gedit nautilus file-roller gdm xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute cronie gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk qalculate gnome-calendar gnome-clocks simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster pencil protonvpn-gui bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv postgresql mariadb mongodb android-tools vala tk filezilla kvantum brave-bin downgrade debtap dpkg vscodium postman-bin colloid-gtk-theme-git xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch --noconfirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
-    systemctl enable sddm
+    systemctl enable gdm
 elif [ $DESKTOP == "3" ]
 then
     pacman -S plasma-desktop dolphin dolphin-plugins ark konsole okular gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate kate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute cronie ufw spectacle ktorrent merkuro skanlite kdenlive audacity vlc mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-ubuntu-font-family noto-fonts noto-fonts-emoji pencil protonvpn-gui bookworm obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv postgresql mariadb mongodb android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp docker --noconfirm --needed
