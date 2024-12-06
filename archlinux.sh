@@ -176,6 +176,7 @@ pacman -Syu pamac-aur --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm --needed
+pamac install stacer-bin --no-confirm --needed
 
 echo "================================================================="
 echo "=                     DESKTOP ENVIRONMENT                       ="
