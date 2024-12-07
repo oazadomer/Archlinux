@@ -49,6 +49,11 @@ echo "="
 echo "Enter your Time Zone: ( Example: Europe/Istanbul )"
 read TIMEZONE
 echo "="
+echo "Please choose your CPU"
+echo "1. AMD"
+echo "2. Intel"
+read CPU
+echo"="
 echo "Please Chosse The Kernel:"
 echo "1. Linux"
 echo "2. Linux-lts"
@@ -62,28 +67,28 @@ echo "4. No Desktop"
 read DESKTOP
 echo "="
 echo "Do You Want To Install Sound, Bluetooth, Printer Drivers:"
-echo "1. for Yes"
-echo "2. for No"
+echo "1. Yes"
+echo "2. No"
 read SOUNDBLUETOOTHPRINTER
 echo "="
 echo "Please Choose Your Graphic Card:"
-echo "1. for AMD"
-echo "2. foe INTEL"
-echo "3. for AMD and NVIDIA"
-echo "4. for INTEL and NVIDIA"
+echo "1. AMD"
+echo "2. INTEL"
+echo "3. AMD and NVIDIA"
+echo "4. INTEL and NVIDIA"
 echo "5. Don't install"
 read GRAPHIC
 echo "="
 echo "Do You Want To Install Office:"
-echo "1. for WPS-Office"
-echo "2. for OnlyOffice"
-echo "3. for LibreOffice"
+echo "1. WPS-Office"
+echo "2. OnlyOffice"
+echo "3. LibreOffice"
 echo "4. Don't Install"
 read OFFICE
 echo "="
 echo "Will you Gaming:"
-echo "1. for Yes"
-echo "2. for No"
+echo "1. Yes"
+echo "2. No"
 read GAMING
 echo "="
 
@@ -107,9 +112,9 @@ echo "================================================================="
 
 if [ $KERNEL == "1" ]
 then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers micro amd-ucode grub efibootmgr btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cron
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers micro grub efibootmgr btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cron
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers micro amd-ucode grub efibootmgr btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cron
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers micro grub efibootmgr btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cron
 fi
 
 #fstab
@@ -177,6 +182,16 @@ pacman -Syu pamac-aur --noconfirm --needed
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm --needed
 pamac install oh-my-posh stacer-bin --no-confirm --needed
+
+echo "================================================================="
+echo "=                             CPU                               ="
+echo "================================================================="
+if [ $CPU == "1" ]
+then
+    pacman -S amd-ucode
+else
+    pacman -S intel-ucode
+if
 
 echo "================================================================="
 echo "=                     DESKTOP ENVIRONMENT                       ="
