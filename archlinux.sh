@@ -181,7 +181,7 @@ pacman -Syyu pamac-aur --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm --needed
-pamac install oh-my-posh stacer-bin mysql mssql-server stirling-pdf-bin --no-confirm --needed
+pamac install oh-my-posh mysql mssql-server stirling-pdf-bin --no-confirm --needed
 
 echo "================================================================="
 echo "=                             CPU                               ="
