@@ -124,7 +124,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 cat <<REALEND > /mnt/next.sh
 echo "$HOSTNAME:$HOSTNAMEPASSWORD" | chpasswd
-useradd -mG wheel "$USERNAME"
+useradd -mG wheel $USERNAME
 echo "$USERNAME:$USERNAMEPASSWORD" | chpasswd
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
@@ -140,11 +140,11 @@ locale-gen
 ln -sf /usr/share/zoneinfo/"$(TIMEZONE)" /etc/localtime
 hwclock --systohc
 
-echo "$HOSTNAME" > /etc/hostname
+echo $HOSTNAME > /etc/hostname
 cat <<EOF > /etc/hosts
 127.0.0.1	localhost
 ::1			localhost
-127.0.1.1	"$HOSTNAME".localdomain	"$HOSTNAME"
+127.0.1.1	$HOSTNAME.localdomain	$HOSTNAME
 EOF
 
 echo "================================================================="
