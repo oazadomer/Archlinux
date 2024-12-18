@@ -101,9 +101,11 @@ mkfs.btrfs -L "ROOT" "${ROOT}"
 
 mount -t btrfs "${ROOT}" /mnt
 btrfs su cr /mnt/@
+btrfs su cr /mnt/@.snapshots
 umount /mnt
 mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ "${ROOT}" /mnt
-mkdir -p /mnt/boot/efi
+mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ "${ROOT}" /mnt/.snapshots
+mkdir -p /mnt/{boot/efi,.snapshots}
 mount -t fat "${EFI}" /mnt/boot/efi
 
 echo "================================================================="
@@ -112,9 +114,9 @@ echo "================================================================="
 
 if [ $KERNEL == "1" ]
 then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers micro grub efibootmgr btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers micro grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers micro grub efibootmgr btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers micro grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
 fi
 
 #fstab
