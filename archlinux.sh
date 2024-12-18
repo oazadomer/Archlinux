@@ -101,12 +101,12 @@ mkfs.btrfs -L "ROOT" "${ROOT}"
 
 mount -t btrfs "${ROOT}" /mnt
 btrfs su cr /mnt/@
-btrfs su cr /mnt/@.snapshots
+btrfs su cr /mnt/@snapshots
 umount /mnt
 mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ "${ROOT}" /mnt
-mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ "${ROOT}" /mnt/.snapshots
-mkdir -p /mnt/{boot/efi,.snapshots}
-mount -t fat "${EFI}" /mnt/boot/efi
+mkdir -p /mnt/{boot,.snapshots}
+mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@snapshots "${ROOT}" /mnt/.snapshots
+mount -t fat "${EFI}" /mnt/boot
 
 echo "================================================================="
 echo "==                    INSTALLING Arch Linux                    =="
@@ -156,7 +156,7 @@ echo "================================================================="
 echo "==                     Installing Grub                         =="
 echo "================================================================="
 
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Archlinux
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
 sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
