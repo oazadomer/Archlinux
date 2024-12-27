@@ -74,9 +74,10 @@ echo "="
 echo "Please Choose Your Graphic Card:"
 echo "1. AMD"
 echo "2. INTEL"
-echo "3. AMD and NVIDIA"
-echo "4. INTEL and NVIDIA"
-echo "5. Don't install"
+echo "3. AMD and INTEL"
+echo "4. AMD and NVIDIA"
+echo "5. INTEL and NVIDIA"
+echo "6. Don't install"
 read GRAPHIC
 echo "="
 echo "Do You Want To Install Office:"
@@ -252,14 +253,20 @@ then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "1" ]
 then
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils --noconfirm --needed
+elif [ $GRAPHIC == "3" ] && [ $KERNEL == "2" ]
+then
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils --noconfirm --needed
+elif [ $GRAPHIC == "4" ] && [ $KERNEL == "1" ]
+then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "2" ]
 then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
-elif [ $GRAPHIC == "4" ] && [ $KERNEL == "1" ]
+elif [ $GRAPHIC == "5" ] && [ $KERNEL == "1" ]
 then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
-elif [ $GRAPHIC == "4" ] && [ $KERNEL == "2" ]
+elif [ $GRAPHIC == "5" ] && [ $KERNEL == "2" ]
 then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayla wayland glfw-wayland egl-wayland plasma-wayland-session xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 else
