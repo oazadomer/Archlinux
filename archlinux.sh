@@ -87,8 +87,10 @@ echo "4. Don't Install"
 read OFFICE
 echo "="
 echo "Will you Gaming:"
-echo "1. Yes"
-echo "2. No"
+echo "1. Yes with AMD GPU"
+echo "2. Yes with INTEL GPU"
+echo "3. Yes with NVIDIA GPU"
+echo "4. No"
 read GAMING
 echo "="
 
@@ -284,6 +286,16 @@ echo "================================================================="
 echo "=                       GAMING INSTALLATION                     ="
 echo "================================================================="
 if [ $GAMING == "1" ]
+then
+    sudo pacman -S linux-cachyos linux-cachyos-headers mesa-utils --noconfirm --needed
+    sudo pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal proton-cachyos ttf-liberation wine-cachyos wine-gecko wine-mono winetricks vulkan-tools --noconfirm --needed
+    sudo pacman -S gamescope heroic-games-launcher lib32-mangohud lutris mangohud steam steam-native-runtime wqy-zenhei--noconfirm --needed
+elif [ $GAMING == "2" ]
+then
+    sudo pacman -S linux-cachyos linux-cachyos-headers mesa-utils --noconfirm --needed
+    sudo pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal proton-cachyos ttf-liberation wine-cachyos wine-gecko wine-mono winetricks vulkan-tools --noconfirm --needed
+    sudo pacman -S gamescope heroic-games-launcher lib32-mangohud lutris mangohud steam steam-native-runtime wqy-zenhei--noconfirm --needed
+elif [ $GAMING == "3" ]
 then
     sudo pacman -S linux-cachyos linux-cachyos-headers linux-cachyos-nvidia-open nvidia-utils nvidia-settings lib32-nvidia-utils nvidia-prime opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
     sudo pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal proton-cachyos ttf-liberation wine-cachyos wine-gecko wine-mono winetricks vulkan-tools --noconfirm --needed
