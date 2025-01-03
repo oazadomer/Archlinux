@@ -117,9 +117,9 @@ echo "================================================================="
 
 if [ $KERNEL == "1" ]
 then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers micro grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers vim grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers micro grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers vim grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
 fi
 
 #fstab
