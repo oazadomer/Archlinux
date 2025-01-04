@@ -183,11 +183,11 @@ echo -e "\n[cachyos-core-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >
 echo -e "\n[cachyos-extra-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-pacman -Syyu pamac-aur envycontrol --noconfirm --needed
+pacman -Syu pamac-aur envycontrol oh-my-posh  --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm --needed
-pamac install oh-my-posh mysql mssql-server stirling-pdf-bin --no-confirm --needed
+pamac install mysql mssql-server stirling-pdf-bin --no-confirm --needed
 
 echo "================================================================="
 echo "=                             CPU                               ="
