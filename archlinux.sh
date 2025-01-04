@@ -67,7 +67,7 @@ echo "4. KDE"
 echo "5. No Desktop"
 read DESKTOP
 echo "="
-echo "Do You Want To Install Sound, Bluetooth, Printer Drivers:"
+echo "Do You Want To Install Sound, Bluetooth, Printer Drivers?"
 echo "1. Yes"
 echo "2. No"
 read SOUNDBLUETOOTHPRINTER
@@ -81,20 +81,26 @@ echo "5. INTEL and NVIDIA"
 echo "6. Don't install"
 read GRAPHIC
 echo "="
-echo "Do You Want To Install Office:"
+echo "Do You Want To Install Office?"
 echo "1. WPS-Office"
 echo "2. OnlyOffice"
 echo "3. LibreOffice"
 echo "4. Don't Install"
 read OFFICE
 echo "="
-echo "Will you Gaming:"
+echo "DO You Want to Install Database?"
+echo "1. Yes postgresql, mysql, sqlite, mssql"
+echo "2. No"
+read DATABASE
+echo "="
+echo "Will you Gaming?"
 echo "1. Yes with AMD GPU"
 echo "2. Yes with INTEL GPU"
 echo "3. Yes with NVIDIA GPU"
 echo "4. No"
 read GAMING
 echo "="
+
 
 echo "================================================================="
 echo "==                      Format And Mount                       =="
@@ -118,9 +124,9 @@ echo "================================================================="
 
 if [ $KERNEL == "1" ]
 then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers vim grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers vim grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim grub efibootmgr grub-btrfs btrfs-progs git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
 fi
 
 #fstab
@@ -183,11 +189,10 @@ echo -e "\n[cachyos-core-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >
 echo -e "\n[cachyos-extra-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-pacman -Syu pamac-aur envycontrol oh-my-posh  --noconfirm --needed
+pacman -Syu pamac-aur --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm --needed
-pamac install mysql mssql-server stirling-pdf-bin --no-confirm --needed
 
 echo "================================================================="
 echo "=                             CPU                               ="
@@ -204,33 +209,37 @@ echo "=                     DESKTOP ENVIRONMENT                       ="
 echo "================================================================="
 if [ $DESKTOP == "1" ]
 then
-    pacman -S cinnamon nemo nemo-fileroller kitty fish gnome-themes-extra gnome-keyring gedit system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk qalculate gnome-calendar simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster pencil protonvpn-gui bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv postgresql sqlite android-tools vala tk filezilla kvantum mintlocale lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib colloid-gtk-theme-git xampp docker --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch bleachbit --noconfirm --needed
+    pacman -S cinnamon nemo nemo-fileroller kitty fish gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk qalculate gnome-calendar simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster pencil protonvpn-gui bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla kvantum mintlocale lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib colloid-gtk-theme-git xampp docker --noconfirm --needed
+    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch bleachbit oh-my-posh-bin --noconfirm --needed
+    pamac install weektodo-bin stirling-pdf-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [ $DESKTOP == "2" ]
 then
-    pacman -S deepin deepin-kwin deepin-terminal deepin-calculator deepin-camera deepin-album deepin-compressor deepin-draw deepin-editor deepin-music deepin-movie deepin-printer deepin-reader deepin-picker deepin-font-manager deepin-voice-note deepin-screen-recorder deepin-grand-search fish gnome-keyring lightdm lightdm-deepin-greeter xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk simple-scan shotcut audacity mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji pencil protonvpn-gui bookworm gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv postgresql sqlite android-tools vala tk filezilla lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib xampp docker --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch bleachbit --noconfirm --needed
+    pacman -S deepin deepin-kwin deepin-terminal deepin-calculator deepin-camera deepin-album deepin-compressor deepin-draw deepin-music deepin-movie deepin-printer deepin-reader deepin-picker deepin-font-manager deepin-voice-note deepin-screen-recorder deepin-grand-search fish gnome-keyring lightdm lightdm-deepin-greeter xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk simple-scan shotcut audacity mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji pencil protonvpn-gui bookworm gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib xampp docker --noconfirm --needed
+    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch bleachbit oh-my-posh-bin --noconfirm --needed
+    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepim-greeter/" /etc/lightdm/lightdm.conf
 elif [ $DESKTOP == "3" ]
 then
-    pacman -S gnome-shell gnome-control-center kitty fish gnome-bluetooth gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector nautilus file-roller gedit gdm xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster pencil protonvpn-gui bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv postgresql sqlite android-tools vala tk filezilla kvantum brave-bin downgrade debtap dpkg vscodium postman-bin colloid-gtk-theme-git xampp docker extension-manager --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch bleachbit --noconfirm --needed
+    pacman -S gnome-shell gnome-control-center kitty fish gnome-bluetooth gnome-themes-extra gnome-keyring gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector extension-manager nautilus file-roller gdm xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster pencil protonvpn-gui bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla kvantum brave-bin downgrade debtap dpkg vscodium postman-bin colloid-gtk-theme-git xampp docker extension-manager --noconfirm --needed
+    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch bleachbit oh-my-posh-bin --noconfirm --needed
+    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "4" ]
 then
-    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish okular gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute ufw spectacle ktorrent merkuro skanlite kdenlive audacity vlc mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji pencil protonvpn-gui bookworm obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv postgresql sqlite android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp docker --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme bleachbit --noconfirm --needed
+    pacman -S plasma-desktop dolphin dolphin-plugins ark konsole fish gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute ufw spectacle ktorrent merkuro skanlite kdenlive audacity vlc mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji pencil protonvpn-gui bookworm obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp docker --noconfirm --needed
+    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme bleachbit oh-my-posh-bin --noconfirm --needed
+    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-managertchy op-ed El-Naggar oconfirm fastfetch --needed
     systemctl enable sddm 
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
 else
-    echo "Desktop Will Not Be Installed"
+    echo "Desktop Will Not be Installed"
 fi
 
 echo "================================================================="
@@ -241,7 +250,7 @@ then
     pacman -S bluez bluez-utils cups touchegg pipewire pipewire-audio pipewire-alsa pipewire-pulse libpipewire pavucontrol xf86-input-libinput libinput bash-completion --noconfirm --needed
     systemctl enable bluetooth cups touchegg
 else
-    "Bluetooth & Printer Drivers Will Not Be Installed"
+    "Bluetooth & Printer Drivers Will Not be Installed"
 fi
 
 echo "================================================================="
@@ -261,24 +270,24 @@ then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-intel mesa-utils --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "1" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils  envycontrol --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "2" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils envycontrol --noconfirm --needed
 elif [ $GRAPHIC == "4" ] && [ $KERNEL == "1" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils envycontrol --noconfirm --needed
 elif [ $GRAPHIC == "3" ] && [ $KERNEL == "2" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils envycontrol --noconfirm --needed
 elif [ $GRAPHIC == "5" ] && [ $KERNEL == "1" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils envycontrol --noconfirm --needed
 elif [ $GRAPHIC == "5" ] && [ $KERNEL == "2" ]
 then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayla wayland glfw-wayland egl-wayland plasma-wayland-session xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayla wayland glfw-wayland egl-wayland plasma-wayland-session xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils envycontrol --noconfirm --needed
 else
-    "Graphic Card Will Not Be Installed"
+    "Graphic Card Will Not be Installed"
 fi
 
 echo "================================================================="
@@ -294,7 +303,18 @@ elif [ $OFFICE == "3" ]
 then
     pacman -S libreoffice --noconfirm --needed
 else
-    "Office Will Not Be Installed"
+    "Office Will Not be Installed"
+fi
+
+echo "================================================================="
+echo "=                            Database                           ="
+echo "================================================================="
+if [ $DATABASE == "1" ]
+then
+    pacman -S postgresql sqlite --noconfirm --needed
+    pamac install mysql mssql-server dbgate-bin --no-confirm --needed
+else
+    "Database Will Mot ne Installed"
 fi
 
 echo "================================================================="
@@ -316,7 +336,7 @@ then
     sudo pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal proton-cachyos ttf-liberation wine-cachyos wine-gecko wine-mono winetricks vulkan-tools --noconfirm --needed
     sudo pacman -S gamescope heroic-games-launcher lib32-mangohud lutris mangohud steam steam-native-runtime wqy-zenhei--noconfirm --needed
 else 
-    "Gaming Apps and Drivers Will Not Be Installed"
+    "Gaming Apps and Drivers Will Not be Installed"
 fi
 
 REALEND
