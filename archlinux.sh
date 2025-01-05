@@ -211,7 +211,7 @@ if [ $DESKTOP == "1" ]
 then
     pacman -S cinnamon nemo nemo-fileroller kitty gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk qalculate gnome-calendar simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster pencil protonvpn-gui bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla kvantum mintlocale lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib colloid-gtk-theme-git xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch bleachbit zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin oh-my-zsh-git --no-confirm --needed
+    pamac install weektodo-bin stirling-pdf-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
@@ -219,7 +219,7 @@ elif [ $DESKTOP == "2" ]
 then
     pacman -S deepin deepin-kwin deepin-terminal deepin-calculator deepin-camera deepin-album deepin-compressor deepin-draw deepin-music deepin-movie deepin-printer deepin-reader deepin-picker deepin-font-manager deepin-voice-note deepin-screen-recorder deepin-grand-search gnome-keyring lightdm lightdm-deepin-greeter xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk simple-scan shotcut audacity mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji pencil protonvpn-gui bookworm gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch bleachbit zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting --noconfirm --needed
-    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin oh-my-zsh-git --no-confirm --needed
+    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepim-greeter/" /etc/lightdm/lightdm.conf
@@ -227,14 +227,14 @@ elif [ $DESKTOP == "3" ]
 then
     pacman -S gnome-shell gnome-control-center kitty gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector extension-manager nautilus file-roller gdm xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster pencil protonvpn-gui bookworm obs-studio gparted ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla kvantum brave-bin downgrade debtap dpkg vscodium postman-bin colloid-gtk-theme-git xampp docker extension-manager --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme fastfetch bleachbit zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting --noconfirm --needed
-    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin oh-my-zsh-git --no-confirm --needed
+    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "4" ]
 then
     pacman -S plasma-desktop dolphin dolphin-plugins ark kitty gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute ufw spectacle ktorrent merkuro skanlite kdenlive audacity vlc mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-ubuntu-font-family noto-fonts noto-fonts-emoji pencil protonvpn-gui bookworm obs-studio partitionmanager ttf-dejavu ttf-hanazono gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin ttf-ms-fonts bibata-cursor-theme bleachbit zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting --noconfirm --needed
-    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin oh-my-zsh-git --no-confirm --needed
+    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-managertchy op-ed El-Naggar oconfirm fastfetch --needed
     systemctl enable sddm 
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
