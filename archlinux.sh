@@ -224,7 +224,7 @@ then
     pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable lightdm
-    sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepim-greeter/" /etc/lightdm/lightdm.conf
+    sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepin-greeter/" /etc/lightdm/lightdm.conf
 elif [ $DESKTOP == "3" ]
 then
     pacman -S gnome-shell gnome-control-center kitty gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector extension-manager nautilus file-roller gdm xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla kvantum brave-bin downgrade debtap dpkg vscodium postman-bin dracula-gtk-theme-git colloid-gtk-theme-git xampp docker extension-manager --noconfirm --needed
