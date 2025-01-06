@@ -12,13 +12,13 @@ echo "================================================================="
 echo "==                     Partition The Drive                     =="
 echo "================================================================="
 echo ""
-# Display available disks for the user to choose
+#Display available disks for the user to choose
 echo "Available Disks: "
 lsblk -d -o NAME,SIZE
 echo "="
 echo "Enter The Disk To Use ( Example: /dev/sda or /dev/nvme0n1 ) :"
 read DISK
-# Manual partitioning
+#Manual partitioning
 echo "Manual Partitioning..."
 cfdisk "$DISK"
 echo "="
@@ -211,7 +211,7 @@ if [ $DESKTOP == "1" ]
 then
     pacman -S cinnamon nemo nemo-fileroller kitty gnome-themes-extra gnome-keyring system-config-printer lightdm lightdm-slick-greeter xdg-user-dirs xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk gnome-system-monitor gnome-screenshot transmission-gtk qalculate gnome-calendar simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla kvantum mintlocale lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib dracula-gtk-theme-git colloid-gtk-theme-git plank xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme fastfetch bleachbit 
-#pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search starship --noconfirm --needed
+   "pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed"
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
     pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
@@ -221,7 +221,7 @@ elif [ $DESKTOP == "2" ]
 then
     pacman -S deepin deepin-kwin deepin-terminal deepin-calculator deepin-camera deepin-album deepin-compressor deepin-draw deepin-music deepin-movie deepin-printer deepin-reader deepin-picker deepin-font-manager deepin-voice-note deepin-screen-recorder deepin-grand-search gnome-keyring lightdm lightdm-deepin-greeter xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk simple-scan shotcut audacity mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme fastfetch bleachbit 
-#pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search starship --noconfirm --needed
+   "pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed"
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
     pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
@@ -231,7 +231,7 @@ elif [ $DESKTOP == "3" ]
 then
     pacman -S gnome-shell gnome-control-center kitty gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector extension-manager nautilus file-roller gdm xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor gnome-screenshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla kvantum brave-bin downgrade debtap dpkg vscodium postman-bin dracula-gtk-theme-git colloid-gtk-theme-git xampp docker extension-manager --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme fastfetch bleachbit 
-#pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search starship --noconfirm --needed
+   "pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed"
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
     pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
@@ -240,7 +240,7 @@ elif [ $DESKTOP == "4" ]
 then
     pacman -S plasma-desktop dolphin dolphin-plugins ark kitty gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-user-dirs xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute ufw spectacle ktorrent merkuro skanlite kdenlive audacity vlc mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio partitionmanager gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme bleachbit 
-#pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search starship --noconfirm --needed
+   "pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed"
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
     pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin --no-confirm --needed
     pacman -S pacman cachyos-kernel-managertchy op-ed El-Naggar oconfirm fastfetch --needed
