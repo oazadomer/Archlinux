@@ -213,7 +213,7 @@ then
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme fastfetch bleachbit 
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search starship --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin --no-confirm --needed
+    pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin zsh-theme-powerlevel10k-git --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
@@ -223,7 +223,7 @@ then
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme fastfetch bleachbit 
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search starship --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
-    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin --no-confirm --needed
+    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin zsh-theme-powerlevel10k-git --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable lightdm
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepin-greeter/" /etc/lightdm/lightdm.conf
@@ -233,7 +233,7 @@ then
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme fastfetch bleachbit 
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search starship --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
-    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin --no-confirm --needed
+    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin zsh-theme-powerlevel10k-git --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "4" ]
@@ -242,7 +242,7 @@ then
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme bleachbit 
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search starship --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
-    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin --no-confirm --needed
+    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin zsh-theme-powerlevel10k-git --no-confirm --needed
     pacman -S pacman cachyos-kernel-managertchy op-ed El-Naggar oconfirm fastfetch --needed
     systemctl enable sddm 
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
