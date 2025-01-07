@@ -160,7 +160,7 @@ EOF
 echo "================================================================="
 echo "==                  Enable Network Service                     =="
 echo "================================================================="
-systemctl enable NetworkManager sshd fstrim.timer inotify-tools
+systemctl enable NetworkManager sshd fstrim.timer grub-btrfsd
 
 echo "================================================================="
 echo "==                     Installing Grub                         =="
