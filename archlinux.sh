@@ -161,6 +161,7 @@ echo "================================================================="
 echo "==                  Enable Network Service                     =="
 echo "================================================================="
 systemctl enable NetworkManager sshd fstrim.timer grub-btrfsd
+sed -i "s/^#ExecStart=/usr/bin/grub-btrfsd --syslog /.snapshots/ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto/" systemctl edit --full grub-btrfsd
 
 echo "================================================================="
 echo "==                     Installing Grub                         =="
