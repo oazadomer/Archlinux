@@ -112,7 +112,7 @@ mkfs.btrfs -L "ROOT" "${ROOT}"
 
 mount -t btrfs "${ROOT}" /mnt
 btrfs su cr /mnt/@
-btrfs su cr /mnt/@snapshots
+btrfs su cr /mnt/@.snapshots
 umount /mnt
 mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ "${ROOT}" /mnt
 mkdir -p /mnt/{boot,.snapshots}
@@ -125,9 +125,9 @@ echo "================================================================="
 
 if [ $KERNEL == "1" ]
 then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers vim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers vim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie
 fi
 
 # fstab
@@ -240,7 +240,7 @@ then
     systemctl enable gdm
 elif [ $DESKTOP == "4" ]
 then
-    pacman -S hyprland hyprpaper hyprcursor hyprpicker hyperutils hyprwayland-scanner power-profiles-daemon wofi waybar slurp grim thunar thunar-archive-plugin file-roller wlogout kitty kitty-shell-integration kitty-terminfo polkit-gnome gnome-keyring wl-clipboard gnome-system-monitor mousepad pamixer network-manager-applet brightnessctl viewnior qalculate sddm sddm-sugar-dark xdg-utils xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-wrlr xdg-desktop-portal-hyprland transmission-gtk simple-scan kdenlive audacity jellyfin-media-player mplayer shutter-encoder-bin mediainfo cheese gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp docker starship dracula-gtk-theme-git dracula-icons-git graphite-gtk-theme sassc bibata-cursor-theme gtk-engine-murrine kvantum --noconfirm --needed
+    pacman -S hyprland hyprpaper hyprcursor hyprpicker hyperutils hyprwayland-scanner power-profiles-daemon wofi waybar slurp grim thunar thunar-archive-plugin file-roller wlogout kitty kitty-shell-integration kitty-terminfo polkit-gnome gnome-keyring wl-clipboard gnome-system-monitor mousepad pamixer network-manager-applet brightnessctl viewnior sddm sddm-sugar-dark xdg-utils xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute qt5-wayland qt6-wayland dunst xdg-desktop-portal-gtk xdg-desktop-portal-wrlr xdg-desktop-portal-hyprland gufw qalculate transmission-gtk simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo cheese gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp docker starship dracula-gtk-theme-git dracula-icons-git graphite-gtk-theme sassc bibata-cursor-theme gtk-engine-murrine kvantum --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
