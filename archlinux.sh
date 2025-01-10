@@ -63,9 +63,8 @@ echo "Please Choose Your Desktop Environment:"
 echo "1. CINNAMON"
 echo "2. DEEPIN"
 echo "3. GNOME"
-echo "4. HYPRLAND"
-echo "5. KDE"
-echo "6. No Desktop"
+echo "4. KDE"
+echo "5. No Desktop"
 read DESKTOP
 echo "="
 echo "Do You Want To Install Sound, Bluetooth, Printer Drivers?"
@@ -239,16 +238,6 @@ then
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
     systemctl enable gdm
 elif [ $DESKTOP == "4" ]
-then
-    pacman -S hyprland hyprpaper hyprcursor hyprpicker hyperutils hyprwayland-scanner waybar power-profiles-daemon nm-connection-editor wofi slurp grim thunar thunar-archive-plugin file-roller wlogout kitty kitty-shell-integration kitty-terminfo polkit-gnome gnome-keyring wl-clipboard gnome-system-monitor mousepad pamixer network-manager-applet brightnessctl viewnior sddm sddm-sugar-dark xdg-utils xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute qt5-wayland qt6-wayland dunst python-pywal python-requests xdg-desktop-portal-gtk xdg-desktop-portal-wrlr xdg-desktop-portal-hyprland gufw qalculate transmission-gtk simple-scan shotcut audacity vlc mplayer shutter-encoder-bin mediainfo cheese gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp docker starship dracula-gtk-theme-git dracula-icons-git graphite-gtk-theme sassc bibata-cursor-theme gtk-engine-murrine kvantum --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme fastfetch bleachbit --noconfirm --needed
-    pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
-    pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts --noconfirm --needed
-    pamac install thorium-browser-bin weektodo-bin stirling-pdf-bin thorium-browser-bin zsh-theme-powerlevel10k-git --no-confirm --needed
-    pacman -S pacman cachyos-kernel-managertchy op-ed El-Naggar oconfirm fastfetch --needed
-    systemctl enable sddm
-    sed -i "s/Current=/Current=sugar-dark/" /usr/lib/sddm/sddm.conf.d/default.conf
-elif [ $DESKTOP == "5" ]
 then
     pacman -S plasma-desktop dolphin dolphin-plugins ark kitty gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute ufw spectacle ktorrent merkuro skanlite kdenlive audacity vlc mplayer shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio partitionmanager gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xampp docker starship --noconfirm --needed
     pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bibata-cursor-theme bleachbit 
