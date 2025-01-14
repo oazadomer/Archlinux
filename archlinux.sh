@@ -82,11 +82,17 @@ echo "5. INTEL and NVIDIA"
 echo "6. Don't install"
 read GRAPHIC
 echo "="
+echo "Do you want to install Power Optimization Tools?"
+echo "1. Yes"
+echo "2. No"
+read POWER
+echo "="
 echo "Do You Want To Install Office?"
 echo "1. WPS-Office"
 echo "2. OnlyOffice"
 echo "3. LibreOffice"
 echo "4. Don't Install"
+echo "="
 read OFFICE
 echo "="
 echo "DO You Want to Install Database?"
@@ -124,9 +130,9 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]] then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie bash-completion bash-language-server
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie bash-completion bash-language-server xf86-input-libinput libinput touchegg
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie bash-completion bash-language-server
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie bash-completion bash-language-server xf86-input-libinput libinput touchegg
 fi
 
 # fstab
@@ -160,7 +166,7 @@ EOF
 echo "================================================================="
 echo "==                  Enable Network Service                     =="
 echo "================================================================="
-systemctl enable NetworkManager sshd fstrim.timer grub-btrfsd
+systemctl enable NetworkManager sshd touchegg fstrim.timer grub-btrfsd
 sed -i "s/^#ExecStart=/usr/bin/grub-btrfsd --syslog /.snapshots/ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto/" systemctl edit --full grub-btrfsd
 
 echo "================================================================="
@@ -259,10 +265,10 @@ echo "================================================================="
 echo "=                  Sound, Bluetooth, Printer Drivers            ="
 echo "================================================================="
 if [[ $SOUNDBLUETOOTHPRINTER == "1" ]] then
-    pacman -S bluez bluez-utils cups touchegg pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire gst-plugins-good libpipewire pavucontrol xf86-input-libinput libinput bash-completion --noconfirm --needed
-    systemctl enable bluetooth cups touchegg
+    pacman -S bluez bluez-utils cups pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire gst-plugins-good libpipewire pavucontrol --noconfirm --needed
+    systemctl enable bluetooth cups
 else
-    "Bluetooth & Printer Drivers Will Not be Installed"
+    "Sound, Bluetooth, Printer Drivers Will Not be Installed"
 fi
 
 echo "================================================================="
@@ -291,6 +297,17 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]] then
 else
     "Graphic Card Will Not be Installed"
 fi
+
+echo "================================================================="
+echo "=                  Power Optimization Tools                     ="
+echo "================================================================="
+if [[ $POWER == "1" ]] then
+    pamac install app-epp
+    pacman -S auto-cpufreq
+    systemctl enable --now auto-cpufreq
+else
+    "Power Optimization Tools Will be Not Installed"
+if
 
 echo "================================================================="
 echo "=                       OFFICE INSTALLATION                     ="
