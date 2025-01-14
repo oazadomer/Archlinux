@@ -283,17 +283,17 @@ elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "1" ]] then
 elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-intel mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils  envycontrol --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils  --noconfirm --needed
 elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils envycontrol --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils envycontrol --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils envycontrol --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils envycontrol --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils envycontrol --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
 else
     "Graphic Card Will Not be Installed"
 fi
@@ -303,7 +303,7 @@ echo "=                  Power Optimization Tools                     ="
 echo "================================================================="
 if [[ $POWER == "1" ]] then
     pamac install app-epp
-    pacman -S auto-cpufreq
+    pacman -S auto-cpufreq envycontrol
     systemctl enable --now auto-cpufreq
 else
     "Power Optimization Tools Will be Not Installed"
