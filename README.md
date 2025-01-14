@@ -8,3 +8,9 @@ Archlinux Installation Script
 3- Run the script by typing: sh archlinux.sh
 
 4- Partition your Drive to two EFI and ROOT
+
+5- How to use Envycontrol:
+glxinfo | grep "renderer"
+sudo envycontrol --switch nvidia
+sudo envycontrol --switch integrated
+sudo envycontrol --switch hybrid
