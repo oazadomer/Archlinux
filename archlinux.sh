@@ -174,6 +174,7 @@ echo "==                     Installing Grub                         =="
 echo "================================================================="
 
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
+sed -i 's/GRUB_TIMEOUT=/GRUB_TIMEOUT=0/' etc/default/grub
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
 sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
