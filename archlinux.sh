@@ -82,7 +82,7 @@ echo "5. INTEL and NVIDIA"
 echo "6. Don't install"
 read GRAPHIC
 echo "="
-echo "Do you want to install Power Optimization Tools?"
+echo "Do You Want to Install Power Optimization Tools?"
 echo "1. Yes"
 echo "2. No"
 read POWER
