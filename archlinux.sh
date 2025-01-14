@@ -187,7 +187,6 @@ pacman-key --lsign-key 3056513887B78AEB
 pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
 sed -i "s/^#Color/Color/" /etc/pacman.conf
-sed -i "/Color/a ILoveCandy" /etc/pacman.conf
 sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
@@ -288,12 +287,21 @@ elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    sed -i "/MODULES=/MODULES=(btrfs amdgpu nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    sed -i "/MODULES=/MODULES=(btrfs amdgpu nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    sed -i "/MODULES=/MODULES=(btrfs i915 nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    sed -i "/MODULES=/MODULES=(btrfs i915 nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
+    mkinitcpio -P
 else
     "Graphic Card Will Not be Installed"
 fi
