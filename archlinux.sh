@@ -12,13 +12,11 @@ echo "================================================================="
 echo "==                     Partition The Drive                     =="
 echo "================================================================="
 echo ""
-# Display available disks for the user to choose
 echo "Available Disks: "
 lsblk -d -o NAME,SIZE
 echo "="
 echo "Enter The Disk To Use ( Example: /dev/sda or /dev/nvme0n1 ) :"
 read DISK
-# Manual partitioning
 echo "Manual Partitioning..."
 cfdisk "$DISK"
 echo "="
@@ -112,7 +110,7 @@ echo "Do You Want to Install Plymouth?"
 echo "y"
 echo "n"
 read PLYMOUTH
-
+echo "="
 
 echo "================================================================="
 echo "==                      Format And Mount                       =="
@@ -140,7 +138,6 @@ else
     pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget curl reflector rsync networkmanager wireless_tools mtools net-tools dosfstools openssh cronie bash-completion bash-language-server xf86-input-libinput libinput touchegg
 fi
 
-# fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
 cat <<REALEND > /mnt/next.sh
@@ -172,7 +169,7 @@ echo "================================================================="
 echo "==                  Enable Network Service                     =="
 echo "================================================================="
 systemctl enable NetworkManager sshd touchegg fstrim.timer grub-btrfsd
-sed -i "s/^#ExecStart=/usr/bin/grub-btrfsd --syslog /.snapshots/ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto/" systemctl edit --full grub-btrfsd
+sed -i 's/^#ExecStart=/ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto/' systemctl edit --full grub-btrfsd
 
 echo "================================================================="
 echo "==                     Installing Grub                         =="
@@ -201,7 +198,7 @@ echo -e "\n[cachyos-core-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >
 echo -e "\n[cachyos-extra-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-pacman -Syu pamac-aur --noconfirm --needed
+pacman -Sy pamac-aur --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm --needed
@@ -319,7 +316,7 @@ echo "================================================================="
 echo "=                  Power Optimization Tools                     ="
 echo "================================================================="
 if [[ $POWER == "y" ]] then
-    pamac install app-epp
+    pamac install auto-epp
     pacman -S auto-cpufreq envycontrol
     systemctl enable --now auto-cpufreq
 else
