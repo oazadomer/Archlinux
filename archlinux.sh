@@ -69,8 +69,8 @@ echo "6. No Desktop"
 read DESKTOP
 echo "="
 echo "Do You Want To Install Sound, Bluetooth, Printer Drivers?"
-echo "1. Yes"
-echo "2. No"
+echo "y"
+echo "n"
 read SOUNDBLUETOOTHPRINTER
 echo "="
 echo "Please Choose Your Graphic Card:"
@@ -83,8 +83,8 @@ echo "6. Don't install"
 read GRAPHIC
 echo "="
 echo "Do You Want to Install Power Optimization Tools?"
-echo "1. Yes"
-echo "2. No"
+echo "y"
+echo "n"
 read POWER
 echo "="
 echo "Do You Want To Install Office?"
@@ -96,8 +96,9 @@ echo "="
 read OFFICE
 echo "="
 echo "DO You Want to Install Database?"
-echo "1. Yes postgresql, mysql, sqlite, mssql"
-echo "2. No"
+echo "postgresql, mysql, sqlite, mssql"
+echo "y"
+echo "n"
 read DATABASE
 echo "="
 echo "Will you Gaming?"
@@ -107,6 +108,10 @@ echo "3. Yes with NVIDIA GPU"
 echo "4. No"
 read GAMING
 echo "="
+echo "Do You Want to Install Plymouth?"
+echo "y"
+echo "n"
+read PLYMOUTH
 
 
 echo "================================================================="
@@ -175,7 +180,6 @@ echo "================================================================="
 
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 sed -i 's/GRUB_TIMEOUT=/GRUB_TIMEOUT=0/' etc/default/grub
-sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
 sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -216,7 +220,7 @@ echo "=                     DESKTOP ENVIRONMENT                       ="
 echo "================================================================="
 if [[ $DESKTOP == "1" ]] then
     pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo starship ptop yazi gnome-themes-extra gnome-keyring lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk blueman numlockx exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk flameshot transmission-gtk qalculate gnome-calendar simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla kvantum mintlocale lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib papirus-folders-nordic papirus-icon-theme papirus-folders dracula-gtk-theme-git dracula-icons-git catppuccin-gtk-theme-mocha colloid-gtk-theme-git bibata-cursor-theme kvantum plank xampp docker --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
+    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome --noconfirm --needed
     pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin pick-colour-picker --no-confirm --needed
@@ -225,7 +229,7 @@ if [[ $DESKTOP == "1" ]] then
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [[ $DESKTOP == "2" ]] then
     pacman -S deepin deepin-kwin kitty kitty-shell-integration kitty-terminfo starship ptop yazi deepin-camera deepin-compressor vlc deepin-printer deepin-voice-note deepin-screen-recorder deepin-grand-search flameshot qalculate gnome-keyring lightdm lightdm-deepin-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk simple-scan shotcut audacity mplayer video-downloader shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib papirus-folders-nordic papirus-icon-theme papirus-folders dracula-gtk-theme-git dracula-icons-git colloid-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum xampp docker --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
+    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
     pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin pick-colour-picker --no-confirm --needed
@@ -234,7 +238,7 @@ elif [[ $DESKTOP == "2" ]] then
     sed -i "s/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepin-greeter/" /etc/lightdm/lightdm.conf
 elif [[ $DESKTOP == "3" ]] then
     pacman -S gnome-shell gnome-control-center kitty kitty-shell-integration kitty-terminfo starship ptop yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector extension-manager nautilus file-roller gdm xdg-utils xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts gnome-system-monitor flameshot transmission-gtk gnome-calculator gnome-calendar gnome-clocks simple-scan shotcut audacity vlc mplayer video-downloader video-downloader shutter-encoder-bin mediainfo eog cheese gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla kvantum brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib papirus-folders-nordic papirus-icon-theme papirus-folders dracula-gtk-theme-git dracula-icons-git colloid-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum xampp docker extension-manager --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
+    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
     pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin pick-colour-picker --no-confirm --needed
@@ -242,7 +246,7 @@ elif [[ $DESKTOP == "3" ]] then
     systemctl enable gdm
 elif [[ $DESKTOP == "4" ]] then
     pacman -S hyprland hyprpaper hyprcursor hyprpicker hyprshot hyperutils hyprlock hypridle hyprwayland-scanner waybar swww cliphist grim grimblast slurp nwg-look waypaper-git power-profiles-daemon nm-connection-editor wofi dolphin dolphin-plugins ark wlogout kitty kitty-shell-integration kitty-terminfo starship ptop yazi stow polkit-kde-agent mousepad pamixer network-manager-applet brightnessctl flameshot viewnior sddm sddm-sugar-dark xdg-utils xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute qt5-wayland qt6-wayland dunst python-pywal python-requests xdg-desktop-portal-gtk xdg-desktop-portal-wrlr xdg-desktop-portal-hyprland gufw qalculate transmission-gtk simple-scan kdenlive audacity vlc mplayer video-downloader shutter-encoder-bin mediainfo cheese gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib xampp docker papirus-folders-nordic papirus-icon-theme papirus-folders dracula-gtk-theme-git dracula-icons-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
+    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
     pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin pick-colour-picker --no-confirm --needed
@@ -251,7 +255,7 @@ elif [[ $DESKTOP == "4" ]] then
     sed -i "s/Current=/Current=sugar-dark/" /usr/lib/sddm/sddm.conf.d/default.conf
 elif [[ $DESKTOP == "5" ]] then
     pacman -S plasma-desktop dolphin dolphin-plugins ark kitty kitty-shell-integration kitty-terminfo starship ptop yazi gthumb plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter flameshot sddm sddm-kcm xdg-utils xdg-user-dirs xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate plasma-systemmonitor xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute ufw spectacle ktorrent merkuro skanlite kdenlive audacity vlc mplayer video-downloader shutter-encoder-bin mediainfo gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio partitionmanager gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib xampp docker --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap plymouth ventoy-bin crow-translate appimagelauncher megasync-bin bleachbit 
+    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin bleachbit 
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
     pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin pick-colour-picker --no-confirm --needed
@@ -265,7 +269,7 @@ fi
 echo "================================================================="
 echo "=                  Sound, Bluetooth, Printer Drivers            ="
 echo "================================================================="
-if [[ $SOUNDBLUETOOTHPRINTER == "1" ]] then
+if [[ $SOUNDBLUETOOTHPRINTER == "y" ]] then
     pacman -S bluez bluez-utils cups pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire gst-plugins-good libpipewire pavucontrol --noconfirm --needed
     systemctl enable bluetooth cups
 else
@@ -291,26 +295,22 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i "/MODULES=/MODULES=(btrfs amdgpu nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
-    grub-mkconfig -o /boot/grub/grub.cfg
-    mkinitcpio -P
+    grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i "/MODULES=/MODULES=(btrfs amdgpu nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
-    grub-mkconfig -o /boot/grub/grub.cfg
-    mkinitcpio -P
+    grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i "/MODULES=/MODULES=(btrfs i915 nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
-    grub-mkconfig -o /boot/grub/grub.cfg
-    mkinitcpio -P
+    grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i "/MODULES=/MODULES=(btrfs i915 nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
-    grub-mkconfig -o /boot/grub/grub.cfg
-    mkinitcpio -P
+    grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 else
     "Graphic Card Will Not be Installed"
 fi
@@ -318,7 +318,7 @@ fi
 echo "================================================================="
 echo "=                  Power Optimization Tools                     ="
 echo "================================================================="
-if [[ $POWER == "1" ]] then
+if [[ $POWER == "y" ]] then
     pamac install app-epp
     pacman -S auto-cpufreq envycontrol
     systemctl enable --now auto-cpufreq
@@ -346,7 +346,7 @@ if [[ $DATABASE == "1" ]] then
     pacman -S postgresql sqlite --noconfirm --needed
     pamac install mysql mssql-server dbgate-bin --no-confirm --needed
 else
-    "Database Will Mot ne Installed"
+    "Database Will Mot be Installed"
 fi
 
 echo "================================================================="
@@ -368,8 +368,19 @@ else
     "Gaming Apps and Drivers Will Not be Installed"
 fi
 
-REALEND
+echo "================================================================="
+echo "==           Plymouth Installation and Congratulations         =="
+echo "================================================================="
+if [[ $PLYMOUTH == "y" ]] then
+    pacman -S plymouth --noconfirm --needed
+    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    sed -i 's/HOOKS=/HOOKS="base systemd plymouth autodetect keyboard sd-vconsole modconf block filesystems fsck"/' /etc/mkinitcpio.conf
+    grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+else
+    "Plymouth Will Mot be Installed"
+fi
 
+REALEND
 
 arch-chroot /mnt sh next.sh
 
