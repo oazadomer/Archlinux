@@ -258,7 +258,7 @@ elif [[ $DESKTOP == "5" ]] then
     pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin pick-colour-picker --no-confirm --needed
+    pamac install hyprpanel weektodo-bin stirling-pdf-bin thorium-browser-bin pick-colour-picker --no-confirm --needed
     pacman -S pacman cachyos-kernel-managertchy op-ed El-Naggar oconfirm fastfetch --needed
     systemctl enable sddm
     sed -i "s/Current=/Current=sugar-dark/" /usr/lib/sddm/sddm.conf.d/default.conf
