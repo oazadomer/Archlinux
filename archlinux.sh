@@ -228,14 +228,14 @@ if [[ $DESKTOP == "1" ]] then
     sed -i "s/^#greeter-session=/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
     elif [[ $DESKTOP == "2" ]] then
     sed -i "s/^#IgnorePkg=/IgnorePkg=cutefish-terminal/" /etc/pacman.conf
-    pacman -Sy cutefish ark kitty kitty-shell-integration kitty-terminfo starship ptop yazi polkit-kde-agent lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk simple-scan shotcut audacity vlc mplayer cheese flameshot gthumb gimp video-downloader shutter-encoder-bin mediainfo xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib papirus-folders-nordic papirus-folders dracula-gtk-theme-git colloid-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum xampp docker --noconfirm --needed
+    pacman -Sy cutefish ark kitty kitty-shell-integration kitty-terminfo starship ptop yazi polkit-kde-agent sddm xdg-utils xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute qt5-wayland qt6-wayland gufw xdg-desktop-portal-gtk transmission-gtk simple-scan kdenlive audacity vlc mplayer cheese flameshot gthumb gimp video-downloader shutter-encoder-bin mediainfo xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
     pamac install weektodo-bin stirling-pdf-bin thorium-browser-bin pick-colour-picker --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
-    systemctl enable lightdm
-    sed -i "s/^#greeter-session=/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
+    systemctl enable sddm
+    sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
 elif [[ $DESKTOP == "3" ]] then
     pacman -S deepin deepin-kwin kitty kitty-shell-integration kitty-terminfo starship ptop yazi deepin-camera deepin-compressor deepin-printer deepin-voice-note deepin-screen-recorder deepin-music deepin-video deepin-calculator polkit-kde-agent lightdm lightdm-deepin-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk simple-scan shotcut audacity mplayer flameshot gthumb gimp video-downloader shutter-encoder-bin mediainfo xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs ffmpegthumbs ffmpeg openh264 php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib cutefish-icons papirus-folders-nordic papirus-folders dracula-gtk-theme-git colloid-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
@@ -289,34 +289,34 @@ echo "================================================================="
 echo "=                    GRAPGIC CARD INSTALLATION                  ="
 echo "================================================================="
 if [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-amdgpu mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-amdgpu mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-intel mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-intel mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-intel mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-intel mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils  --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils  --noconfirm --needed
 elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i "/MODULES=/MODULES=(btrfs amdgpu nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i "/MODULES=/MODULES=(btrfs amdgpu nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i "/MODULES=/MODULES=(btrfs i915 nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
+    pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i "/MODULES=/MODULES=(btrfs i915 nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
