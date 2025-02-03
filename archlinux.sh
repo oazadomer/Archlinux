@@ -125,8 +125,9 @@ btrfs su cr /mnt/@
 btrfs su cr /mnt/@.snapshots
 umount /mnt
 mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@ "${ROOT}" /mnt
-mkdir -p /mnt/{boot,.snapshots}
+mkdir /mnt/.snapshots
 mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
+mkdir /mnt/boot
 mount -t fat "${EFI}" /mnt/boot
 
 echo "================================================================="
