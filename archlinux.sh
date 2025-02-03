@@ -51,7 +51,7 @@ echo "Please choose your CPU"
 echo "1. AMD"
 echo "2. Intel"
 read CPU
-echo"="
+echo "="
 echo "Please Chosse The Kernel:"
 echo "1. Linux"
 echo "2. Linux-lts"
