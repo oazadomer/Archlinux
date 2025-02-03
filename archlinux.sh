@@ -5,7 +5,7 @@ echo "==        Welcome To The Arch Linux Installation Script        =="
 echo "================================================================="
 
 timedatectl set-ntp true
-reflector --sort rate --latest 20 --protocol https --save /etc/pacman.d/mirrorlist
+reflector --sort rate --latest 6 --protocol https --save /etc/pacman.d/mirrorlist
 
 echo ""
 echo "================================================================="
