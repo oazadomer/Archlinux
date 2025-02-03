@@ -117,17 +117,17 @@ echo "================================================================="
 echo "==                      Format And Mount                       =="
 echo "================================================================="
 
-mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
+mkfs.vfat -F32 -n "EFISYSTEM" "${EFI}"
 mkfs.btrfs -f -L "ROOT" "${ROOT}"
 
 mount -t btrfs "${ROOT}" /mnt
 btrfs su cr /mnt/@
 btrfs su cr /mnt/@.snapshots
 umount /mnt
-mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ "${ROOT}" /mnt
+mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@ "${ROOT}" /mnt
 mkdir -p /mnt/{boot,.snapshots}
-mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
-mount -t fat "${EFI}" /mnt/boot
+mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
+mount -t vfat "${EFI}" /mnt/boot
 
 echo "================================================================="
 echo "==                    INSTALLING Arch Linux                    =="
