@@ -117,7 +117,7 @@ echo "================================================================="
 echo "==                      Format And Mount                       =="
 echo "================================================================="
 
-mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
+mkfs.vfat -F32 -n "EFISYSTEM" "${EFI}"
 mkfs.btrfs -L "ROOT" "${ROOT}"
 
 mount -t btrfs "${ROOT}" /mnt
@@ -126,8 +126,8 @@ btrfs su cr /mnt/@.snapshots
 umount /mnt
 mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@ "${ROOT}" /mnt
 mkdir -p /mnt/{boot,.snapshots}
-mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@snapshots "${ROOT}" /mnt/.snapshots
-mount -t fat "${EFI}" /mnt/boot
+mount -o noatime,ssd,compress=zstd,space_cache=v2,discord=async,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
+mount -t vfat "${EFI}" /mnt/boot
 
 echo "================================================================="
 echo "==                    INSTALLING Arch Linux                    =="
@@ -169,6 +169,7 @@ EOF
 echo "================================================================="
 echo "==                  Enable Network Service                     =="
 echo "================================================================="
+
 systemctl enable NetworkManager sshd touchegg fstrim.timer grub-btrfsd
 sed -i 's/^#ExecStart=/ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto/' systemctl edit --full grub-btrfsd
 
@@ -207,6 +208,7 @@ pamac update all --no-confirm --needed
 echo "================================================================="
 echo "=                             CPU                               ="
 echo "================================================================="
+
 if [[ $CPU == "1" ]] then
     pacman -S amd-ucode
 else
@@ -216,6 +218,7 @@ if
 echo "================================================================="
 echo "=                     DESKTOP ENVIRONMENT                       ="
 echo "================================================================="
+
 if [[ $DESKTOP == "1" ]] then
     pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo starship ptop yazi gnome-themes-extra gnome-keyring blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk numlockx exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts mailspring-bin simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin cheese flameshot gthumb gimp xournalpp openvpn networkmanager-openvpn pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs nfs-utils ntfs-3g unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha colloid-gtk-theme-git bibata-cursor-theme kvantum plank xampp docker --noconfirm --needed
     pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
@@ -277,6 +280,7 @@ fi
 echo "================================================================="
 echo "=                  Sound, Bluetooth, Printer Drivers            ="
 echo "================================================================="
+
 if [[ $SOUNDBLUETOOTHPRINTER == "y" ]] then
     pacman -S bluez bluez-utils cups pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire libpipewire gstreamer gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpegthumbs ffmpeg openh264 --noconfirm --needed
     systemctl enable bluetooth cups
@@ -287,6 +291,7 @@ fi
 echo "================================================================="
 echo "=                    GRAPGIC CARD INSTALLATION                  ="
 echo "================================================================="
+
 if [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland xf86-video-amdgpu mesa-utils --noconfirm --needed
 elif [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "2" ]] then
@@ -326,6 +331,7 @@ fi
 echo "================================================================="
 echo "=                  Power Optimization Tools                     ="
 echo "================================================================="
+
 if [[ $POWER == "y" ]] then
     pamac install auto-epp
     pacman -S auto-cpufreq envycontrol
@@ -337,6 +343,7 @@ if
 echo "================================================================="
 echo "=                       OFFICE INSTALLATION                     ="
 echo "================================================================="
+
 if [[ $OFFICE == "1" ]] then
     pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
 elif [[ $OFFICE == "2" ]] then
@@ -350,6 +357,7 @@ fi
 echo "================================================================="
 echo "=                            DATABASE                          ="
 echo "================================================================="
+
 if [[ $DATABASE == "1" ]] then
     pacman -S postgresql sqlite --noconfirm --needed
     pamac install mysql mssql-server dbgate-bin --no-confirm --needed
@@ -360,6 +368,7 @@ fi
 echo "================================================================="
 echo "=                       GAMING INSTALLATION                     ="
 echo "================================================================="
+
 if [[ $GAMING == "1" ]] then
     sudo pacman -S linux-cachyos linux-cachyos-headers mesa-utils --noconfirm --needed
     sudo pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal proton-cachyos ttf-liberation wine-cachyos wine-gecko wine-mono winetricks vulkan-tools --noconfirm --needed
@@ -379,6 +388,7 @@ fi
 echo "================================================================="
 echo "==           Plymouth Installation and Congratulations         =="
 echo "================================================================="
+
 if [[ $PLYMOUTH == "y" ]] then
     pacman -S plymouth --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
@@ -396,5 +406,6 @@ arch-chroot /mnt sh next.sh
 echo "================================================================="
 echo "==       Installation Complete. Rebooting in 10 Seconds...     =="
 echo "================================================================="
+
 sleep 10
 reboot
