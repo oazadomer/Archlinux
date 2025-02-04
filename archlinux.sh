@@ -26,7 +26,7 @@ echo "="
 echo "Please Enter Root Paritition: ( Example: /dev/sda2 or /dev/nvme0n1p2 ):"
 read ROOT
 echo "="
-echo " Please choose File System:"
+echo "Please Choose File System:"
 echo "1. Ext4"
 echo "2. Btrfs"
 read FILESYSTEM
