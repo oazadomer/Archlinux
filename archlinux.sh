@@ -119,7 +119,7 @@ read PLYMOUTH
 echo "="
 
 echo "================================================================="
-echo "==                      Format And Mount                       =="
+echo "==            Formating And Mounting The Filesystem            =="
 echo "================================================================="
 
 if [[ $FILESYSTEM == "1" ]] then
@@ -189,7 +189,7 @@ echo "================================================================="
 echo "==                     Installing Grub                         =="
 echo "================================================================="
 
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 sed -i 's/GRUB_TIMEOUT=/GRUB_TIMEOUT=0/' etc/default/grub
 sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
