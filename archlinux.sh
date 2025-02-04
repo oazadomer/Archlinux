@@ -118,16 +118,22 @@ echo "==                      Format And Mount                       =="
 echo "================================================================="
 
 mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
-mkfs.btrfs -f -L "ROOT" "${ROOT}"
+mkfs.ext4 -L "ROOT" "${ROOT}"
+mount -t ext4 "${ROOT}" /mnt
+mkdir /mnt/boot
+mount -t fat "${EFI}" /mnt/boot/
 
-mount -t btrfs "${ROOT}" /mnt
-btrfs su cr /mnt/@
-btrfs su cr /mnt/@.snapshots
-umount /mnt
-mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@ "${ROOT}" /mnt
-mkdir -p /mnt/{boot,.snapshots}
-mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
-mount -t fat "${EFI}" /mnt/boot
+# mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
+# mkfs.btrfs -f -L "ROOT" "${ROOT}"
+
+# mount -t btrfs "${ROOT}" /mnt
+# btrfs su cr /mnt/@
+# btrfs su cr /mnt/@.snapshots
+# umount /mnt
+# mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@ "${ROOT}" /mnt
+# mkdir -p /mnt/{boot,.snapshots}
+# mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
+# mount -t fat "${EFI}" /mnt/boot
 
 echo "================================================================="
 echo "==                    INSTALLING Arch Linux                    =="
