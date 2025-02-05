@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 echo ""
 echo "================================================================="
 echo "==        Welcome To The Arch Linux Installation Script        =="
