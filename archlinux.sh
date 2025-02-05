@@ -27,8 +27,8 @@ echo "Please Enter Root Paritition: ( Example: /dev/sda2 or /dev/nvme0n1p2 ):"
 read ROOT
 echo "="
 echo "Please Choose File System:"
-echo "1. Ext4"
-echo "2. Btrfs"
+echo "1. Btrfs"
+echo "2. Ext4"
 read FILESYSTEM
 echo "="
 echo "Please Enter Your hostname:"
@@ -123,13 +123,6 @@ echo "==            Formating And Mounting The Filesystem            =="
 echo "================================================================="
 
 if [[ $FILESYSTEM == "1" ]] then
-   mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
-   mkfs.ext4 -L "ROOT" "${ROOT}"
-   mount -t ext4 "${ROOT}" /mnt
-   mkdir /mnt/boot
-   mount -t fat "${EFI}" /mnt/boot/
-else
-   mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
    mkfs.btrfs -f -L "ROOT" "${ROOT}"
    mount -t btrfs "${ROOT}" /mnt
    btrfs su cr /mnt/@
@@ -139,6 +132,13 @@ else
    mkdir -p /mnt/{boot,.snapshots}
    mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
    mount -t fat "${EFI}" /mnt/boot
+else
+   mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
+   mkfs.ext4 -L "ROOT" "${ROOT}"
+   mount -t ext4 "${ROOT}" /mnt
+   mkdir /mnt/boot
+   mount -t fat "${EFI}" /mnt/boot
+   mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
 fi
 
 echo "================================================================="
@@ -146,9 +146,9 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]] then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers vim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget curl reflector rsync networkmanager networkmanager-openvpn wpa_supplicant usb_modeswitch nss-mdns modemmanger iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smarmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils ntfs-3g ntp openssh cronie bash-completion bash-language-server pacman-contrib pkgfile rebuild-detector mousetweaks ptop
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers vim grub efibootmgr inotify-tools git wget curl reflector rsync networkmanager networkmanager-openvpn wpa_supplicant usb_modeswitch nss-mdns modemmanger iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smarmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils ntfs-3g ntp openssh cronie bash-completion bash-language-server pacman-contrib pkgfile rebuild-detector mousetweaks ptop
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers vim grub efibootmgr grub-btrfs btrfs-progs inotify-tools git wget curl reflector rsync networkmanager networkmanager-openvpn wpa_supplicant usb_modeswitch nss-mdns modemmanger iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smarmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils ntfs-3g ntp openssh cronie bash-completion bash-language-server pacman-contrib pkgfile rebuild-detector mousetweaks ptop
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers vim grub efibootmgr inotify-tools git wget curl reflector rsync networkmanager networkmanager-openvpn wpa_supplicant usb_modeswitch nss-mdns modemmanger iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smarmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils ntfs-3g ntp openssh cronie bash-completion bash-language-server pacman-contrib pkgfile rebuild-detector mousetweaks ptop
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -179,11 +179,10 @@ cat <<EOF > /etc/hosts
 EOF
 
 echo "================================================================="
-echo "==                  Enable Network Service                     =="
+echo "==             Enable Network Service, sshd, fstrim            =="
 echo "================================================================="
 
-systemctl enable NetworkManager sshd fstrim.timer grub-btrfsd
-sed -i 's/^#ExecStart=/ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto/' systemctl edit --full grub-btrfsd
+systemctl enable NetworkManager sshd fstrim.timer
 
 echo "================================================================="
 echo "==                     Installing Grub                         =="
@@ -218,7 +217,7 @@ sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm --needed
 
 echo "================================================================="
-echo "=                             CPU                               ="
+echo "==                            CPU                              =="
 echo "================================================================="
 
 if [[ $CPU == "1" ]] then
@@ -228,61 +227,61 @@ else
 if
 
 echo "================================================================="
-echo "=                     DESKTOP ENVIRONMENT                       ="
+echo "==                    DESKTOP ENVIRONMENT                      =="
 echo "================================================================="
 
 if [[ $DESKTOP == "1" ]] then
     pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo starship yazi gnome-themes-extra gnome-keyring blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk numlockx touchegg exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts mailspring-bin simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot flameshot gthumb gimp xournalpp pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha colloid-gtk-theme-git bibata-cursor-theme kvantum plank xampp docker --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
+    pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
+    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable lightdm touchegg
     sed -i "s/^#greeter-session=/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
-    elif [[ $DESKTOP == "2" ]] then
+elif [[ $DESKTOP == "2" ]] then
     sed -i "s/^#IgnorePkg=/IgnorePkg=cutefish-terminal/" /etc/pacman.conf
     pacman -Sy cutefish fishui cutefish-qt-plugins libcutefish ark polkit-kde-agent kwin kitty kitty-shell-integration kitty-terminfo starship yazi sddm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk gnome-online-accounts mailspring-bin transmission-gtk simple-scan kdenlive audacity vlc mplayer video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp pencil protonvpn-gui bookworm gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib gtk-engine-murrine orchis-theme candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum xampp docker --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
+    pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
+    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable sddm touchegg
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
 elif [[ $DESKTOP == "3" ]] then
     pacman -S deepin deepin-kwin kitty kitty-shell-integration kitty-terminfo starship yazi deepin-camera deepin-compressor deepin-printer deepin-voice-note deepin-screen-recorder deepin-music deepin-video deepin-calculator polkit-kde-agent lightdm lightdm-deepin-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk gnome-online-accounts mailspring-bin transmission-gtk simple-scan shotcut audacity mplayer video-downloader shutter-encoder-bin flameshot gthumb gimp xournalpp pencil protonvpn-gui bookworm gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum xampp docker --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
+    pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
+    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable lightdm touchegg
     sed -i "s/^#greeter-session=/greeter-session=lightdm-deepin-greeter/" /etc/lightdm/lightdm.conf
 elif [[ $DESKTOP == "4" ]] then
-    pacman -S gnome-shell gnome-control-center kitty kitty-shell-integration kitty-terminfo starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector extension-manager nautilus file-roller gdm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts mailspring-bin transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot flameshot gthumb gimp xournalpp pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git colloid-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum xampp docker extension-manager --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
+    pacman -S gnome-shell gnome-control-center kitty kitty-shell-integration kitty-terminfo starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-browser-connector extension-manager nautilus file-roller gdm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-online-accounts mailspring-bin transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot flameshot eog gimp xournalpp pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git colloid-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum xampp docker extension-manager --noconfirm --needed
+    pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-    pamac install mailspring-bin weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     pacman -S pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
+    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable gdm touchegg
 elif [[ $DESKTOP == "5" ]] then
     pacman -S hyprland hyprpaper hyprcursor hyprpicker hyprshot hyprutils hyprlock hypridle hyprwayland-scanner hyprpolkitagent hyprland-bash-completion waybar waypaper-git swww swaync grim grimblast slurp wlogout nwg-look cliphist playerctl wofi dolphin dolphin-plugins ark kitty kitty-shell-integration kitty-terminfo brightnessctl power-profiles-daemon nm-connection-editor starship yazi stow mousepad pamixer network-manager-applet viewnior sddm sddm-sugar-dark xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg exfatprogs f2fs-tools traceroute dunst python-pywal python-requests xdg-desktop-portal-gtk xdg-desktop-portal-wrlr xdg-desktop-portal-hyprland gufw qalculate gnome-online-accounts mailspring-bin transmission-gtk simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin kamoso gimp xournalpp pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib xampp docker gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
+    pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin fastfetch bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-    pamac install hyprpanel weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     pacman -S pacman cachyos-kernel-managertchy op-ed El-Naggar oconfirm fastfetch --needed
+    pamac install hyprpanel weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable sddm touchegg
     sed -i "s/Current=/Current=sugar-dark/" /usr/lib/sddm/sddm.conf.d/default.conf
 elif [[ $DESKTOP == "6" ]] then
     pacman -S plasma-desktop dolphin dolphin-plugins ark kitty kitty-shell-integration kitty-terminfo starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde exfatprogs f2fs-tools traceroute gufw spectacle ktorrent merkuro skanlite mailspring-bin kdenlive audacity vlc mplayer video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp pencil protonvpn-gui bookworm obs-studio partitionmanager gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib xampp docker gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum --noconfirm --needed
-    pacman -S timeshift timeshift-autosnap ventoy-bin crow-translate appimagelauncher megasync-bin bleachbit 
+    pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin bleachbit 
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     pacman -S pacman cachyos-kernel-managertchy op-ed El-Naggar oconfirm fastfetch --needed
+    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable sddm touchegg
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
 else
@@ -290,7 +289,7 @@ else
 fi
 
 echo "================================================================="
-echo "=                  Sound, Bluetooth, Printer Drivers            ="
+echo "==                 Sound, Bluetooth, Printer Drivers            =="
 echo "================================================================="
 
 if [[ $SOUNDBLUETOOTHPRINTER == "y" ]] then
@@ -301,7 +300,7 @@ else
 fi
 
 echo "================================================================="
-echo "=                    GRAPGIC CARD INSTALLATION                  ="
+echo "==                   GRAPGIC CARD INSTALLATION                 =="
 echo "================================================================="
 
 if [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "1" ]] then
@@ -341,7 +340,7 @@ else
 fi
 
 echo "================================================================="
-echo "=                  Power Optimization Tools                     ="
+echo "==                 Power Optimization Tools                    =="
 echo "================================================================="
 
 if [[ $POWER == "y" ]] then
@@ -353,7 +352,7 @@ else
 if
 
 echo "================================================================="
-echo "=                       OFFICE INSTALLATION                     ="
+echo "==                      OFFICE INSTALLATION                    =="
 echo "================================================================="
 
 if [[ $OFFICE == "1" ]] then
@@ -367,7 +366,7 @@ else
 fi
 
 echo "================================================================="
-echo "=                            DATABASE                          ="
+echo "==                           DATABASE                          =="
 echo "================================================================="
 
 if [[ $DATABASE == "1" ]] then
@@ -378,7 +377,7 @@ else
 fi
 
 echo "================================================================="
-echo "=                       GAMING INSTALLATION                     ="
+echo "==                      GAMING INSTALLATION                    =="
 echo "================================================================="
 
 if [[ $GAMING == "1" ]] then
@@ -409,6 +408,19 @@ if [[ $PLYMOUTH == "y" ]] then
 else
     "Plymouth Will Mot be Installed"
 fi
+
+echo "================================================================="
+echo "==            Timeshift and Snapshot Configuration             =="               
+echo "================================================================="
+
+if [[ $FILESYSTEM == "1" ]] then
+   pacman -S grub-btrfs btrfs-progs timeshift timeshift-autosnap
+   systemctl enable grub-btrfsd
+   sed -i 's/^#ExecStart=/ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto/' systemctl edit --full grub-btrfsd
+else
+    pacman -S timeshift
+fi
+
 
 REALEND
 
