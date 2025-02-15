@@ -359,8 +359,7 @@ echo "================================================================="
 if [[ $CACHYOS == "1" ]] then
     curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
     tar xvf cachyos-repo.tar.xz && cd cachyos-repo
-    sudo ./cachyos-repo.sh --noconfirm --needed
-    pacman -Syu
+    ./cachyos-repo.sh --noconfirm --needed
 else
     "Cachyos Repo and Kernel Will Mot be Installed"
 fi
