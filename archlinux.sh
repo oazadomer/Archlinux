@@ -108,10 +108,11 @@ echo "n"
 read CACHYOS
 echo "="
 echo "Will you Gaming?"
-echo "1. Yes with AMD GPU"
-echo "2. Yes with INTEL GPU"
-echo "3. Yes with NVIDIA GPU"
-echo "4. No"
+echo "1. Yes With Cachyos Repo and Kernel"
+echo "2. Yes Without Cachyos Repo and Kernel"
+echo "3. Yes With Cachyos Repo and Kernel and Open NVIDIA"
+echo "4. Yes Without Cachyos Repo and Kernel With Nvidia Property"
+echo "5.No I Will Not"
 read GAMING
 echo "="
 echo "Do You Want to Install Plymouth?"
@@ -294,22 +295,22 @@ elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "2" ]] then
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xorg-xrander xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-    sed -i "/MODULES=/MODULES=(btrfs amdgpu nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
+    sed -i "/MODULES=/MODULES=(amdgpu nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xorg-xrander xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-    sed -i "/MODULES=/MODULES=(btrfs amdgpu nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
+    sed -i "/MODULES=/MODULES=(amdgpu nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xorg-xrander xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-    sed -i "/MODULES=/MODULES=(btrfs i915 nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
+    sed -i "/MODULES=/MODULES=(i915 nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xorg-xrander xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-intel nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="rootfstype=btrfs nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-    sed -i "/MODULES=/MODULES=(btrfs i915 nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
+    sed -i "/MODULES=/MODULES=(i915 nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 else
     "Graphic Card Will Not be Installed"
@@ -381,17 +382,20 @@ echo "================================================================="
 echo "==                      GAMING INSTALLATION                    =="
 echo "================================================================="
 
-if [[ $GAMING == "1" ]] then
-    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation proton-cachyos protontricks wine-cachyos-opt wine-gecko wine-mono winetricks vulkan-tools mesa-utils --noconfirm --needed
-    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei--noconfirm --needed
-elif [[ $GAMING == "2" ]] then
-    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation proton-cachyos protontricks wine-cachyos-opt wine-gecko wine-mono winetricks vulkan-tools mesa-utils --noconfirm --needed
-    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei--noconfirm --needed
-elif [[ $GAMING == "3" ]] then
-    pacman -S linux-cachyos linux-cachyos-headers linux-cachyos-nvidia-open nvidia-utils nvidia-settings lib32-nvidia-utils nvidia-prime opencl-nvidia libxnvctrl libxcrypt-compat mesa-utils --noconfirm --needed
-    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation proton-cachyos protontricks wine-cachyos-opt wine-gecko wine-mono winetricks vulkan-tools --noconfirm --needed
-    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei--noconfirm --needed
-else 
+if [[ $GAMING == "1" ]] && [[ $CACHYOS == "y" ]] then
+    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation proton-cachyos protontricks wine-cachyos-opt wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
+    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
+elif [[ $GAMING == "2" ]] && [[ $CACHYOS == "n" then
+    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
+    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
+elif [[ $GAMING == "3" ]] && [[ $CACHYOS == "y" ]] then
+    pacman -S linux-cachyos linux-cachyos-headers linux-cachyos-nvidia-open --noconfirm --needed
+    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation proton-cachyos protontricks wine-cachyos-opt wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
+    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
+elif [[ $GAMING == "4" ]] && [[ $CACHYOS == "n" ]] then
+    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
+    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
+else
     "Gaming Apps and Drivers Will Not be Installed"
 fi
 
