@@ -373,7 +373,7 @@ if [[ $CACHYOS == "1" ]] then
     echo -e "\n[cachyos-extra-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >> /etc/pacman.conf
     echo -e "\n[cachyos]\nInclude = /etc/pacman.d/cachyos-mirrorlist\n" >> /etc/pacman.conf
 
-    pacman -Sy pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
+    pacman -Sy linux-cachyos linux-cachyos-headers pacman cachyos-kernel-manager cachyos-settings --noconfirm --needed
 else
     "Cachyos Repo and Kernel Will Mot be Installed"
 fi
@@ -389,7 +389,7 @@ elif [[ $GAMING == "2" ]] && [[ $CACHYOS == "n" then
     pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
     pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
 elif [[ $GAMING == "3" ]] && [[ $CACHYOS == "y" ]] then
-    pacman -S linux-cachyos linux-cachyos-headers linux-cachyos-nvidia-open --noconfirm --needed
+    pacman -S linux-cachyos-nvidia-open --noconfirm --needed
     pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation proton-cachyos protontricks wine-cachyos-opt wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
     pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
 elif [[ $GAMING == "4" ]] && [[ $CACHYOS == "n" ]] then
