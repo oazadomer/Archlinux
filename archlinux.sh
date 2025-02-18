@@ -127,7 +127,7 @@ echo "==            Formating And Mounting The Filesystem            =="
 echo "================================================================="
 
 if [[ $FILESYSTEM == "1" ]] then
-   mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
+   mkfs.vfat -F 32 -n "EFISYSTEM" "${EFI}"
    mkfs.btrfs -f -L "ROOT" "${ROOT}"
    mount -t btrfs "${ROOT}" /mnt
    btrfs su cr /mnt/@
@@ -138,7 +138,7 @@ if [[ $FILESYSTEM == "1" ]] then
    mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
    mount -t fat "${EFI}" /mnt/boot
 else
-   mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
+   mkfs.vfat -F 32 -n "EFISYSTEM" "${EFI}"
    mkfs.ext4 -L "ROOT" "${ROOT}"
    mount -t ext4 "${ROOT}" /mnt
    mkdir /mnt/boot
