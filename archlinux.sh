@@ -223,7 +223,7 @@ if [[ $CPU == "1" ]] then
     pacman -S amd-ucode
 else
     pacman -S intel-ucode
-if
+fi
 
 echo "================================================================="
 echo "==                    DESKTOP ENVIRONMENT                      =="
@@ -325,7 +325,7 @@ if [[ $POWER == "y" ]] then
     systemctl enable --now auto-cpufreq
 else
     "Power Optimization Tools Will be Not Installed"
-if
+fi
 
 echo "================================================================="
 echo "==                      OFFICE INSTALLATION                    =="
@@ -433,5 +433,5 @@ echo "================================================================="
 echo "==       Installation Complete. Rebooting in 10 Seconds...     =="
 echo "================================================================="
 
-sleep 5
+sleep 10
 reboot
