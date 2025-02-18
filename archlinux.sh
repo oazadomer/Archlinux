@@ -208,7 +208,7 @@ sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-pacman -Sy pamac-aur --noconfirm --needed
+pacman -Sy libpamac-aur pamac-aur --noconfirm --needed
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm --needed
@@ -228,7 +228,7 @@ echo "==                    DESKTOP ENVIRONMENT                      =="
 echo "================================================================="
 
 if [[ $DESKTOP == "1" ]] then
-    pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo starship yazi gnome-themes-extra gnome-keyring blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk numlockx touchegg exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts mailspring-bin simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot flameshot gthumb gimp xournalpp pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha colloid-gtk-theme-git bibata-cursor-theme kvantum plank xampp docker --noconfirm --needed
+    pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo starship yazi gnome-themes-extra gnome-keyring gnome-system-monitor blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk numlockx touchegg exfatprogs f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts mailspring-bin simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot flameshot gthumb gimp xournalpp pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha colloid-gtk-theme-git bibata-cursor-theme kvantum plank xampp docker --noconfirm --needed
     pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome --noconfirm --needed
