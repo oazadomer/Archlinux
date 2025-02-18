@@ -5,6 +5,7 @@ echo "==        Welcome To The Arch Linux Installation Script        =="
 echo "================================================================="
 
 timedatectl set-ntp true
+pacman-key --init
 
 echo "================================================================="
 echo "==                     Partition The Drive                     =="
@@ -168,7 +169,7 @@ echo "LANG=$LOCALE" >> /etc/locale.conf
 echo "KEYMAP=$KEYBOARD_LAYOUT" >> /etc/vconsole.conf
 locale-gen
 
-ln -sf /usr/share/zoneinfo/"$(TIMEZONE)" /etc/localtime
+ln -sf /usr/share/zoneinfo/"${TIMEZONE}" /etc/localtime
 hwclock --systohc
 
 echo $HOSTNAME > /etc/hostname
