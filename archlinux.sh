@@ -147,9 +147,9 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]] then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers vim grub efibootmgr inotify-tools git wget curl reflector rsync networkmanager networkmanager-openvpn wpa_supplicant usb_modeswitch nss-mdns modemmanger iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smarmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils ntfs-3g ntp openssh cronie bash-completion bash-language-server pacman-contrib pkgfile rebuild-detector mousetweaks ptop
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers vim grub efibootmgr inotify-tools git wget curl reflector rsync networkmanager networkmanager-openvpn wpa_supplicant usb_modeswitch nss-mdns modemmanager iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils ntfs-3g ntp openssh cronie bash-completion bash-language-server pacman-contrib pkgfile rebuild-detector mousetweaks
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers vim grub efibootmgr inotify-tools git wget curl reflector rsync networkmanager networkmanager-openvpn wpa_supplicant usb_modeswitch nss-mdns modemmanger iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smarmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils ntfs-3g ntp openssh cronie bash-completion bash-language-server pacman-contrib pkgfile rebuild-detector mousetweaks ptop
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers vim grub efibootmgr inotify-tools git wget curl reflector rsync networkmanager networkmanager-openvpn wpa_supplicant usb_modeswitch nss-mdns modemmanager iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils ntfs-3g ntp openssh cronie bash-completion bash-language-server pacman-contrib pkgfile rebuild-detector mousetweaks
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
