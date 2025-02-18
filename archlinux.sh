@@ -124,7 +124,7 @@ echo "==            Formating And Mounting The Filesystem            =="
 echo "================================================================="
 
 if [[ $FILESYSTEM == "1" ]] then
-   mkfs.vfat -F32 -n "EFISYSTEM" "${EFI}"
+   mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
    mkfs.btrfs -f -L "ROOT" "${ROOT}"
    mount -t btrfs "${ROOT}" /mnt
    btrfs su cr /mnt/@
@@ -139,7 +139,7 @@ else
    mkfs.ext4 -L "ROOT" "${ROOT}"
    mount -t ext4 "${ROOT}" /mnt
    mkdir /mnt/boot
-   mount -t vfat "${EFI}" /mnt/boot/
+   mount -t fat "${EFI}" /mnt/boot/
 fi
 
 echo "================================================================="
@@ -155,6 +155,7 @@ fi
 genfstab -U /mnt >> /mnt/etc/fstab
 
 cat <<REALEND > /mnt/next.sh
+
 echo "$HOSTNAME:$HOSTNAMEPASSWORD" | chpasswd
 useradd -mG wheel $USERNAME
 echo "$USERNAME:$USERNAMEPASSWORD" | chpasswd
@@ -422,8 +423,8 @@ else
     pacman -S timeshift
 fi
 
-
 REALEND
+
 
 arch-chroot /mnt sh next.sh
 
