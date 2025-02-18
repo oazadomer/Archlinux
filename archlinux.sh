@@ -133,13 +133,13 @@ if [[ $FILESYSTEM == "1" ]] then
    mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@ "${ROOT}" /mnt
    mkdir -p /mnt/{boot,.snapshots}
    mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
-   mount -t fat -F32 "${EFI}" /mnt/boot
+   mount -t fat "${EFI}" /mnt/boot
 else
    mkfs.fat -F32 -n "EFISYSTEM" "${EFI}"
    mkfs.ext4 -L "ROOT" "${ROOT}"
    mount -t ext4 "${ROOT}" /mnt
    mkdir /mnt/boot
-   mount -t fat -F32 "${EFI}" /mnt/boot
+   mount -t fat "${EFI}" /mnt/boot
 fi
 
 echo "================================================================="
