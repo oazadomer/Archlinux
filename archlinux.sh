@@ -6,8 +6,6 @@ echo "================================================================="
 
 timedatectl set-ntp true
 reflector --sort rate --latest 6 --protocol https --save /etc/pacman.d/mirrorlist
-pacman -Sy archlinux-keyring  --noconfirm --needed
-pacman -Su --noconfirm
 pacman -S dosfstools --noconfirm --needed
 
 echo "================================================================="
