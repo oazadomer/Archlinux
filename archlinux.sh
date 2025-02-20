@@ -6,7 +6,7 @@ echo "================================================================="
 
 timedatectl set-ntp true
 reflector --sort rate --latest 6 --protocol https --save /etc/pacman.d/mirrorlist
-pacman-key --init --noconfirm --needed
+# pacman-key --init --noconfirm --needed
 
 echo "================================================================="
 echo "==                     Partition The Drive                     =="
