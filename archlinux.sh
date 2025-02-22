@@ -5,6 +5,8 @@ echo "==        Welcome To The Arch Linux Installation Script        =="
 echo "================================================================="
 
 timedatectl set-ntp true
+reflector --latest 20 --protocol https --save /etc/pacman.d/mirrorlist
+pacman -Sy
 
 echo "================================================================="
 echo "==                     Partition The Drive                     =="
