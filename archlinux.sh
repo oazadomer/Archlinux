@@ -5,10 +5,10 @@ echo "==        Welcome To The Arch Linux Installation Script        =="
 echo "================================================================="
 
 timedatectl set-ntp true
-#timedatectl set-time #YYYY-MM-DD
-#timedatectl set-time #HH:MM:SS
 reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Sy
+#timedatectl set-time #YYYY-MM-DD
+#timedatectl set-time #HH:MM:SS
 
 echo "================================================================="
 echo "==                     Partition The Drive                     =="
