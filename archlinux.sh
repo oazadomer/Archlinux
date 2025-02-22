@@ -7,7 +7,7 @@ echo "================================================================="
 timedatectl set-ntp true
 #timedatectl set-time #YYYY-MM-DD
 #timedatectl set-time #HH:MM:SS
-reflector --latest 20 --protocol https --save /etc/pacman.d/mirrorlist
+reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Sy
 
 echo "================================================================="
