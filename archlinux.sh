@@ -6,6 +6,7 @@ echo "================================================================="
 
 timedatectl set-ntp true
 pacman -Sy; pacman -Syy; pacman -Sy archlinux-keyring --noconfirm --needed
+pacman-key --init --noconfirm --needed
 
 echo "================================================================="
 echo "==                     Partition The Drive                     =="
