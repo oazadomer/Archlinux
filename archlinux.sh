@@ -324,7 +324,7 @@ echo "================================================================="
 
 if [[ $POWER == "y" ]] then
     pamac install auto-epp
-    pacman -S auto-cpufreq envycontrol
+    pacman -S auto-cpufreq envycontrol --noconfirm --needed
     systemctl enable --now auto-cpufreq
 else
     "Power Optimization Tools Will be Not Installed"
