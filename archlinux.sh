@@ -340,7 +340,7 @@ echo "================================================================="
 echo "==                           DATABASE                          =="
 echo "================================================================="
 
-if [[ $DATABASE == "1" ]] then
+if [[ $DATABASE == "y" ]] then
     pacman -S postgresql sqlite --noconfirm --needed
     yay -S mysql mssql-server dbgate-bin --no-confirm --needed
 else
@@ -351,7 +351,7 @@ echo "================================================================="
 echo "==                           Cachyos                           =="
 echo "================================================================="
 
-if [[ $CACHYOS == "1" ]] then
+if [[ $CACHYOS == "y" ]] then
     pacman-key --recv-keys F3B607488DB35A47 --keyserver keyserver.ubuntu.com
     pacman-key --lsign-key F3B607488DB35A47 
 
@@ -379,7 +379,7 @@ echo "================================================================="
 if [[ $GAMING == "1" ]] && [[ $CACHYOS == "y" ]] then
     pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation proton-cachyos protontricks wine-cachyos-opt wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
     pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
-elif [[ $GAMING == "2" ]] && [[ $CACHYOS == "n" then
+elif [[ $GAMING == "2" ]] && [[ $CACHYOS == "n" ]] then
     pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
     pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
 elif [[ $GAMING == "3" ]] && [[ $CACHYOS == "y" ]] then
