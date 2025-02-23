@@ -9,7 +9,9 @@ Archlinux Installation Script
 
 4- Partition your Drive to two EFI and ROOT
 
-5- How to use Envycontrol:
+5- İf you will gaming with Cachyos Kernel and open Nvidia then in GPU option go just with integrated once 
+
+6- How to use Envycontrol:
 glxinfo | grep "renderer"
 sudo envycontrol --switch nvidia
 sudo envycontrol --switch integrated
