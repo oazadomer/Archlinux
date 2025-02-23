@@ -225,9 +225,9 @@ echo "==                            CPU                              =="
 echo "================================================================="
 
 if [[ $CPU == "1" ]] then
-    pacman -S amd-ucode
+    pacman -S amd-ucode --noconfirm --needeed
 else
-    pacman -S intel-ucode
+    pacman -S intel-ucode --noconfirm --needeed
 fi
 
 echo "================================================================="
