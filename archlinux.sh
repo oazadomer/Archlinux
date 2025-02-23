@@ -213,10 +213,8 @@ sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-pacman -Sy libpamac-aur pamac-aur --noconfirm --needed
-
-sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
-pamac update all --no-confirm --needed
+pacman -Sy yay --noconfirm --needed
+yay -S libpamac-aur pamac-aur --noconfirm --needed
 
 echo "================================================================="
 echo "==                            CPU                              =="
@@ -237,7 +235,7 @@ if [[ $DESKTOP == "1" ]] then
     pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
+    yay -S weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable lightdm touchegg
     sed -i "s/^#greeter-session=/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [[ $DESKTOP == "2" ]] then
@@ -245,14 +243,14 @@ elif [[ $DESKTOP == "2" ]] then
     pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
+    yay -S weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable gdm touchegg
 elif [[ $DESKTOP == "3" ]] then
     pacman -S hyprland hyprpaper hyprcursor hyprpicker hyprshot hyprutils hyprlock hypridle hyprwayland-scanner hyprpolkitagent hyprland-bash-completion dart-sass wl-clipboard python-pywal python-requests aylurs-gtk-shell-git grimblast-git gpu-screen-recorder matugen python-gpustat hyprsunset waybar waypaper-git swww swaync grim slurp wlogout nwg-look cliphist playerctl wireplumber libgtop btop wofi thunar thunar-archive-plugin thunar-volman tumbler kitty kitty-shell-integration kitty-terminfo brightnessctl upower power-profiles-daemon nm-connection-editor starship yazi stow mousepad pamixer network-manager-applet viewnior sddm sddm-sugar-dark xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg f2fs-tools traceroute dunst xdg-desktop-portal-gtk xdg-desktop-portal-wrlr xdg-desktop-portal-hyprland gufw qalculate mailspring-bin transmission-gtk simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin kamoso gimp xournalpp pencil protonvpn-gui bookworm obs-studio gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin zen-browser-bin downgrade debtap dpkg vscodium postman-bin xclip python-xlib xampp docker gtk-engine-murrine orchis-theme cutefish-icons candy-icons-git papirus-folders-nordic papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-mocha bibata-cursor-theme kvantum --noconfirm --needed
     pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-    pamac install hyprpanel weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
+    yay -S hyprpanel weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable sddm touchegg
     sed -i "s/Current=/Current=sugar-dark/" /usr/lib/sddm/sddm.conf.d/default.conf
 elif [[ $DESKTOP == "4" ]] then
@@ -260,7 +258,7 @@ elif [[ $DESKTOP == "4" ]] then
     pacman -S ventoy-bin crow-translate appimagelauncher megasync-bin bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-    pamac install weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
+    yay -S weektodo-bin stirling-pdf-bin pick-colour-picker --no-confirm --needed
     systemctl enable sddm touchegg
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
 else
@@ -323,7 +321,7 @@ echo "==                 Power Optimization Tools                    =="
 echo "================================================================="
 
 if [[ $POWER == "y" ]] then
-    pamac install auto-epp
+    yay -S auto-epp
     pacman -S auto-cpufreq envycontrol --noconfirm --needed
     systemctl enable --now auto-cpufreq
 else
@@ -350,7 +348,7 @@ echo "================================================================="
 
 if [[ $DATABASE == "1" ]] then
     pacman -S postgresql sqlite --noconfirm --needed
-    pamac install mysql mssql-server dbgate-bin --no-confirm --needed
+    yay -S mysql mssql-server dbgate-bin --no-confirm --needed
 else
     "Database Will Mot be Installed"
 fi
