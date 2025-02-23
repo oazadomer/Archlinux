@@ -216,6 +216,9 @@ echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/
 pacman -Sy yay --noconfirm --needed
 yay -S libpamac-aur pamac-aur --noconfirm --needed
 
+sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
+pamac update all --no-confirm --needed
+
 echo "================================================================="
 echo "==                            CPU                              =="
 echo "================================================================="
