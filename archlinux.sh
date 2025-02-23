@@ -8,8 +8,6 @@ pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring
 timedatectl set-ntp true
 reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Sy
-#timedatectl set-time #YYYY-MM-DD
-#timedatectl set-time #HH:MM:SS
 
 echo "================================================================="
 echo "==                     Partition The Drive                     =="
