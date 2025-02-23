@@ -274,7 +274,7 @@ echo "==                 Sound, Bluetooth, Printer Drivers            =="
 echo "================================================================="
 
 if [[ $SOUNDBLUETOOTHPRINTER == "y" ]] then
-    pacman -S bluez bluez-utils bluez-libs bluez-hid2hci cups pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire libpipewire gstreamer gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpegthumbs ffmpeg openh264 --noconfirm --needed
+    pacman -S bluez bluez-utils bluez-libs bluez-hid2hci cups pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpegthumbs ffmpeg openh264 --noconfirm --needed
     systemctl enable bluetooth cups
 else
     "Sound, Bluetooth, Printer Drivers Will Not be Installed"
