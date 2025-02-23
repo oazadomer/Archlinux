@@ -4,7 +4,8 @@ echo "================================================================="
 echo "==        Welcome To The Arch Linux Installation Script        =="
 echo "================================================================="
 
-#timedatectl set-ntp true
+pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring
+timedatectl set-ntp true
 reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Sy
 #timedatectl set-time #YYYY-MM-DD
