@@ -220,11 +220,7 @@ sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-# pacman -Sy libpamac-aur pamac-aur --noconfirm --needed
 pacman -Sy yay --noconfirm --needed
-
-sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
-pamac update all --no-confirm --needed
 
 echo "================================================================="
 echo "==                            CPU                              =="
@@ -245,7 +241,6 @@ if [[ $DESKTOP == "1" ]] then
     pacman -S ventoy-bin appimagelauncher bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome --noconfirm --needed
-#   yay -S megasync-bin crow-translate pencil mailspring-bin weektodo-bin stirling-pdf-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm --needed
     systemctl enable lightdm touchegg
     sed -i "s/^#greeter-session=/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 elif [[ $DESKTOP == "2" ]] then
@@ -253,14 +248,12 @@ elif [[ $DESKTOP == "2" ]] then
     pacman -S ventoy-bin appimagelauncher bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-#   yay -S megasync-bin crow-translate pencil mailspring-bin weektodo-bin stirling-pdf-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm --needed
     systemctl enable gdm touchegg
 elif [[ $DESKTOP == "3" ]] then
     pacman -S plasma-desktop dolphin dolphin-plugins ark kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw ktorrent merkuro skanlite kdenlive audacity vlc mplayer video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp proton-vpn-gtk-app bookworm partitionmanager gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker papirus-folders dracula-gtk-theme-git catppuccin-gtk-theme-macchiato bibata-cursor-theme kvantum --noconfirm --needed
     pacman -S ventoy-bin appimagelauncher bleachbit --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome --noconfirm --needed
-#   yay -S megasync-bin crow-translate pencil mailspring-bin weektodo-bin stirling-pdf-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm --needed
     systemctl enable sddm touchegg
     sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
 else
@@ -323,7 +316,6 @@ echo "==                 Power Optimization Tools                    =="
 echo "================================================================="
 
 if [[ $POWER == "y" ]] then
-#   yay -S auto-epp
     pacman -S auto-cpufreq envycontrol --noconfirm --needed
     systemctl enable --now auto-cpufreq
 else
@@ -350,7 +342,6 @@ echo "================================================================="
 
 if [[ $DATABASE == "y" ]] then
     pacman -S postgresql sqlite --noconfirm --needed
-#   yay -S mysql mssql-server dbgate-bin --no-confirm --needed
 else
     "Database Will Mot be Installed"
 fi
@@ -444,6 +435,33 @@ REALEND
 
 
 arch-chroot /mnt sh next.sh
+
+echo "================================================================="
+echo "==                       Yay Packages                          =="
+echo "================================================================="
+
+if [[ $DESKTOP = "1" ]] | [[ $DESKTOP == "2" ]] | [[ $DESKTOP == "3" ]] then
+   yay -Sy libpamac-aur pamac-aur --noconfirm --needed
+   yay -S megasync-bin crow-translate pencil mailspring-bin weektodo-bin stirling-pdf-bin pick-colour-picker candy-icons-git papirus-folders-nordic --noconfirm --needed
+   
+   sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
+   pamac update all --no-confirm --needed
+else
+    "Desktop Will Not be İnstalled"
+fi
+
+if [[ $POWER == "y" ]] then
+   yay -S auto-epp --noconfirm --needed
+else
+    "Power Optimization Tools Will be Not Installed"
+fi
+
+if [[ $DATABASE == "y" ]] then
+   yay -S mysql mssql-server dbgate-bin --noconfirm --needed
+else
+    "Database Will Not be Installed"
+fi
+
 
 # Rebooting The System
 echo "================================================================="
