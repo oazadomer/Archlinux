@@ -68,7 +68,7 @@ echo "# Please Choose Your Desktop Environment:"
 echo "1. CINNAMON"
 echo "2. GNOME"
 echo "3. KDE"
-echo "4. No Desktop"
+echo "n. No Desktop"
 read DESKTOP
 echo "="
 echo "# Do You Want To Install Sound, Bluetooth, Printer Drivers?"
@@ -82,7 +82,7 @@ echo "2. INTEL"
 echo "3. AMD and INTEL"
 echo "4. AMD and NVIDIA"
 echo "5. INTEL and NVIDIA"
-echo "6. Don't install"
+echo "n. Don't install"
 read GRAPHIC
 echo "="
 echo "# Do You Want to Install Power Optimization Tools?"
@@ -94,7 +94,7 @@ echo "# Do You Want To Install Office?"
 echo "1. WPS-Office"
 echo "2. OnlyOffice"
 echo "3. LibreOffice"
-echo "4. Don't Install"
+echo "n. Don't Install"
 read OFFICE
 echo "="
 echo "# DO You Want to Install Database?"
@@ -112,8 +112,14 @@ echo "1. Yes With Cachyos Repo and Kernel"
 echo "2. Yes Without Cachyos Repo and Kernel"
 echo "3. Yes With Cachyos Repo and Kernel and Open NVIDIA"
 echo "4. Yes Without Cachyos Repo and Kernel With Nvidia Property"
-echo "5. No I Will Not"
+echo "n. No I Will Not"
 read GAMING
+echo "="
+echo "# Do You Want to Install VirtualBox?"
+echo "1. Linux"
+echo "2. Linux LTS"
+echo "n"
+read VBOX
 echo "="
 echo "# Do You Want to Install Plymouth?"
 echo "y"
@@ -391,6 +397,18 @@ elif [[ $GAMING == "4" ]] && [[ $CACHYOS == "n" ]] then
     pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
 else
     "Gaming Apps and Drivers Will Not be Installed"
+fi
+
+echo "================================================================="
+echo "==                        Virtualbox                           =="
+echo "================================================================="
+
+if [[ $VBOX == "1" ]] then
+    pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
+elif [[ $VBOX == "2" ]] then
+    pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
+else
+    "Virtualbox Will Not be Intalled"
 fi
 
 echo "================================================================="
