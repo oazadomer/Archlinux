@@ -103,12 +103,6 @@ echo "y"
 echo "n"
 read DATABASE
 echo "="
-echo "# Do You Want to Install VirtualBox?"
-echo "1. Yes With Linux Kernel"
-echo "2. Yes With Linux LTS"
-echo "n"
-read VBOX
-echo "="
 echo "# Do You Want Add Cachyos Repo and Download the Kernel?"
 echo "y"
 echo "n"
@@ -121,6 +115,13 @@ echo "3. Yes With Cachyos Repo and Kernel and Open NVIDIA"
 echo "4. Yes Without Cachyos Repo and Kernel With Nvidia Property"
 echo "n. No I Will Not"
 read GAMING
+echo "="
+echo "# Do You Want to Install VirtualBox?"
+echo "1. Yes With Linux Kernel"
+echo "2. Yes With Linux LTS"
+echo "3. Yes With Cachyos Kernel"
+echo "n"
+read VBOX
 echo "="
 echo "# Do You Want to Install Plymouth?"
 echo "y"
@@ -355,18 +356,6 @@ else
 fi
 
 echo "================================================================="
-echo "==                        Virtualbox                           =="
-echo "================================================================="
-
-if [[ $VBOX == "1" ]] then
-    pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
-elif [[ $VBOX == "2" ]] then
-    pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
-else
-    "Virtualbox Will Not be Intalled"
-fi
-
-echo "================================================================="
 echo "==                           Cachyos                           =="
 echo "================================================================="
 
@@ -410,6 +399,20 @@ elif [[ $GAMING == "4" ]] && [[ $CACHYOS == "n" ]] then
     pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
 else
     "Gaming Apps and Drivers Will Not be Installed"
+fi
+
+echo "================================================================="
+echo "==                        Virtualbox                           =="
+echo "================================================================="
+
+if [[ $VBOX == "1" ]] then
+    pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
+elif [[ $VBOX == "2" ]] then
+    pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
+elif [[ $VBOX == "3" ]] then
+    pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
+else
+    "Virtualbox Will Not be Intalled"
 fi
 
 echo "================================================================="
