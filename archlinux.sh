@@ -457,7 +457,8 @@ else
 fi
 
 if [[ $DATABASE == "y" ]] then
-   yay -S mysql mssql-server dbgate-bin --noconfirm --needed
+   yay -S mysql mssql-server --noconfirm --needed
+   flatpak install flathub org.dbgate.DbGate
 else
     "Database Will Not be Installed"
 fi
