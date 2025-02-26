@@ -413,7 +413,7 @@ echo "================================================================="
 if [[ $PLYMOUTH == "y" ]] then
     pacman -S plymouth --noconfirm --needed
     sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
-    sed -i 's/HOOKS=/HOOKS="base systemd plymouth autodetect keyboard sd-vconsole modconf block filesystems fsck"/' /etc/mkinitcpio.conf
+    sed -i 's/HOOKS=/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap consolfont block filesystems fsck)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 else
     "Plymouth Will Mot be Installed"
