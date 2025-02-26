@@ -442,7 +442,7 @@ echo "================================================================="
 
 if [[ $DESKTOP = "1" ]] | [[ $DESKTOP == "2" ]] | [[ $DESKTOP == "3" ]] then
    yay -Sy libpamac-aur pamac-aur --noconfirm --needed
-   yay -S megasync-bin crow-translate pencil mailspring-bin weektodo-bin pick-colour-picker candy-icons-git papirus-folders-nordic --noconfirm --needed
+   yay -S megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --noconfirm --needed
    
    sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
    pamac update all --no-confirm --needed
