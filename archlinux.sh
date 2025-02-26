@@ -220,7 +220,7 @@ sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-pacman -Sy yay --noconfirm --needed
+pacman -Sy yay --noconfirm
 
 echo "================================================================="
 echo "==                            CPU                              =="
@@ -440,23 +440,23 @@ echo "==                       Yay Packages                          =="
 echo "================================================================="
 
 if [[ $DESKTOP = "1" ]] | [[ $DESKTOP == "2" ]] | [[ $DESKTOP == "3" ]] then
-   yay -Sy libpamac-aur pamac-aur --noconfirm --needed
-   yay -S megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --noconfirm --needed
+   yay --noconfirm -Sy libpamac-aur pamac-aur
+   yay --noconfirm -S megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic
    
    sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
-   pamac update all --no-confirm --needed
+   pamac update all --no-confirm
 else
     "Desktop Will Not be İnstalled"
 fi
 
 if [[ $POWER == "y" ]] then
-   yay -S auto-epp --noconfirm --needed
+   yay --noconfirm -S auto-epp 
 else
     "Power Optimization Tools Will be Not Installed"
 fi
 
 if [[ $DATABASE == "y" ]] then
-   yay -S mysql mssql-server --noconfirm --needed
+   yay --noconfirm -S mysql mssql-server
    flatpak install flathub org.dbgate.DbGate
 else
     "Database Will Not be Installed"
