@@ -213,7 +213,7 @@ echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/
 
 pacman -Syu; pacman -S pamac --noconfirm
 
-sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
+sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
 pamac update all --no-confirm
 
 echo "================================================================="
