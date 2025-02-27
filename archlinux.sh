@@ -199,19 +199,27 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo "================================================================="
 echo "==                    Enable Multilib Repo                     =="
 echo "================================================================="
-
+# Chaotic AUR
 pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key 3056513887B78AEB
 pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
+# Andontie AUR
+pacman-key --recv-key 72BF227DD76AE5BF
+pacman-key --lsign-key 72BF227DD76AE5BF
+
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-# sed -i 's/^#ParallelDownloads =/ParallelDownloads = 3/' /etc/pacman.conf
+sed -i 's/^#ParallelDownloads/ParallelDownloads = 3/' /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
+echo -e "\n[andontie-aur]\nServer = https://aur.andontie.net/$arch" >> /etc/pacman.conf
 
-pacman -Syu; pacman -S yay --noconfirm
+pacman -Syu; pacman -S libpamac-aur pamac-aur --noconfirm
+
+sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
+pamac update all --no-confirm
 
 echo "================================================================="
 echo "==                            CPU                              =="
@@ -229,18 +237,20 @@ echo "================================================================="
 
 if [[ $DESKTOP == "1" ]] then
     pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-themes-extra gnome-keyring gnome-system-monitor blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk numlockx touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot flameshot gthumb gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak dracula-gtk-theme-git bibata-cursor-theme kvantum --noconfirm
-    pacman -S ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
+    pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm
+    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
     systemctl enable lightdm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
     sed -i 's/^#greeter-session=/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
 elif [[ $DESKTOP == "2" ]] then
     pacman -S gnome-shell gnome-control-center kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts extension-manager nautilus file-roller gdm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot eog gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak dracula-gtk-theme-git bibata-cursor-theme kvantum --noconfirm
-    pacman -S ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
+    pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm
+    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
     systemctl enable gdm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
@@ -249,6 +259,7 @@ elif [[ $DESKTOP == "3" ]] then
     pacman -S ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm
+    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
     systemctl enable sddm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
@@ -308,6 +319,7 @@ echo "================================================================="
 
 if [[ $POWER == "y" ]] then
     pacman -S auto-cpufreq envycontrol --noconfirm
+    pamac install auto-epp --no-confirm
     systemctl enable --now auto-cpufreq
 else
     "Power Optimization Tools Will be Not Installed"
@@ -333,6 +345,7 @@ echo "================================================================="
 
 if [[ $DATABASE == "y" ]] then
     pacman -S postgresql sqlite --noconfirm
+    pamac install mysql mssql-server electron30-bin dbgate-bin --no-confirm
 else
     "Database Will Mot be Installed"
 fi
@@ -354,7 +367,7 @@ echo "================================================================="
 
 if [[ $VBOX == "1" ]] then
     pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm
-elif
+elif [[ $VBOX == "2" ]] then
     pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm
 else
     "Virtualbox Will Not be Intalled"
@@ -389,34 +402,6 @@ REALEND
 
 
 arch-chroot /mnt sh next.sh
-
-echo "================================================================="
-echo "==                       Yay Packages                          =="
-echo "================================================================="
-
-if [[ $DESKTOP == "1" ]] || [[ $DESKTOP == "2" ]] || [[ $DESKTOP == "3" ]] then
-   yay --noconfirm -Sy libpamac-aur pamac-aur xdg-terminal-exec-git
-   yay --noconfirm -S megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic
-   
-   sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
-   pamac update all --no-confirm
-else
-    "Desktop Will Not be İnstalled"
-fi
-
-if [[ $POWER == "y" ]] then
-   yay --noconfirm -S auto-epp 
-else
-    "Power Optimization Tools Will be Not Installed"
-fi
-
-if [[ $DATABASE == "y" ]] then
-   yay --noconfirm -S mysql mssql-server
-   flatpak install flathub org.dbgate.DbGate
-else
-    "Database Will Not be Installed"
-fi
-
 
 echo "================================================================="
 echo "==       Installation Complete. Rebooting in 10 Seconds...     =="
