@@ -282,7 +282,7 @@ elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "1" ]] | [[ $KERNEL == "2" ]] | [[ $
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland xf86-video-intel --noconfirm
 elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "1" ]] | [[ $KERNEL == "2" ]] | [[ $KERNEL == "3" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland xf86-video-amdgpu xf86-video-intel --noconfirm
-elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
+elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] | [[ $KERNEL == "3" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i "/MODULES=/MODULES=(amdgpu nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
@@ -292,7 +292,7 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i 's/MODULES=/MODULES=(amdgpu nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)' /etc/mkinitcpio.conf
     sed -i 's/MODULES=()/MODULES=(nvidia-lts nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
-elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
+elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] | [[ $KERNEL == "3" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i 's/MODULES=/MODULES=(i915 nvidia nvidia_modset nvidia_drm nvidia_uvm)' /etc/mkinitcpio.conf
     sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
