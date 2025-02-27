@@ -195,7 +195,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 sed -i 's/GRUB_TIMEOUT=/GRUB_TIMEOUT=0/' /etc/default/grub
 sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
-
+sleep 20
 echo "================================================================="
 echo "==                    Enable Multilib Repo                     =="
 echo "================================================================="
@@ -212,7 +212,7 @@ echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
 pacman -Syu; pacman -S yay --noconfirm
-
+sleep 20
 echo "================================================================="
 echo "==                            CPU                              =="
 echo "================================================================="
@@ -222,7 +222,7 @@ if [[ $CPU == "1" ]] then
 else
     pacman -S intel-ucode --noconfirm
 fi
-
+sleep 20
 echo "================================================================="
 echo "==                    DESKTOP ENVIRONMENT                      =="
 echo "================================================================="
