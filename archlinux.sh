@@ -341,7 +341,7 @@ echo "================================================================="
 echo "==                      GAMING INSTALLATION                    =="
 echo "================================================================="
 
-if [[ $GAMING == "y" ]]then
+if [[ $GAMING == "y" ]] then
     pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm
     pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm
 else
