@@ -166,7 +166,7 @@ echo "================================================================="
 echo "==                 Setup Language and Set Locale               =="
 echo "================================================================="
 
-sed -i "s/^#$LOCALE/$LOCALE/" /etc/locale.gen
+sed -i 's/^#$LOCALE/$LOCALE/' /etc/locale.gen
 echo "LANG=$LOCALE" >> /etc/locale.conf
 echo "KEYMAP=$KEYBOARD_LAYOUT" >> /etc/vconsole.conf
 locale-gen
@@ -204,9 +204,9 @@ pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key 3056513887B78AEB
 pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
-sed -i "s/^#Color/Color/" /etc/pacman.conf
-sed -i "/Color/a ILoveCandy" /etc/pacman.conf
-sed -i "s/^#ParallelDownloads =/ParallelDownloads = 3/" /etc/pacman.conf
+sed -i 's/^#Color/Color/' /etc/pacman.conf
+sed -i '/Color/a ILoveCandy' /etc/pacman.conf
+sed -i 's/^#ParallelDownloads =/ParallelDownloads = 3/' /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
@@ -235,7 +235,7 @@ if [[ $DESKTOP == "1" ]] then
     systemctl enable lightdm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
-    sed -i "s/^#greeter-session=/greeter-session=lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
+    sed -i 's/^#greeter-session=/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
 elif [[ $DESKTOP == "2" ]] then
     pacman -S gnome-shell gnome-control-center kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts extension-manager nautilus file-roller gdm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot eog gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak dracula-gtk-theme-git bibata-cursor-theme kvantum --noconfirm
     pacman -S ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
@@ -252,7 +252,7 @@ elif [[ $DESKTOP == "3" ]] then
     systemctl enable sddm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
-    sed -i "s/Current=/Current=breeze/" /usr/lib/sddm/sddm.conf.d/default.conf
+    sed -i 's/Current=/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
 else
     echo "Desktop Will Not be Installed"
 fi
