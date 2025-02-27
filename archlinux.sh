@@ -354,7 +354,7 @@ echo "================================================================="
 
 if [[ $VBOX == "1" ]] then
     pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm
-else
+elif
     pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm
 else
     "Virtualbox Will Not be Intalled"
