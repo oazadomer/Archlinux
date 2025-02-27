@@ -62,6 +62,7 @@ echo "="
 echo "# Please Chosse The Kernel:"
 echo "1. Linux"
 echo "2. Linux-lts"
+echo "3. Linux-Zen"
 read KERNEL
 echo "="
 echo "# Please Choose Your Desktop Environment:"
@@ -103,23 +104,15 @@ echo "y"
 echo "n"
 read DATABASE
 echo "="
-echo "# Do You Want Add Cachyos Repo and Download the Kernel?"
+echo "# Will you Gaming?"
 echo "y"
 echo "n"
-read CACHYOS
-echo "="
-echo "# Will you Gaming?"
-echo "1. Yes With Cachyos Repo and Kernel"
-echo "2. Yes Without Cachyos Repo and Kernel"
-echo "3. Yes With Cachyos Repo and Kernel and Open NVIDIA"
-echo "4. Yes Without Cachyos Repo and Kernel With Nvidia Property"
-echo "n. No I Will Not"
 read GAMING
 echo "="
 echo "# Do You Want to Install VirtualBox?"
 echo "1. Yes With Linux Kernel"
-echo "2. Yes With Linux LTS"
-echo "3. Yes With Cachyos Kernel"
+echo "2. Yes With Linux-LTS"
+echo "3. Yes With Linux-Zen"
 echo "n"
 read VBOX
 echo "="
@@ -158,8 +151,10 @@ echo "================================================================="
 
 if [[ $KERNEL == "1" ]] then
     pacstrap -K /mnt base base-devel linux linux-firmware linux-headers vim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl reflector rsync networkmanager wpa_supplicant usb_modeswitch nss-mdns modemmanager iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils
-else
+elif [[ $KERNEL == "2" ]] then
     pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers vim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl reflector rsync networkmanager wpa_supplicant usb_modeswitch nss-mdns modemmanager iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils
+else 
+    pacstrap -K /mnt base base-devel linux-zen linux-firmware linux-zen-headers vim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl reflector rsync networkmanager wpa_supplicant usb_modeswitch nss-mdns modemmanager iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -347,44 +342,10 @@ else
 fi
 
 echo "================================================================="
-echo "==                           Cachyos                           =="
-echo "================================================================="
-
-if [[ $CACHYOS == "y" ]] then
-    pacman-key --recv-keys F3B607488DB35A47 --keyserver keyserver.ubuntu.com
-    pacman-key --lsign-key F3B607488DB35A47 
-
-    pacman -U --noconfirm 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-keyring-20240331-1-any.pkg.tar.zst' \
-    'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-mirrorlist-18-1-any.pkg.tar.zst' \
-    'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v3-mirrorlist-18-1-any.pkg.tar.zst' \
-    'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v4-mirrorlist-6-1-any.pkg.tar.zst'
-
-    echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
-    echo -e "\n[cachyos-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >> /etc/pacman.conf
-    echo -e "\n[cachyos-core-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >> /etc/pacman.conf
-    echo -e "\n[cachyos-extra-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n" >> /etc/pacman.conf
-    echo -e "\n[cachyos]\nInclude = /etc/pacman.d/cachyos-mirrorlist\n" >> /etc/pacman.conf
-
-    pacman -Sy linux-cachyos linux-cachyos-headers cachyos-kernel-manager cachyos-settings --noconfirm --needed
-else
-    "Cachyos Repo and Kernel Will Mot be Installed"
-fi
-
-echo "================================================================="
 echo "==                      GAMING INSTALLATION                    =="
 echo "================================================================="
 
-if [[ $GAMING == "1" ]] && [[ $CACHYOS == "y" ]] then
-    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation proton-cachyos protontricks wine-cachyos-opt wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
-    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
-elif [[ $GAMING == "2" ]] && [[ $CACHYOS == "n" ]] then
-    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
-    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
-elif [[ $GAMING == "3" ]] && [[ $CACHYOS == "y" ]] then
-    pacman -S linux-cachyos-nvidia-open nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
-    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation proton-cachyos protontricks wine-cachyos-opt wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
-    pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
-elif [[ $GAMING == "4" ]] && [[ $CACHYOS == "n" ]] then
+if [[ $GAMING == "y" ]]then
     pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
     pacman -S gamescope heroic-games-launcher lutris steam steam-native-runtime wqy-zenhei --noconfirm --needed
 else
@@ -398,9 +359,9 @@ echo "================================================================="
 if [[ $VBOX == "1" ]] then
     pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
 elif [[ $VBOX == "2" ]] then
-    pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
-elif [[ $VBOX == "3" ]] then
-    pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
+    pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
+if [[ $VBOX == "3" ]] then
+    pacman -S virtualbox virtualbox- virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needeed
 else
     "Virtualbox Will Not be Intalled"
 fi
