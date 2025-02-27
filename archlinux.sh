@@ -62,7 +62,6 @@ echo "="
 echo "# Please Chosse The Kernel:"
 echo "1. Linux"
 echo "2. Linux-lts"
-echo "3. Linux-Zen"
 read KERNEL
 echo "="
 echo "# Please Choose Your Desktop Environment:"
@@ -111,8 +110,7 @@ read GAMING
 echo "="
 echo "# Do You Want to Install VirtualBox?"
 echo "1. Yes With Linux Kernel"
-echo "2. Yes With Linux-LTS"
-echo "3. Yes With Linux-Zen"
+echo "2. Yes With Linux LTS"
 echo "n"
 read VBOX
 echo "="
@@ -151,10 +149,8 @@ echo "================================================================="
 
 if [[ $KERNEL == "1" ]] then
     pacstrap -K /mnt base base-devel linux linux-firmware linux-headers vim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl reflector rsync networkmanager wpa_supplicant usb_modeswitch nss-mdns modemmanager iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils
-elif [[ $KERNEL == "2" ]] then
+else
     pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers vim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl reflector rsync networkmanager wpa_supplicant usb_modeswitch nss-mdns modemmanager iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils
-else 
-    pacstrap -K /mnt base base-devel linux-zen linux-firmware linux-zen-headers vim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl reflector rsync networkmanager wpa_supplicant usb_modeswitch nss-mdns modemmanager iwd ethtool dnsutils dnsmasq dhclient wireless-regdb wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -210,12 +206,12 @@ pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring
 
 sed -i "s/^#Color/Color/" /etc/pacman.conf
 sed -i "/Color/a ILoveCandy" /etc/pacman.conf
-sed -i "s/^#ParallelDownloads = 5/ParallelDownloads = 4/" /etc/pacman.conf
+sed -i "s/^#ParallelDownloads =/ParallelDownloads = 3/" /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-pacman -Sy yay --noconfirm
+pacman -Syu; pacman -S yay --noconfirm
 
 echo "================================================================="
 echo "==                            CPU                              =="
@@ -276,13 +272,13 @@ echo "================================================================="
 echo "==                   GRAPGIC CARD INSTALLATION                 =="
 echo "================================================================="
 
-if [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "1" ]] | [[ $KERNEL == "2" ]] | [[ $KERNEL == "3" ]] then
+if [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland xf86-video-amdgpu --noconfirm
-elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "1" ]] | [[ $KERNEL == "2" ]] | [[ $KERNEL == "3" ]] then
+elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland xf86-video-intel --noconfirm
-elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "1" ]] | [[ $KERNEL == "2" ]] | [[ $KERNEL == "3" ]] then
+elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland xf86-video-amdgpu xf86-video-intel --noconfirm
-elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] | [[ $KERNEL == "3" ]] then
+elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i "/MODULES=/MODULES=(amdgpu nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
     sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
@@ -292,7 +288,7 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i 's/MODULES=/MODULES=(amdgpu nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)' /etc/mkinitcpio.conf
     sed -i 's/MODULES=()/MODULES=(nvidia-lts nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
-elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] | [[ $KERNEL == "3" ]] then
+elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
     sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i 's/MODULES=/MODULES=(i915 nvidia nvidia_modset nvidia_drm nvidia_uvm)' /etc/mkinitcpio.conf
     sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
@@ -358,10 +354,8 @@ echo "================================================================="
 
 if [[ $VBOX == "1" ]] then
     pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm
-elif [[ $VBOX == "2" ]] then
+else
     pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm
-elif [[ $VBOX == "3" ]] then
-    pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-guest-utils --noconfirm
 else
     "Virtualbox Will Not be Intalled"
 fi
@@ -400,7 +394,7 @@ echo "================================================================="
 echo "==                       Yay Packages                          =="
 echo "================================================================="
 
-if [[ $DESKTOP == "1" ]] | [[ $DESKTOP == "2" ]] | [[ $DESKTOP == "3" ]] then
+if [[ $DESKTOP == "1" ]] || [[ $DESKTOP == "2" ]] || [[ $DESKTOP == "3" ]] then
    yay --noconfirm -Sy libpamac-aur pamac-aur xdg-terminal-exec-git
    yay --noconfirm -S megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic
    
