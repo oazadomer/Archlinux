@@ -204,19 +204,14 @@ pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key 3056513887B78AEB
 pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
-# Andontie AUR
-pacman-key --recv-key 72BF227DD76AE5BF
-pacman-key --lsign-key 72BF227DD76AE5BF
-
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 sed -i '/Color/a ILoveCandy' /etc/pacman.conf
 sed -i 's/^#ParallelDownloads/ParallelDownloads = 3/' /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
-echo -e "\n[andontie-aur]\nServer = https://aur.andontie.net/$arch" >> /etc/pacman.conf
 
-pacman -Syu; pacman -S libpamac-aur pamac-aur --noconfirm
+pacman -Syu; pacman pamac --noconfirm
 
 sed -i "s/^#EnableAUR/EnableAUR/" /etc/pamac.conf
 pamac update all --no-confirm
