@@ -367,7 +367,7 @@ if [[ $VBOX == "1" ]] then
 elif [[ $VBOX == "2" ]] then
     pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm
 elif [[ $VBOX == "3" ]] then
-    pacman -S virtualbox virtualbox-dkms virtualbox-guest-iso virtualbox-guest-utils --noconfirm
+    pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-guest-utils --noconfirm
 else
     "Virtualbox Will Not be Intalled"
 fi
