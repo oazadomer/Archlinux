@@ -199,14 +199,13 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo "================================================================="
 echo "==                    Enable Multilib Repo                     =="
 echo "================================================================="
-# Chaotic AUR
 pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key 3056513887B78AEB
 pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-sed -i 's/^#ParallelDownloads/ParallelDownloads = 3/' /etc/pacman.conf
+sed -e 's/^#ParallelDownloads/ParallelDownloads = 3/' /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
@@ -214,7 +213,7 @@ echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/
 pacman -Syu; pacman -S pamac --noconfirm
 
 sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
-pamac update all --no-confirm
+pacman -Syu --noconfirm; pamac update all --no-confirm
 
 echo "================================================================="
 echo "==                            CPU                              =="
