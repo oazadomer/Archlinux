@@ -192,7 +192,7 @@ echo "==                     Installing Grub                         =="
 echo "================================================================="
 
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
-sed -i 's/GRUB_TIMEOUT=/GRUB_TIMEOUT=0/' /etc/default/grub
+sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/' /etc/default/grub
 sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -288,23 +288,23 @@ elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland xf86-video-amdgpu xf86-video-intel --noconfirm
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
-    sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i "/MODULES=/MODULES=(amdgpu nvidia nvidia_modset nvidia_drm nvidia_uvm)" /etc/mkinitcpio.conf
-    sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+    sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
+    sed -i 's/MODULES=()/MODULES=(amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
-    sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i 's/MODULES=/MODULES=(amdgpu nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)' /etc/mkinitcpio.conf
-    sed -i 's/MODULES=()/MODULES=(nvidia-lts nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+    sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
+    sed -i 's/MODULES=()/MODULES=(amdgpu nvidia-lts nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
-    sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i 's/MODULES=/MODULES=(i915 nvidia nvidia_modset nvidia_drm nvidia_uvm)' /etc/mkinitcpio.conf
-    sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+    sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
+    sed -i 's/MODULES=()/MODULES=(i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols kwayland qt5-wayland qt6-wayland glfw-wayland egl-wayland xf86-video-intel nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
-    sed -i 's/GRUB_CMDLINE_LINUX=/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub    sed -i 's/MODULES=/MODULES=(i915 nvidia-lts nvidia_modset nvidia_drm nvidia_uvm)' /etc/mkinitcpio.conf
-    sed -i 's/MODULES=()/MODULES=(nvidia-lts nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+    sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
+    sed -i 's/MODULES=()/MODULES=(i915 nvidia-lts nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 else
     "Graphic Card Will Not be Installed"
@@ -376,8 +376,8 @@ echo "================================================================="
 
 if [[ $PLYMOUTH == "y" ]] then
     pacman -S plymouth --noconfirm
-    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
-    sed -i 's/HOOKS=/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap consolfont block filesystems fsck)/' /etc/mkinitcpio.conf
+    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    sed -i 's/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck)/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap consolfont block filesystems fsck)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 else
     "Plymouth Will Mot be Installed"
@@ -390,7 +390,8 @@ echo "================================================================="
 if [[ $FILESYSTEM == "1" ]] then
    pacman -S grub-btrfs btrfs-progs timeshift timeshift-autosnap --noconfirm
    systemctl enable grub-btrfsd
-   sed -i 's/^#ExecStart=/ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto/' sudo systemctl edit --full grub-btrfsd
+   sed -i 's/^#ExecStart=/ExecStart=/' sudo systemctl edit --full grub-btrfsd
+   sed -i 's/ExecStart=\/usr\/bin\/grub-btrfsd --syslog \/.snapshots/ExecStart=\/usr\/bin\/grub-btrfsd --syslog --timeshift-auto/' sudo systemctl edit --full grub-btrfsd 
 else
     pacman -S timeshift --noconfirm
 fi
