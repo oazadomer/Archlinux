@@ -205,7 +205,7 @@ pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring
 
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-# sed -i 's/^#ParallelDownloads/ParallelDownloads = 3/' /etc/pacman.conf
+sed -i 's/^#ParallelDownloads/ParallelDownloads = 3/' /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
@@ -214,9 +214,7 @@ pacman -Syu; pacman -S pamac --noconfirm
 
 sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
 pacman -Syu --noconfirm
-sleep 20
 pamac update all --no-confirm
-sleep 10
 
 echo "================================================================="
 echo "==                            CPU                              =="
@@ -227,17 +225,17 @@ if [[ $CPU == "1" ]] then
 else
     pacman -S intel-ucode --noconfirm
 fi
-sleep 20
+
 echo "================================================================="
 echo "==                    DESKTOP ENVIRONMENT                      =="
 echo "================================================================="
-sleep 20
+
 if [[ $DESKTOP == "1" ]] then
     pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-themes-extra gnome-keyring gnome-system-monitor blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk numlockx touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot flameshot gthumb gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak dracula-gtk-theme-git bibata-cursor-theme kvantum --noconfirm
     pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm
-#    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
     systemctl enable lightdm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
@@ -247,7 +245,7 @@ elif [[ $DESKTOP == "2" ]] then
     pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm
-#    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
     systemctl enable gdm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
@@ -256,7 +254,7 @@ elif [[ $DESKTOP == "3" ]] then
     pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm
-#    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
     systemctl enable sddm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
@@ -321,7 +319,7 @@ if [[ $POWER == "y" ]] then
 else
     "Power Optimization Tools Will be Not Installed"
 fi
-sleep 20
+
 echo "================================================================="
 echo "==                      OFFICE INSTALLATION                    =="
 echo "================================================================="
@@ -342,7 +340,7 @@ echo "================================================================="
 
 if [[ $DATABASE == "y" ]] then
     pacman -S postgresql sqlite --noconfirm
-#    pamac install mysql mssql-server electron30-bin dbgate-bin --no-confirm
+    pamac install mysql mssql-server electron30-bin dbgate-bin --no-confirm
 else
     "Database Will Mot be Installed"
 fi
