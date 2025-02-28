@@ -205,7 +205,8 @@ pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring
 
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-sed -i 's/^#ParallelDownloads/ParallelDownloads = 3/' /etc/pacman.conf
+sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
+sed -i '/ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
@@ -213,6 +214,7 @@ echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/
 pacman -Sy; pacman -S pamac --noconfirm
 
 sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
+sed -i '/MaxParallelDownloads = 4/MaxParallelDownloads = 2/' /etc/pamac.conf
 pacman -Syu --noconfirm
 pamac update --aur --force-refresh
 
