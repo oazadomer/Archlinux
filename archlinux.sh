@@ -205,15 +205,16 @@ pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring
 
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-# sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
+sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
 
-pacman -Sy; pacman -S pamac --noconfirm
+pacman -Sy; pacman -S pamac --noconfirm --needed
 
 sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
 sed -i 's/MaxParallelDownloads = 4/MaxParallelDownloads = 2/' /etc/pamac.conf
+
 pacman -Syu --noconfirm
 pamac update --aur --force-refresh
 
@@ -222,9 +223,10 @@ echo "==                            CPU                              =="
 echo "================================================================="
 
 if [[ $CPU == "1" ]] then
-    pacman -S amd-ucode --noconfirm
+    pacman -S amd-ucode --noconfirm --needed
+
 else
-    pacman -S intel-ucode --noconfirm
+    pacman -S intel-ucode --noconfirm --needed
 fi
 
 echo "================================================================="
@@ -232,34 +234,38 @@ echo "==                    DESKTOP ENVIRONMENT                      =="
 echo "================================================================="
 
 if [[ $DESKTOP == "1" ]] then
-    pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-themes-extra gnome-keyring gnome-system-monitor blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk numlockx touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot flameshot gthumb gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak dracula-gtk-theme-git bibata-cursor-theme kvantum --noconfirm
-    pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
-    pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm
-    pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm
-#  pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+    pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-themes-extra gnome-keyring gnome-system-monitor blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs xdg-user-dirs-gtk numlockx touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot flameshot gthumb gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak dracula-gtk-theme-git bibata-cursor-theme kvantum --noconfirm --needed
+    pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm --needed
+    pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
+    pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm --needed
+    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm 
+    
     systemctl enable lightdm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
     sed -i 's/^#greeter-session=/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
 elif [[ $DESKTOP == "2" ]] then
-    pacman -S gnome-shell gnome-control-center kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts extension-manager nautilus file-roller gdm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot eog gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak dracula-gtk-theme-git bibata-cursor-theme kvantum --noconfirm
-    pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
-    pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm
-    pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm
-#  pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+    pacman -S gnome-shell gnome-control-center kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts extension-manager nautilus file-roller gdm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut audacity vlc mplayer video-downloader shutter-encoder-bin snapshot eog gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak dracula-gtk-theme-git bibata-cursor-theme kvantum --noconfirm --needed
+    pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm --needed
+    pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
+    pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm --needed
+    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+ 
     systemctl enable gdm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
 elif [[ $DESKTOP == "3" ]] then
-    pacman -S plasma-desktop dolphin dolphin-plugins ark kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw ktorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp proton-vpn-gtk-app bookworm partitionmanager gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak bibata-cursor-theme kvantum --noconfirm
-    pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm
-    pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm
-    pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm
-#  pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+    pacman -S plasma-desktop dolphin dolphin-plugins ark kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs xdg-user-dirs-gtk touchegg breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw ktorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp proton-vpn-gtk-app bookworm partitionmanager gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs-lts-iron npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin zen-browser-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak bibata-cursor-theme kvantum --noconfirm --needed
+    pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm --needed
+    pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
+    pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm --needed
+    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+
     systemctl enable sddm touchegg
     export TERM="kitty"
     export TERMINAL="kitty"
     sed -i 's/Current=/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
+
 else
     echo "Desktop Will Not be Installed"
 fi
@@ -269,8 +275,10 @@ echo "==                 Sound, Bluetooth, Printer Drivers            =="
 echo "================================================================="
 
 if [[ $SOUNDBLUETOOTHPRINTER == "y" ]] then
-    pacman -S bluez bluez-utils bluez-libs bluez-hid2hci cups pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm
+    pacman -S bluez bluez-utils bluez-libs bluez-hid2hci cups pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
+
     systemctl enable bluetooth cups
+
 else
     "Sound, Bluetooth, Printer Drivers Will Not be Installed"
 fi
@@ -280,31 +288,46 @@ echo "==                   GRAPGIC CARD INSTALLATION                 =="
 echo "================================================================="
 
 if [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu --noconfirm
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu --noconfirm --needed
+    
 elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-intel --noconfirm
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-intel --noconfirm --needed
+    
 elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel --noconfirm
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel --noconfirm --needed
+    
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu --noconfirm --needed
+    pacman -S nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+
     sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i 's/MODULES=()/MODULES=(amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu --noconfirm --needed
+    pacman -S nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+
     sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i 's/MODULES=()/MODULES=(amdgpu nvidia-lts nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel --noconfirm --needed
+    pacman -S nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+
     sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i 's/MODULES=()/MODULES=(i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]] then
-    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel --noconfirm --needed
+    pacman -S nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm -needed
+
     sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
     sed -i 's/MODULES=()/MODULES=(i915 nvidia-lts nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+
 else
     "Graphic Card Will Not be Installed"
 fi
@@ -314,9 +337,11 @@ echo "==                 Power Optimization Tools                    =="
 echo "================================================================="
 
 if [[ $POWER == "y" ]] then
-    pacman -S auto-cpufreq envycontrol --noconfirm
-#  pamac install auto-epp --no-confirm
+    pacman -S auto-cpufreq envycontrol --noconfirm --needed
+    pamac install auto-epp --no-confirm
+
     systemctl enable --now auto-cpufreq
+
 else
     "Power Optimization Tools Will be Not Installed"
 fi
@@ -326,11 +351,14 @@ echo "==                      OFFICE INSTALLATION                    =="
 echo "================================================================="
 
 if [[ $OFFICE == "1" ]] then
-    pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm
+    pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
+
 elif [[ $OFFICE == "2" ]] then
-    pacman -S onlyoffice-bin --noconfirm
+    pacman -S onlyoffice-bin --noconfirm --needed
+
 elif [[ $OFFICE == "3" ]] then
-    pacman -S libreoffice --noconfirm
+    pacman -S libreoffice --noconfirm --needed
+
 else
     "Office Will Not be Installed"
 fi
@@ -340,8 +368,9 @@ echo "==                           DATABASE                          =="
 echo "================================================================="
 
 if [[ $DATABASE == "y" ]] then
-    pacman -S postgresql sqlite --noconfirm
-#  pamac install mysql mssql-server electron30-bin dbgate-bin --no-confirm
+    pacman -S postgresql sqlite --noconfirm --needed
+    pamac install mysql mssql-server electron30-bin dbgate-bin --no-confirm
+
 else
     "Database Will Mot be Installed"
 fi
@@ -351,8 +380,9 @@ echo "==                      GAMING INSTALLATION                    =="
 echo "================================================================="
 
 if [[ $GAMING == "y" ]] then
-    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm
-    pacman -S gamescope heroic-games-launcher lutris steam  --noconfirm
+    pacman -S gifli glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
+    pacman -S gamescope heroic-games-launcher lutris steam  --noconfirm --needed
+
 else
     "Gaming Apps and Drivers Will Not be Installed"
 fi
@@ -362,9 +392,11 @@ echo "==                        Virtualbox                           =="
 echo "================================================================="
 
 if [[ $VBOX == "1" ]] then
-    pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm
+    pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needed
+
 elif [[ $VBOX == "2" ]] then
-    pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm
+    pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needed
+
 else
     "Virtualbox Will Not be Intalled"
 fi
@@ -374,10 +406,12 @@ echo "==           Plymouth Installation and Congratulations         =="
 echo "================================================================="
 
 if [[ $PLYMOUTH == "y" ]] then
-    pacman -S plymouth --noconfirm
+    pacman -S plymouth --noconfirm --needed
+ 
     sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
-    sed -i 's/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck)/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap consolfont block filesystems fsck)/' /etc/mkinitcpio.conf
+    sed -i 's/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck)/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+
 else
     "Plymouth Will Mot be Installed"
 fi
@@ -387,12 +421,14 @@ echo "==            Timeshift and Snapshot Configuration             =="
 echo "================================================================="
 
 if [[ $FILESYSTEM == "1" ]] then
-   pacman -S grub-btrfs btrfs-progs timeshift timeshift-autosnap --noconfirm
+   pacman -S grub-btrfs btrfs-progs timeshift timeshift-autosnap --noconfirm --needed
+ 
    systemctl enable grub-btrfsd
    sed -i 's/^#ExecStart=/ExecStart=/' sudo systemctl edit --full grub-btrfsd
    sed -i 's/ExecStart=\/usr\/bin\/grub-btrfsd --syslog \/.snapshots/ExecStart=\/usr\/bin\/grub-btrfsd --syslog --timeshift-auto/' sudo systemctl edit --full grub-btrfsd 
+
 else
-    pacman -S timeshift --noconfirm
+    pacman -S timeshift --noconfirm --needed
 fi
 
 REALEND
