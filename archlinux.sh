@@ -240,7 +240,7 @@ if [[ $DESKTOP == "1" ]] then
     pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts powerline-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm --needed
-    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm 
+#    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm 
     
     systemctl enable lightdm touchegg
     export TERM="kitty"
@@ -251,7 +251,7 @@ elif [[ $DESKTOP == "2" ]] then
     pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm --needed
-    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+#    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
  
     systemctl enable gdm touchegg
     export TERM="kitty"
@@ -261,7 +261,7 @@ elif [[ $DESKTOP == "3" ]] then
     pacman -S xdg-terminal-exec-git ventoy-bin appimagelauncher bleachbit telegram-desktop --noconfirm --needed
     pacman -S zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-history-substring-search --noconfirm --needed
     pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-dejavu-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-dejavu ttf-hanazono ttf-ms-fonts ttf-font-awesome awesome-terminal-fonts --noconfirm --needed
-    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
+#    pamac install megasync-bin crow-translate mailspring-bin pick-colour-picker candy-icons-git papirus-folders-nordic --no-confirm
 
     systemctl enable sddm touchegg
     export TERM="kitty"
@@ -340,7 +340,7 @@ echo "================================================================="
 
 if [[ $POWER == "y" ]] then
     pacman -S auto-cpufreq envycontrol --noconfirm --needed
-    pamac install auto-epp --no-confirm
+#    pamac install auto-epp --no-confirm
 
     systemctl enable --now auto-cpufreq
 
@@ -371,7 +371,7 @@ echo "================================================================="
 
 if [[ $DATABASE == "y" ]] then
     pacman -S postgresql sqlite --noconfirm --needed
-    pamac install mysql mssql-server electron30-bin dbgate-bin --no-confirm
+#    pamac install mysql mssql-server electron30-bin dbgate-bin --no-confirm
 
 else
     "Database Will Mot be Installed"
