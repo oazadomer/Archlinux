@@ -372,7 +372,7 @@ echo "================================================================="
 
 if [[ $DATABASE == "y" ]] then
     pacman -S postgresql sqlite --noconfirm --needed
-# pamac install mysql mssql-server electron30-bin dbgate-bin --no-confirm
+# pamac install mysql mssql-server --no-confirm
 
 else
     "Database Will Mot be Installed"
