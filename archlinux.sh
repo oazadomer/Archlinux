@@ -424,8 +424,7 @@ if [[ $FILESYSTEM == "1" ]] then
    pacman -S grub-btrfs btrfs-progs timeshift timeshift-autosnap --noconfirm --needed
  
    systemctl enable grub-btrfsd
-   sed -i 's/^#ExecStart=/ExecStart=/' sudo systemctl edit --full grub-btrfsd
-   sed -i 's/ExecStart=\/usr\/bin\/grub-btrfsd --syslog \/.snapshots/ExecStart=\/usr\/bin\/grub-btrfsd --syslog --timeshift-auto/' sudo systemctl edit --full grub-btrfsd 
+   sed -i 's/^#ExecStart=\\/usr\\/bin\\/grub-btrfsd --syslog \\/.snapshots/ExecStart=\\/usr\\/bin\\/grub-btrfsd --syslog --timeshift-auto/' sudo systemctl edit --full grub-btrfsd 
 
 else
     pacman -S timeshift --noconfirm --needed
