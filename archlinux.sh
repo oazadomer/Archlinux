@@ -289,13 +289,22 @@ echo "================================================================="
 echo "==                   GRAPGIC CARD INSTALLATION                 =="
 echo "================================================================="
 
-if [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
+if [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "1" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu --noconfirm --needed
     
-elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
+elif [[ $GRAPHIC == "1" ]] && [[ $KERNEL == "2" ]] then
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu --noconfirm --needed
+    
+elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "1" ]] then
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-intel --noconfirm --needed
+
+elif [[ $GRAPHIC == "2" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-intel --noconfirm --needed
     
-elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "1" ]] || [[ $KERNEL == "2" ]] then
+elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "1" ]] then
+    pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel --noconfirm --needed
+
+elif [[ $GRAPHIC == "3" ]] && [[ $KERNEL == "2" ]] then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel --noconfirm --needed
     
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
