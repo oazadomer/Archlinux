@@ -98,7 +98,7 @@ echo "n. Don't Install"
 read OFFICE
 echo "="
 echo "# DO You Want to Install Database?"
-echo "postgresql, mysql, sqlite, mssql"
+echo "postgresql, sqlite, mssql"
 echo "y"
 echo "n"
 read DATABASE
@@ -368,7 +368,7 @@ echo "==                           DATABASE                          =="
 echo "================================================================="
 
 if [[ $DATABASE == "y" ]] then
-    pacman -S postgresql mysql sqlite --noconfirm --needed
+    pacman -S postgresql sqlite --noconfirm --needed
 # pamac install mssql-server --no-confirm
 
 else
