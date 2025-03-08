@@ -148,9 +148,9 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]] then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils zram-generator                                          
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils                                       
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils zram-generator                                                  
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils                                                 
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -161,10 +161,6 @@ echo "$HOSTNAME:$HOSTNAMEPASSWORD" | chpasswd
 useradd -mG wheel $USERNAME
 echo "$USERNAME:$USERNAMEPASSWORD" | chpasswd
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
-
-# zram
-echo -e "\[zram0]\nzram-size=ram\n" >> /usr/lib/systemd/zram-generator.conf
-echo -e "\compression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
 
 echo "================================================================="
 echo "==                 Setup Language and Set Locale               =="
@@ -190,8 +186,6 @@ echo "==             Enable Network Service, sshd, fstrim            =="
 echo "================================================================="
 
 systemctl enable NetworkManager sshd fstrim.timer
-systemctl daemon-reload
-systemctl start /dev/zram0
 
 echo "================================================================="
 echo "==                     Installing Grub                         =="
@@ -439,6 +433,19 @@ if [[ $FILESYSTEM == "1" ]] then
 else
     pacman -S timeshift --noconfirm --needed
 fi
+
+
+echo "================================================================="
+echo "==                     Zram Configuration                      =="               
+echo "================================================================="
+pacman -S zram-generator
+
+echo -e "\n[zram0]\nzram-size=ram" >> /usr/lib/systemd/zram-generator.conf
+echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
+
+systemctl daemon-reload
+systemctl start /dev/zram0
+
 
 REALEND
 
