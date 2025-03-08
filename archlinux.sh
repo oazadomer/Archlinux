@@ -166,9 +166,6 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 echo -e "\[zram0]\nzram-size=ram\n" >> /usr/lib/systemd/zram-generator.conf
 echo -e "\compression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
 
-systemctl daemon-reload
-systemctl start /dev/zram0
-
 echo "================================================================="
 echo "==                 Setup Language and Set Locale               =="
 echo "================================================================="
@@ -193,6 +190,8 @@ echo "==             Enable Network Service, sshd, fstrim            =="
 echo "================================================================="
 
 systemctl enable NetworkManager sshd fstrim.timer
+systemctl daemon-reload
+systemctl start /dev/zram0
 
 echo "================================================================="
 echo "==                     Installing Grub                         =="
