@@ -98,7 +98,7 @@ echo "n. Don't Install"
 read OFFICE
 echo "="
 echo "# DO You Want to Install Database?"
-echo "postgresql, sqlite, mssql"
+echo "postgresql, mysql, sqlite"
 echo "y"
 echo "n"
 read DATABASE
