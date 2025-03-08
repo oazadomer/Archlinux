@@ -6,7 +6,7 @@ echo "================================================================="
 
 pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring --noconfirm --needed
 timedatectl set-ntp true
-reflector --latest 6 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Sy
 
 echo "================================================================="
