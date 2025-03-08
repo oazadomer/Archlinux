@@ -378,7 +378,7 @@ echo "==                           DATABASE                          =="
 echo "================================================================="
 
 if [[ $DATABASE == "y" ]] then
-    pacman -S postgresql sqlite --noconfirm --needed
+    pacman -S postgresql mysql sqlite --noconfirm --needed
 # pamac install mssql-server --no-confirm
 
 else
