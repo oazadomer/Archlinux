@@ -148,9 +148,9 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]] then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils                                       
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils os-prober                                      
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils                                                 
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils os-prober                                                
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -193,9 +193,10 @@ echo "================================================================="
 
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 
-sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/' /etc/default/grub
-sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet zswap.enabled=0"/' /etc/default/grub
-sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
+sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=5/' /etc/default/grub
+sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT=" ------------------ "/' /etc/default/grub
+sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=menu/' /etc/default/grub
+sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -413,7 +414,7 @@ echo "================================================================="
 if [[ $PLYMOUTH == "y" ]] then
     pacman -S plymouth --noconfirm --needed
  
-    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet zswap.enabled=0"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3 zswap.enabled=0"/' /etc/default/grub
+    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
     sed -i 's/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap block filesystems fsck)/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 
@@ -440,6 +441,7 @@ echo "==                     Zram Configuration                      =="
 echo "================================================================="
 pacman -S zram-generator
 
+sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3 zswap.enabled=0"/' /etc/default/grub
 echo -e "\n[zram0]\nzram-size=ram" >> /usr/lib/systemd/zram-generator.conf
 echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
 
