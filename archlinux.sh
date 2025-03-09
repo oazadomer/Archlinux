@@ -148,9 +148,9 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]] then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils os-prober                                      
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers zsh fish gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils os-prober                                      
 else
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers zsh gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils os-prober                                                
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers zsh fish gvim grub efibootmgr inotify-tools git python rust gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie bash-completion pacman-contrib pkgfile rebuild-detector mousetweaks usbutils os-prober                                                
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
