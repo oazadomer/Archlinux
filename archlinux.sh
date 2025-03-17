@@ -245,7 +245,6 @@ if [[ $DESKTOP == "1" ]] then
     pacman -S yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher telegram-desktop --noconfirm --needed
     pacman -S ttf-jetbrains-mono-nerd ttf-cascadia-mono-nerd ttf-dejavu ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts awesome-terminal-fonts --noconfirm --needed
 # pamac install thorium-browser-bin megasync-bin crow-translate papirus-folders-nordic mailspring-bin local-by-flywheel-bin stacer-bin --no-confirm
-# flatpak install OptimusUI
     
     systemctl enable lightdm touchegg
     export TERM="kitty"
@@ -257,7 +256,6 @@ elif [[ $DESKTOP == "2" ]] then
       pacman -S yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher telegram-desktop --noconfirm --needed
       pacman -S ttf-jetbrains-mono-nerd ttf-cascadia-mono-nerd ttf-dejavu ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts awesome-terminal-fonts --noconfirm --needed
 # pamac install thorium-browser-bin megasync-bin crow-translate papirus-folders-nordic mailspring-bin local-by-flywheel-bin stacer-bin --no-confirm
-# flatpak install OptimusUI
  
     systemctl enable gdm touchegg
     export TERM="kitty"
@@ -268,7 +266,6 @@ elif [[ $DESKTOP == "3" ]] then
       pacman -S yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher telegram-desktop --noconfirm --needed
       pacman -S ttf-jetbrains-mono-nerd ttf-cascadia-mono-nerd ttf-dejavu ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts awesome-terminal-fonts --noconfirm --needed
 # pamac install thorium-browser-bin megasync-bin crow-translate papirus-folders-nordic mailspring-bin local-by-flywheel-bin stacer-bin --no-confirm
-# flatpak install OptimusUI
 
     systemctl enable sddm touchegg
     export TERM="kitty"
