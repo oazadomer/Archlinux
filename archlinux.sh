@@ -344,7 +344,7 @@ echo "================================================================="
 
 if [[ $POWER == "y" ]] then
     pacman -S auto-cpufreq envycontrol --noconfirm --needed
-#  pamac install auto-epp optimus-manager-git --no-confirm
+#  pamac install auto-epp --no-confirm
 
     systemctl enable --now auto-cpufreq
 
