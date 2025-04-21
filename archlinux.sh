@@ -154,10 +154,10 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim efibootmgr zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                      
+    pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                      
 
 elif [[ $KERNEL == "2" ]]; then
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim efibootmgr zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                                
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                                
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -200,7 +200,7 @@ echo "==                  Installing Bootloader                      =="
 echo "================================================================="
 
 if [[ $BOOTLOADER == "1" ]]; then
-   pacman -S grub
+   pacman -S grub efibootmgr
    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 
    sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=5/' /etc/default/grub
