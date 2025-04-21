@@ -212,41 +212,17 @@ if [[ $BOOTLOADER == "1" ]]; then
 
 elif [[ $BOOTLOADER == "2" ]]; then 
    bootctl install
- # sed -i 's/^#timeout 3/timeout 5/' /mnt/boot/loader/loader.conf
- # sed -i 's/^default/default arch-*/' /mnt/boot/loader/loader.conf
+   sed -i 's/^#timeout 3/timeout 5/' /boot/loader/loader.conf
+   sed -i 's/^default/default arch-*/' /boot/loader/loader.conf
+   
    if [[ $KERNEL == "1" ]]; then
-       cat <<EOL > /boot/loader/loader.conf
-       default arch
-       timeout 5
-       EOL
+       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux" >> /boot/loader/entries/arch.conf
+       echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$(ROOT) rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf 
        
-      cat <<EOL > /boot/loader/entries/arch.conf
-      title Arch Linux
-      linux /vmlinuz-linux
-      initrd /initramfs-linux.img
-      options root=PARTUUID=$(blkid -s PARTUUID -o value ${ROOT}) rw rootfstype=btrfs quiet splash
-      EOL
-
    elif [[ $KERNEL == "2" ]]; then
-       cat <<EOL > /boot/loader/loader.conf
-       default arch
-       timeout 5
-       EOL
-       
-      cat <<EOL > /boot/loader/entries/arch.conf
-      title Arch Linux
-      linux /vmlinuz-linux-lts
-      initrd /initramfs-linux-lts.img
-      options root=PARTUUID=$(blkid -s PARTUUID -o value ${ROOT}) rw rootfstype=btrfs quiet splash
-      EOL
-      
-# echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux" >> /mnt/boot/loader/entries/arch.conf
-# echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$(ROOT) rw rootfstype=btrfs quiet splash" >> /mnt/boot/loader/entries/arch.conf
-
-  # else
-# echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux-lts" >> /mnt/boot/loader/entries/arch.conf
-# echo -e "\ninitrd   /initramfs-linux-lts.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /mnt/boot/loader/entries/arch.conf
-   fi
+         echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux-lts" >> /boot/loader/entries/arch.conf
+         echo -e "\ninitrd   /initramfs-linux-lts.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+  fi
 fi   
 
 echo "================================================================="
