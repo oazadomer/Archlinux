@@ -40,7 +40,7 @@ read KERNEL
 echo "="
 echo "# Please Choose The Bootloader:"
 echo "1. GRUB"
-echo "2. SYSTEMD"
+echo "2. SYSTEMD-BOOT"
 read BOOTLOADER
 echo "="
 echo "# Please Enter Your hostname:"
@@ -129,7 +129,7 @@ echo "================================================================="
 echo "==            Formating And Mounting The Filesystem            =="
 echo "================================================================="
 
-if [[ $FILESYSTEM == "1" ]] then
+if [[ $FILESYSTEM == "1" ]]; then
    mkfs.vfat -F32 -n "EFISYSTEM" "${EFI}"
    mkfs.btrfs -f -L "ROOT" "${ROOT}"
    mount -t btrfs "${ROOT}" /mnt
@@ -152,7 +152,7 @@ echo "================================================================="
 echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
-if [[ $KERNEL == "1" ]] then
+if [[ $KERNEL == "1" ]]; then
     pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim efibootmgr zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                      
 else
     pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim efibootmgr zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                                
@@ -160,7 +160,8 @@ fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-cat <<REALEND > /mnt/next.sh
+# cat <<REALEND > /mnt/next.sh
+arch-chroot /mnt <<EOF
 
 echo "$HOSTNAME:$HOSTNAMEPASSWORD" | chpasswd
 useradd -mG wheel $USERNAME
@@ -196,7 +197,7 @@ echo "================================================================="
 echo "==                  Installing Bootloader                      =="
 echo "================================================================="
 
-if [[ $BOOTLOADER == "1" ]] then
+if [[ $BOOTLOADER == "1" ]]; then
    pacman -S grub
    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 
@@ -207,18 +208,42 @@ if [[ $BOOTLOADER == "1" ]] then
 
    grub-mkconfig -o /boot/grub/grub.cfg
 
-else 
-   bootctl --esp-path=/boot install
-   sed -i 's/^#timeout 3/timeout 5/' /mnt/boot/loader/loader.conf
-   sed -i 's/^default/default arch-*/' /mnt/boot/loader/loader.conf
+elif [[ $BOOTLOADER == "2" ]]; then 
+   bootctl install
+ # sed -i 's/^#timeout 3/timeout 5/' /mnt/boot/loader/loader.conf
+ # sed -i 's/^default/default arch-*/' /mnt/boot/loader/loader.conf
+   if [[ $KERNEL == "1" ]]; then
+       cat <<EOL > /boot/loader/loader.conf
+       default arch
+       timeout 5
+       EOL
+       
+      cat <<EOL > /boot/loader/entries/arch.conf
+      title Arch Linux
+      linux /vmlinuz-linux
+      initrd /initramfs-linux.img
+      options root=PARTUUID=$(blkid -s PARTUUID -o value ${ROOT}) rw rootfstype=btrfs quiet splash
+      EOL
 
-   if [[ $KERNEL == "1" ]] then
-       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux" >> /mnt/boot/loader/entries/arch.conf
-       echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /mnt/boot/loader/entries/arch.conf
+   elif [[ $KERNEL == "2" ]]; then
+       cat <<EOL > /boot/loader/loader.conf
+       default arch
+       timeout 5
+       EOL
+       
+      cat <<EOL > /boot/loader/entries/arch.conf
+      title Arch Linux
+      linux /vmlinuz-linux-lts
+      initrd /initramfs-linux-lts.img
+      options root=PARTUUID=$(blkid -s PARTUUID -o value ${ROOT}) rw rootfstype=btrfs quiet splash
+      EOL
+      
+# echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux" >> /mnt/boot/loader/entries/arch.conf
+# echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$(ROOT) rw rootfstype=btrfs quiet splash" >> /mnt/boot/loader/entries/arch.conf
 
-   else
-       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux-lts" >> /mnt/boot/loader/entries/arch.conf
-       echo -e "\ninitrd   /initramfs-linux-lts.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /mnt/boot/loader/entries/arch.conf
+  # else
+# echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux-lts" >> /mnt/boot/loader/entries/arch.conf
+# echo -e "\ninitrd   /initramfs-linux-lts.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /mnt/boot/loader/entries/arch.conf
    fi
 fi   
 
@@ -250,7 +275,7 @@ echo "================================================================="
 echo "==                            CPU                              =="
 echo "================================================================="
 
-if [[ $CPU == "1" ]] then
+if [[ $CPU == "1" ]]; then
     pacman -S amd-ucode --noconfirm --needed
 
 else
@@ -261,7 +286,7 @@ echo "================================================================="
 echo "==                    DESKTOP ENVIRONMENT                      =="
 echo "================================================================="
 
-if [[ $DESKTOP == "1" ]] then
+if [[ $DESKTOP == "1" ]]; then
     pacman -S cinnamon nemo nemo-fileroller kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-themes-extra gnome-keyring blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs-gtk numlockx touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts simple-scan kdenlive audacity audacious vlc mplayer video-downloader shutter-encoder-bin snapshot gnome-screenshot shotwell gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak bibata-cursor-theme kvantum --noconfirm --needed
     pacman -S spotify whatsie-git xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher telegram-desktop --noconfirm --needed
     pacman -S ttf-jetbrains-mono-nerd ttf-cascadia-mono-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts awesome-terminal-fonts --noconfirm --needed
@@ -272,7 +297,7 @@ if [[ $DESKTOP == "1" ]] then
     systemctl enable lightdm
     sed -i 's/^#greeter-session=/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
 
-elif [[ $DESKTOP == "2" ]] then
+elif [[ $DESKTOP == "2" ]]; then
       pacman -S gnome-shell gnome-control-center kitty kitty-shell-integration kitty-terminfo btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts nautilus file-roller gdm xdg-utils xdg-user-dirs-gtk touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan kdenlive audacity audacious vlc mplayer video-downloader shutter-encoder-bin snapshot shotwell gimp xournalpp proton-vpn-gtk-app gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak bibata-cursor-theme kvantum --noconfirm --needed
       pacman -S spotify whatsie-git xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher telegram-desktop --noconfirm --needed
       pacman -S ttf-jetbrains-mono-nerd ttf-cascadia-mono-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts awesome-terminal-fonts --noconfirm --needed
@@ -281,7 +306,7 @@ elif [[ $DESKTOP == "2" ]] then
     export TERM="kitty"
     export TERMINAL="kitty"
     
-elif [[ $DESKTOP == "3" ]] then
+elif [[ $DESKTOP == "3" ]]; then
       pacman -S plasma-desktop dolphin dolphin-plugins ark kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk touchegg breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw ktorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp proton-vpn-gtk-app bookworm partitionmanager gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak bibata-cursor-theme --noconfirm --needed
       pacman -S spotify whatsie-git xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher telegram-desktop --noconfirm --needed
       pacman -S ttf-jetbrains-mono-nerd ttf-cascadia-mono-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts awesome-terminal-fonts --noconfirm --needed
@@ -299,163 +324,163 @@ echo "================================================================="
 echo "==                 Sound, Bluetooth, Printer Drivers            =="
 echo "================================================================="
 
-if [[ $SOUNDBLUETOOTHPRINTER == "y" ]] then
+if [[ $SOUNDBLUETOOTHPRINTER == "y" ]]; then
     pacman -S bluez bluez-utils bluez-libs bluez-hid2hci cups pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
 
     systemctl enable bluetooth cups
 
 else
-    "Sound, Bluetooth, Printer Drivers Will Not be Installed"
+   echo "Sound, Bluetooth, Printer Drivers Will Not be Installed"
 fi
 
 echo "================================================================="
 echo "==                   GRAPGIC CARD INSTALLATION                 =="
 echo "================================================================="
 
-if [[ $GRAPHIC == "1" ]] then
+if [[ $GRAPHIC == "1" ]]; then
     pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu --noconfirm --needed
     
-elif [[ $GRAPHIC == "2" ]] then
+elif [[ $GRAPHIC == "2" ]]; then
       pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-intel --noconfirm --needed
     
-elif [[ $GRAPHIC == "3" ]] then
+elif [[ $GRAPHIC == "3" ]]; then
       pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel --noconfirm --needed
  
-elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]] then
+elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
       pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu --noconfirm --needed
       pacman -S nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
      
-      if [[ $BOOTLOADER == "1" ]] then   
+      if [[ $BOOTLOADER == "1" ]]; then   
          sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
          sed -i 's/MODULES=()/MODULES=(amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
          grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
       fi
 
-elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]] then
+elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
       pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu --noconfirm --needed
       pacman -S nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 
-      if [[ $BOOTLOADER == "1" ]] then
+      if [[ $BOOTLOADER == "1" ]]; then
         sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
         sed -i 's/MODULES=()/MODULES=(amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
         grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
       fi
       
-elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]] then
+elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
       pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel --noconfirm --needed
       pacman -S nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
      
-     if [[ $BOOTLOADER == "1" ]] then 
+     if [[ $BOOTLOADER == "1" ]]; then 
       sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
       sed -i 's/MODULES=()/MODULES=(i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
       grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
     fi
     
-elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]] then
+elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
       pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel --noconfirm --needed
       pacman -S nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm -needed
 
-    if [[ $BOOTLOADER == "1" ]] then
+    if [[ $BOOTLOADER == "1" ]]; then
       sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
       sed -i 's/MODULES=()/MODULES=(i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
       grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
     fi
     
 else
-    "Graphic Card Will Not be Installed"
+   echo "Graphic Card Will Not be Installed"
 fi
 
 echo "================================================================="
 echo "==                 Power Optimization Tools                    =="
 echo "================================================================="
 
-if [[ $POWER == "y" ]] then
+if [[ $POWER == "y" ]]; then
     pacman -S auto-cpufreq envycontrol --noconfirm --needed
  #  pamac install auto-epp --no-confirm
 
     systemctl enable --now auto-cpufreq
 
 else
-    "Power Optimization Tools Will be Not Installed"
+  echo "Power Optimization Tools Will be Not Installed"
 fi
 
 echo "================================================================="
 echo "==                      OFFICE INSTALLATION                    =="
 echo "================================================================="
 
-if [[ $OFFICE == "1" ]] then
+if [[ $OFFICE == "1" ]]; then
     pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
 
-elif [[ $OFFICE == "2" ]] then
+elif [[ $OFFICE == "2" ]]; then
       pacman -S onlyoffice-bin --noconfirm --needed
 
-elif [[ $OFFICE == "3" ]] then
+elif [[ $OFFICE == "3" ]]; then
       pacman -S libreoffice --noconfirm --needed
 
 else
-    "Office Will Not be Installed"
+   echo "Office Will Not be Installed"
 fi
 
 echo "================================================================="
 echo "==                           DATABASE                          =="
 echo "================================================================="
 
-if [[ $DATABASE == "y" ]] then
+if [[ $DATABASE == "y" ]]; then
     pacman -S postgresql mysql sqlite --noconfirm --needed
   # pamac install mssql-server --no-confirm
 
 else
-    "Database Will Mot be Installed"
+   echo "Database Will Mot be Installed"
 fi
 
 echo "================================================================="
 echo "==                      GAMING INSTALLATION                    =="
 echo "================================================================="
 
-if [[ $GAMING == "y" ]] then
+if [[ $GAMING == "y" ]]; then
     pacman -S lib32-libudev0-shim giflib glfw gst-plugins-base-libs lib32-alsa-plugins lib32-giflib lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libva lib32-mpg123 lib32-ocl-icd lib32-opencl-icd-loader lib32-openal libjpeg-turbo libva libxslt mpg123 opencl-icd-loader openal ttf-liberation wine wine-gecko wine-mono winetricks vulkan-tools mesa-utils lib32-mesa-utils --noconfirm --needed
     pacman -S heroic-games-launcher steam --noconfirm --needed
 
 else
-    "Gaming Apps and Drivers Will Not be Installed"
+   echo "Gaming Apps and Drivers Will Not be Installed"
 fi
 
 echo "================================================================="
 echo "==                        Virtualbox                           =="
 echo "================================================================="
 
-if [[ $VBOX == "1" ]] then
+if [[ $VBOX == "1" ]]; then
     pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needed
 
-elif [[ $VBOX == "2" ]] then
+elif [[ $VBOX == "2" ]]; then
       pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needed
 
 else
-    "Virtualbox Will Not be Installed"
+   echo "Virtualbox Will Not be Installed"
 fi
 
 echo "================================================================="
 echo "==           Plymouth Installation and Congratulations         =="
 echo "================================================================="
 
-if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]] then
+if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]]; then
     pacman -S plymouth --noconfirm --needed
     sed -i 's/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap block filesystems fsck)/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 
-elif [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "2" ]] then
+elif [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "2" ]]; then
     pacman -S plymouth
     sed -i 's/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap block filesystems fsck)/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
 
 else
-   "Plymouth Will Not be Installed"
+   echo "Plymouth Will Not be Installed"
 fi
 
 echo "================================================================="
 echo "==            Timeshift and Snapshot Configuration             =="               
 echo "================================================================="
 
-if [[ $FILESYSTEM == "1" ]] && [[ BOOTLOADER == "1" ]] then
+if [[ $FILESYSTEM == "1" ]] && [[ $BOOTLOADER == "1" ]]; then
     pacman -S inotify-tools grub-btrfs btrfs-progs timeshift timeshift-autosnap --noconfirm --needed
  
     systemctl enable grub-btrfsd
@@ -470,7 +495,7 @@ echo "================================================================="
 
 pacman -S zram-generator  --noconfirm --needed
 
-if [[ $BOOTLOADER == "1" ]] then
+if [[ $BOOTLOADER == "1" ]]; then
    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3 zswap.enabled=0"/' /etc/default/grub
    echo -e "\n[zram0]\nzram-size=ram" >> /usr/lib/systemd/zram-generator.conf
    echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
@@ -483,8 +508,8 @@ systemctl daemon-reload
 systemctl start /dev/zram0
 
 
-REALEND
-
+# REALEND
+EOF
 
 arch-chroot /mnt sh next.sh
 
