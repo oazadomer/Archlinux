@@ -140,7 +140,8 @@ if [[ $FILESYSTEM == "1" ]]; then
    mkdir -p /mnt/{boot,.snapshots}
    mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
    mount -t vfat "${EFI}" /mnt/boot/
-else
+   
+elif [[ $FILESYSTEM == "2" ]]; then
    mkfs.vfat -F32 -n "EFISYSTEM" "${EFI}"
    mkfs.ext4 -L "ROOT" "${ROOT}"
    mount -t ext4 "${ROOT}" /mnt
@@ -154,7 +155,8 @@ echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
     pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim efibootmgr zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                      
-else
+
+elif [[ $KERNEL == "2" ]]; then
     pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim efibootmgr zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                                
 fi
 
@@ -278,7 +280,7 @@ echo "================================================================="
 if [[ $CPU == "1" ]]; then
     pacman -S amd-ucode --noconfirm --needed
 
-else
+elif [[ $CPU == "2" ]]; then
     pacman -S intel-ucode --noconfirm --needed
 fi
 
