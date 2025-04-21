@@ -211,7 +211,7 @@ if [[ $BOOTLOADER == "1" ]]; then
    grub-mkconfig -o /boot/grub/grub.cfg
 
 elif [[ $BOOTLOADER == "2" ]]; then 
-   bootctl install
+   bootctl --esp-path=/boot install
    sed -i 's/^#timeout 3/timeout 5/' /boot/loader/loader.conf
    sed -i 's/^default/default arch-*/' /boot/loader/loader.conf
    
