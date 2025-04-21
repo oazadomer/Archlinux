@@ -213,7 +213,7 @@ if [[ $BOOTLOADER == "1" ]]; then
 elif [[ $BOOTLOADER == "2" ]]; then 
    bootctl --esp-path=/boot install
    rm /boot/loader/loader.conf
-   echo -e "default arch.conf\ntimeout 5" > /boot/loader/loader.conf
+   echo -e "default arch.conf\ntimeout 5" >> /boot/loader/loader.conf
    
    if [[ $KERNEL == "1" ]]; then
        echo -e "title Arch Linux\nlinux /vmlinuz-linux\n" >> /boot/loader/entries/arch.conf
