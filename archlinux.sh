@@ -208,17 +208,17 @@ if [[ $BOOTLOADER == "1" ]] then
    grub-mkconfig -o /boot/grub/grub.cfg
 
 else 
-   bootctl install
-   sed -i 's/^#timeout 3/timeout 5/' /boot/loader/loader.conf
-   sed -i 's/^default/default arch-*/' /boot/loader/loader.conf
+   bootctl --esp-path=/mnt/boot install
+   sed -i 's/^#timeout 3/timeout 5/' /mnt/boot/loader/loader.conf
+   sed -i 's/^default/default arch-*/' /mnt/boot/loader/loader.conf
 
    if [[ $KERNEL == "1" ]] then
-       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux" >> /boot/loader/entries/arch.conf
-       echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux" >> /mnt/boot/loader/entries/arch.conf
+       echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /mnt/boot/loader/entries/arch.conf
 
    else
-       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux-lts" >> /boot/loader/entries/arch.conf
-       echo -e "\ninitrd   /initramfs-linux-lts.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux-lts" >> /mnt/boot/loader/entries/arch.conf
+       echo -e "\ninitrd   /initramfs-linux-lts.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /mnt/boot/loader/entries/arch.conf
    fi
 fi   
 
