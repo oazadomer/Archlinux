@@ -212,16 +212,23 @@ if [[ $BOOTLOADER == "1" ]]; then
 
 elif [[ $BOOTLOADER == "2" ]]; then 
    bootctl --esp-path=/boot install
-   sed -i 's/^#timeout 3/timeout 5/' /boot/loader/loader.conf
-   sed -i 's/^default/default arch-*/' /boot/loader/loader.conf
+   mkdir -p /boot/loader
+   mkdir -p /boot/loader/entries
+   
+   echo "default arch.conf" >> /boot/loader/loader.conf
+   echo "timeout 5" >> /boot/loader/loader.conf
    
    if [[ $KERNEL == "1" ]]; then
-       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux" >> /boot/loader/entries/arch.conf
-       echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$(ROOT) rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf 
+       echo "title   Arch Linux" >> /boot/loader/entries/arch.conf
+       echo"linux   /vmlinuz-linux" >> /boot/loader/entries/arch.conf
+       echo "initrd  /initramfs-linux.img" >> /boot/loader/entries/arch.conf
+       echo "options root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
        
    elif [[ $KERNEL == "2" ]]; then
-         echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux-lts" >> /boot/loader/entries/arch.conf
-         echo -e "\ninitrd   /initramfs-linux-lts.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+         echo "title   Arch Linux" >> /boot/loader/entries/arch.conf
+         echo"linux   /vmlinuz-linux-lts" >> /boot/loader/entries/arch.conf
+         echo "initrd  /initramfs-linux-lts.img" >> /boot/loader/entries/arch.conf
+         echo "options root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
   fi
 fi   
 
