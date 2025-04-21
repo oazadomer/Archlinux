@@ -212,8 +212,14 @@ else
    sed -i 's/^#timeout 3/timeout 5/' /boot/loader/loader.conf
    sed -i 's/^default/default arch-*/' /boot/loader/loader.conf
 
-   echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux-lts" >> /boot/loader/entries/arch.conf
-   echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+   if [[ $KERNEL == "1" ]] then
+       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux" >> /boot/loader/entries/arch.conf
+       echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+
+   else
+       echo -e "\ntitle   Arch linux\nlinux   /vnlinuz-linux-lts" >> /boot/loader/entries/arch.conf
+       echo -e "\ninitrd   /initramfs-linux.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+   fi
 fi   
 
 echo "================================================================="
