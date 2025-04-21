@@ -144,7 +144,7 @@ else
    mkfs.vfat -F32 -n "EFISYSTEM" "${EFI}"
    mkfs.ext4 -L "ROOT" "${ROOT}"
    mount -t ext4 "${ROOT}" /mnt
-   mkdir -p /mnt/boot
+   mkdir /mnt/boot
    mount -t vfat "${EFI}" /mnt/boot/
 fi
 
@@ -238,7 +238,6 @@ sed -i 's/^#EnableFlatpak/EnableFlatpak/' /etc/pamac.conf
 sed -i 's/MaxParallelDownloads = 4/MaxParallelDownloads = 2/' /etc/pamac.conf
 
 pacman -Syu --noconfirm
-pamac update --aur --force-refresh
 pamac update all --no-confirm
 
 echo "================================================================="
