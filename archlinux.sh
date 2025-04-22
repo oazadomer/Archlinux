@@ -213,17 +213,24 @@ if [[ $BOOTLOADER == "1" ]]; then
 elif [[ $BOOTLOADER == "2" ]]; then 
    bootctl --esp-path=/boot install
    rm /boot/loader/loader.conf
-   echo -e "default arch.conf\ntimeout 5" >> /boot/loader/loader.conf
+   
+   echo -e "default arch.conf\ntimeout 5\n" >> /boot/loader/loader.conf
+   echo -e "editor no" >> /boot/loader/loader.conf
    
    if [[ $KERNEL == "1" ]]; then
        echo -e "title Arch Linux\nlinux /vmlinuz-linux\n" >> /boot/loader/entries/arch.conf
-       echo -e "initrd /initramfs-linux.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
-       
+       echo -e "initrd /amd-ucode.img\n" >> /boot/loader/entries/arch.conf
+       echo -e "initrd /initramfs-linux.img\noptions root=/dev/$ROOT rw systemd.unit=multi-user.target" >> /boot/loader/entries/arch.conf
+    
    elif [[ $KERNEL == "2" ]]; then
          echo -e "title Arch Linux\nlinux /vmlinuz-linux-lts\n" >> /boot/loader/entries/arch.conf
-         echo -e "initrd /initramfs-linux-lts.img\noptions root=/dev/$ROOT rw rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+         echo -e "initrd  /amd-ucode.img\n" >> /boot/loader/entries/arch.conf
+         echo -e "initrd /initramfs-linux-lts.img\noptions initrd=/initramfs-linux-lts.img root=/dev/$ROOT rw rootflags=subvol=@ rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
   fi
 fi   
+
+  systemctl enable systemd-boot-update.service
+
 
 echo "================================================================="
 echo "==                    Enable Multilib Repo                     =="
