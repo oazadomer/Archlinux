@@ -162,7 +162,7 @@ fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt <<EOF
+cat <<REALEND > /mnt/next.sh
 
 echo "$HOSTNAME:$HOSTNAMEPASSWORD" | chpasswd
 useradd -mG wheel $USERNAME
@@ -490,8 +490,7 @@ fi
 systemctl daemon-reload
 systemctl start /dev/zram0
 
-
-EOF
+REALEND
 
 arch-chroot /mnt sh next.sh
 
