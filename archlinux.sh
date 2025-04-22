@@ -215,19 +215,19 @@ elif [[ $BOOTLOADER == "2" ]]; then
     bootctl --esp-path=/boot install
     rm /boot/loader/loader.conf
 
-    cat <<EOF > /mnt/boot/loader/loader.conf
+cat <<EOF > /mnt/boot/loader/loader.conf
 default arch
 timeout 5
 editor no
 EOF
 
-    cat <<EOF > /mnt/boot/loader/entries/windows.conf
+cat <<EOF > /mnt/boot/loader/entries/windows.conf
 title    Windows Boot Manager
 linux    /EFI/Microsoft/Boot/bootmgfw.efi
 EOF
 
     if [[ $KERNEL == "1" ]]; then
-        cat <<EOF > /mnt/boot/loader/entries/arch.conf
+cat <<EOF > /mnt/boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /amd-ucode.img
@@ -236,18 +236,17 @@ options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=mul
 EOF
 
     elif [[ $KERNEL == "2" ]]; then
-        cat <<EOF > /mnt/boot/loader/entries/arch.conf
+cat <<EOF > /mnt/boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux-lts
 initrd   /amd-ucode.img
 initrd   /initramfs-linux-lts.img
 options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=multi-user.target
 EOF
-    fi
+ fi
 fi   
 
-  systemctl enable systemd-boot-update.service
-
+systemctl enable systemd-boot-update.service
 
 echo "================================================================="
 echo "==                    Enable Multilib Repo                     =="
