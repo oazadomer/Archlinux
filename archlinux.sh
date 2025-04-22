@@ -7,6 +7,8 @@ echo "================================================================="
 pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring --noconfirm --needed
 timedatectl set-ntp true
 reflector --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
+sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
+sed -i 's/ParallelDownloads = 5/ParallelDownloads = 3/' /etc/pacman.conf
 pacman -Sy
 
 echo "================================================================="
@@ -219,12 +221,12 @@ elif [[ $BOOTLOADER == "2" ]]; then
    if [[ $KERNEL == "1" ]]; then
        echo -e "title Arch Linux\nlinux /vmlinuz-linux\n" >> /boot/loader/entries/arch.conf
        echo -e "initrd /amd-ucode.img\n" >> /boot/loader/entries/arch.conf
-       echo -e "initrd /initramfs-linux.img\noptions root=/dev/$ROOT rw systemd.unit=multi-user.target" >> /boot/loader/entries/arch.conf
+       echo -e "initrd /initramfs-linux.img\noptions root=$ROOT rw systemd.unit=multi-user.target" >> /boot/loader/entries/arch.conf
     
    elif [[ $KERNEL == "2" ]]; then
          echo -e "title Arch Linux\nlinux /vmlinuz-linux-lts\n" >> /boot/loader/entries/arch.conf
          echo -e "initrd  /amd-ucode.img\n" >> /boot/loader/entries/arch.conf
-         echo -e "initrd /initramfs-linux-lts.img\noptions initrd=/initramfs-linux-lts.img root=/dev/$ROOT rw rootflags=subvol=@ rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+         echo -e "initrd /initramfs-linux-lts.img\noptions initrd=/initramfs-linux-lts.img root=$ROOT rw rootflags=subvol=@ rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
   fi
 fi   
 
