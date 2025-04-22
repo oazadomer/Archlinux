@@ -221,12 +221,12 @@ elif [[ $BOOTLOADER == "2" ]]; then
    if [[ $KERNEL == "1" ]]; then
        echo -e "title Arch Linux\nlinux /vmlinuz-linux\n" >> /boot/loader/entries/arch.conf
        echo -e "initrd /amd-ucode.img\n" >> /boot/loader/entries/arch.conf
-       echo -e "initrd /initramfs-linux.img\noptions root=$ROOT rw systemd.unit=multi-user.target" >> /boot/loader/entries/arch.conf
+       echo -e "initrd /initramfs-linux.img\noptions root=/dev/nvme0n1p2 rw systemd.unit=multi-user.target" >> /boot/loader/entries/arch.conf
     
    elif [[ $KERNEL == "2" ]]; then
          echo -e "title Arch Linux\nlinux /vmlinuz-linux-lts\n" >> /boot/loader/entries/arch.conf
          echo -e "initrd  /amd-ucode.img\n" >> /boot/loader/entries/arch.conf
-         echo -e "initrd /initramfs-linux-lts.img\noptions initrd=/initramfs-linux-lts.img root=$ROOT rw rootflags=subvol=@ rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+         echo -e "initrd /initramfs-linux-lts.img\noptions initrd=/initramfs-linux-lts.img root=/dev/nvme0n1p2 rw rootflags=subvol=@ rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
   fi
 fi   
 
