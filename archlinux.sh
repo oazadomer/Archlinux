@@ -162,7 +162,6 @@ fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-# cat <<REALEND > /mnt/next.sh
 arch-chroot /mnt <<EOF
 
 echo "$HOSTNAME:$HOSTNAMEPASSWORD" | chpasswd
@@ -204,7 +203,7 @@ if [[ $BOOTLOADER == "1" ]]; then
    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 
    sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=5/' /etc/default/grub
-   sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
    sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=menu/' /etc/default/grub
    sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
 
@@ -241,8 +240,7 @@ pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring
 
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
-sed -i 's/ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
+sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
 
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
@@ -319,7 +317,7 @@ else
 fi
 
 echo "================================================================="
-echo "==                   GRAPGIC CARD INSTALLATION                 =="
+echo "==                   GRAPHIC CARD INSTALLATION                 =="
 echo "================================================================="
 
 if [[ $GRAPHIC == "1" ]]; then
@@ -415,7 +413,7 @@ if [[ $DATABASE == "y" ]]; then
   # pamac install mssql-server --no-confirm
 
 else
-   echo "Database Will Mot be Installed"
+   echo "Database Will Not be Installed"
 fi
 
 echo "================================================================="
@@ -450,12 +448,12 @@ echo "================================================================="
 
 if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]]; then
     pacman -S plymouth --noconfirm --needed
-    sed -i 's/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap block filesystems fsck)/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+    sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 
 elif [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "2" ]]; then
     pacman -S plymouth
-    sed -i 's/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap block filesystems fsck)/HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+    sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
 
 else
    echo "Plymouth Will Not be Installed"
@@ -481,19 +479,18 @@ echo "================================================================="
 pacman -S zram-generator  --noconfirm --needed
 
 if [[ $BOOTLOADER == "1" ]]; then
-   sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3 zswap.enabled=0"/' /etc/default/grub
+   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3 zswap.enabled=0"/' /etc/default/grub
    echo -e "\n[zram0]\nzram-size=ram" >> /usr/lib/systemd/zram-generator.conf
    echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
 else 
-   echo -e "\n[zram0]\nzram-size=ram" >> /usr/lib/systemd/zram-generator.conf
-   echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
+   echo -e "\n[zram0]\nzram-size=ram" >> /etc/systemd/zram-generator.conf
+   echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /etc/systemd/zram-generator.conf
 fi
 
 systemctl daemon-reload
 systemctl start /dev/zram0
 
 
-# REALEND
 EOF
 
 arch-chroot /mnt sh next.sh
