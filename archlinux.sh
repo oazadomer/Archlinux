@@ -201,7 +201,7 @@ echo "==                  Installing Bootloader                      =="
 echo "================================================================="
 
 if [[ $BOOTLOADER == "1" ]]; then
-    pacman -S grub efibootmgr
+    pacman -S grub efibootmgr --noconfirm --needed
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 
     sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=5/' /etc/default/grub
@@ -212,36 +212,37 @@ if [[ $BOOTLOADER == "1" ]]; then
     grub-mkconfig -o /boot/grub/grub.cfg
 
 elif [[ $BOOTLOADER == "2" ]]; then 
-    bootctl --esp-path=/boot install
-    rm /boot/loader/loader.conf
+      pacman -S efibootmgr --nocofirm --needed
+      bootctl --esp-path=/boot install
+      rm /boot/loader/loader.conf
 
-cat <<EOF > /mnt/boot/loader/loader.conf
-default arch
+cat <<EOF > /boot/loader/loader.conf
+default arch-*
 timeout 5
 editor no
 EOF
 
-cat <<EOF > /mnt/boot/loader/entries/windows.conf
+cat <<EOF > /boot/loader/entries/windows.conf
 title    Windows Boot Manager
 linux    /EFI/Microsoft/Boot/bootmgfw.efi
 EOF
 
     if [[ $KERNEL == "1" ]]; then
-cat <<EOF > /mnt/boot/loader/entries/arch.conf
+cat <<EOF > /boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /amd-ucode.img
 initrd   /initramfs-linux.img
-options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=multi-user.target
+options  root="${ROOT}" rw systemd.unit=multi-user.target
 EOF
 
     elif [[ $KERNEL == "2" ]]; then
-cat <<EOF > /mnt/boot/loader/entries/arch.conf
+cat <<EOF > /boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux-lts
 initrd   /amd-ucode.img
 initrd   /initramfs-linux-lts.img
-options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=multi-user.target
+options  root="$(ROOT)" rw systemd.unit=multi-user.target
 EOF
  fi
 fi   
