@@ -214,19 +214,35 @@ if [[ $BOOTLOADER == "1" ]]; then
 elif [[ $BOOTLOADER == "2" ]]; then 
    bootctl --esp-path=/boot install
    rm /boot/loader/loader.conf
-   
-   echo -e "default arch.conf\ntimeout 5\n" >> /boot/loader/loader.conf
-   echo -e "editor no" >> /boot/loader/loader.conf
+
+   cat <<EOF > /mnt/boot/loader/loader.conf
+   default arch
+   timeout 5
+   editor no
+   EOF
+
+   cat <<EOF > /mnt/boot/loader/entries/windows.conf
+       title    Windows Boot Manager
+       linux    /EFI/Microsoft/Boot/bootmgfw.efi
+       EOF
    
    if [[ $KERNEL == "1" ]]; then
-       echo -e "title Arch Linux\nlinux /vmlinuz-linux\n" >> /boot/loader/entries/arch.conf
-       echo -e "initrd /amd-ucode.img\n" >> /boot/loader/entries/arch.conf
-       echo -e "initrd /initramfs-linux.img\noptions root=/dev/nvme0n1p2 rw systemd.unit=multi-user.target" >> /boot/loader/entries/arch.conf
+       cat <<EOF > /mnt/boot/loader/entries/arch.conf
+       title    Arch Linux
+       linux    /vmlinuz-linux
+       initrd   /amd-ucode.img
+       initrd   /initramfs-linux.img
+       options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=multi-user.target
+       EOF
     
    elif [[ $KERNEL == "2" ]]; then
-         echo -e "title Arch Linux\nlinux /vmlinuz-linux-lts\n" >> /boot/loader/entries/arch.conf
-         echo -e "initrd  /amd-ucode.img\n" >> /boot/loader/entries/arch.conf
-         echo -e "initrd /initramfs-linux-lts.img\noptions initrd=/initramfs-linux-lts.img root=/dev/nvme0n1p2 rw rootflags=subvol=@ rootfstype=btrfs quiet splash" >> /boot/loader/entries/arch.conf
+         cat <<EOF > /mnt/boot/loader/entries/arch.conf
+         title    Arch Linux
+         linux    /vmlinuz-linux-lts
+         initrd   /amd-ucode.img
+         initrd   /initramfs-linux-lts.img
+         options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=multi-user.target
+         EOF
   fi
 fi   
 
