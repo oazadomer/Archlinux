@@ -6,7 +6,7 @@ echo "================================================================="
 
 pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring --noconfirm --needed
 timedatectl set-ntp true
-reflector --latest 12 --sort rate --save /etc/pacman.d/mirrorlist
+# reflector --latest 12 --sort rate --save /etc/pacman.d/mirrorlist
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
 sed -i 's/ParallelDownloads = 5/ParallelDownloads = 3/' /etc/pacman.conf
 pacman -Sy
@@ -212,35 +212,33 @@ if [[ $BOOTLOADER == "1" ]]; then
     grub-mkconfig -o /boot/grub/grub.cfg
 
 elif [[ $BOOTLOADER == "2" ]]; then 
-      pacman -S efibootmgr --nocofirm --needed
+      pacman -S efibootmgr --noconfirm --needed
       bootctl --esp-path=/boot install
       rm /boot/loader/loader.conf
 
 cat <<EOF > /boot/loader/loader.conf
-default arch-*
+default arch
 timeout 5
+console-mode max
 editor no
-EOF
-
-cat <<EOF > /boot/loader/entries/windows.conf
-title    Windows Boot Manager
-linux    /EFI/Microsoft/Boot/bootmgfw.efi
 EOF
 
     if [[ $KERNEL == "1" ]]; then
 cat <<EOF > /boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux
+initrd   /amd-ucode.img
 initrd   /initramfs-linux.img
-options  initrd=/initramfs-linux.img root="$(ROOT)" rw rootflags=subvol=@ rootfstype=btrfs quiet splash
+options  initrd=/initramfs-linux.img root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
 
     elif [[ $KERNEL == "2" ]]; then
 cat <<EOF > /boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux-lts
+initrd   /amd-ucode.img
 initrd   /initramfs-linux-lts.img
-initrd=/initramfs-linux-lts.img root="$(ROOT)" rw rootflags=subvol=@ rootfstype=btrfs quiet splash
+initrd=/initramfs-linux-lts.img root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
  fi
 fi   
