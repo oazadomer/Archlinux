@@ -233,7 +233,7 @@ title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /amd-ucode.img
 initrd   /initramfs-linux.img
-options  root="${ROOT}" rw systemd.unit=multi-user.target
+options  initrd=/initramfs-linux.img root="$(ROOT)" rw rootflags=subvol=@ rootfstype=btrfs quiet splash
 EOF
 
     elif [[ $KERNEL == "2" ]]; then
@@ -242,7 +242,7 @@ title    Arch Linux
 linux    /vmlinuz-linux-lts
 initrd   /amd-ucode.img
 initrd   /initramfs-linux-lts.img
-options  root="$(ROOT)" rw systemd.unit=multi-user.target
+initrd=/initramfs-linux-lts.img root="$(ROOT)" rw rootflags=subvol=@ rootfstype=btrfs quiet splash
 EOF
  fi
 fi   
