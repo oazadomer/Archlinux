@@ -6,7 +6,7 @@ echo "================================================================="
 
 pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring --noconfirm --needed
 timedatectl set-ntp true
-reflector --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
+reflector --latest 12 --sort rate --save /etc/pacman.d/mirrorlist
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
 sed -i 's/ParallelDownloads = 5/ParallelDownloads = 3/' /etc/pacman.conf
 pacman -Sy
