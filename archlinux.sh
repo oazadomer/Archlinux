@@ -159,7 +159,7 @@ if [[ $KERNEL == "1" ]]; then
     pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                      
 
 elif [[ $KERNEL == "2" ]]; then
-    pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                                
+    pacstrap -K /mnt base base-devel linux-lts linux-firmware # linux-lts-headers gvim zsh git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                                
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -201,49 +201,49 @@ echo "==                  Installing Bootloader                      =="
 echo "================================================================="
 
 if [[ $BOOTLOADER == "1" ]]; then
-   pacman -S grub efibootmgr
-   grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
+    pacman -S grub efibootmgr
+    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
 
-   sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=5/' /etc/default/grub
-   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
-   sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=menu/' /etc/default/grub
-   sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
+    sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=5/' /etc/default/grub
+    sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=menu/' /etc/default/grub
+    sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
 
-   grub-mkconfig -o /boot/grub/grub.cfg
+    grub-mkconfig -o /boot/grub/grub.cfg
 
 elif [[ $BOOTLOADER == "2" ]]; then 
-   bootctl --esp-path=/boot install
-   rm /boot/loader/loader.conf
+    bootctl --esp-path=/boot install
+    rm /boot/loader/loader.conf
 
-   cat <<EOF > /mnt/boot/loader/loader.conf
-   default arch
-   timeout 5
-   editor no
-   EOF
+    cat <<EOF > /mnt/boot/loader/loader.conf
+default arch
+timeout 5
+editor no
+EOF
 
-   cat <<EOF > /mnt/boot/loader/entries/windows.conf
-       title    Windows Boot Manager
-       linux    /EFI/Microsoft/Boot/bootmgfw.efi
-       EOF
-   
-   if [[ $KERNEL == "1" ]]; then
-       cat <<EOF > /mnt/boot/loader/entries/arch.conf
-       title    Arch Linux
-       linux    /vmlinuz-linux
-       initrd   /amd-ucode.img
-       initrd   /initramfs-linux.img
-       options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=multi-user.target
-       EOF
-    
-   elif [[ $KERNEL == "2" ]]; then
-         cat <<EOF > /mnt/boot/loader/entries/arch.conf
-         title    Arch Linux
-         linux    /vmlinuz-linux-lts
-         initrd   /amd-ucode.img
-         initrd   /initramfs-linux-lts.img
-         options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=multi-user.target
-         EOF
-  fi
+    cat <<EOF > /mnt/boot/loader/entries/windows.conf
+title    Windows Boot Manager
+linux    /EFI/Microsoft/Boot/bootmgfw.efi
+EOF
+
+    if [[ $KERNEL == "1" ]]; then
+        cat <<EOF > /mnt/boot/loader/entries/arch.conf
+title    Arch Linux
+linux    /vmlinuz-linux
+initrd   /amd-ucode.img
+initrd   /initramfs-linux.img
+options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=multi-user.target
+EOF
+
+    elif [[ $KERNEL == "2" ]]; then
+        cat <<EOF > /mnt/boot/loader/entries/arch.conf
+title    Arch Linux
+linux    /vmlinuz-linux-lts
+initrd   /amd-ucode.img
+initrd   /initramfs-linux-lts.img
+options  root=PARTUUID=$(blkid -s PARTUUID -o value "$ROOT") rw systemd.unit=multi-user.target
+EOF
+    fi
 fi   
 
   systemctl enable systemd-boot-update.service
