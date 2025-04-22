@@ -255,7 +255,7 @@ sed -i 's/^#EnableFlatpak/EnableFlatpak/' /etc/pamac.conf
 sed -i 's/MaxParallelDownloads = 4/MaxParallelDownloads = 3/' /etc/pamac.conf
 
 pacman -Syu --noconfirm
-pamac update all --no-confirm
+pamac update --no-confirm
 
 echo "================================================================="
 echo "==                            CPU                              =="
