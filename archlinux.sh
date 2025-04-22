@@ -231,7 +231,6 @@ EOF
 cat <<EOF > /boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux
-initrd   /amd-ucode.img
 initrd   /initramfs-linux.img
 options  initrd=/initramfs-linux.img root="$(ROOT)" rw rootflags=subvol=@ rootfstype=btrfs quiet splash
 EOF
@@ -240,7 +239,6 @@ EOF
 cat <<EOF > /boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux-lts
-initrd   /amd-ucode.img
 initrd   /initramfs-linux-lts.img
 initrd=/initramfs-linux-lts.img root="$(ROOT)" rw rootflags=subvol=@ rootfstype=btrfs quiet splash
 EOF
