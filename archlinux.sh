@@ -9,7 +9,7 @@ timedatectl set-ntp true
 
 reflector --latest 12 --sort rate --save /etc/pacman.d/mirrorlist
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
-sed -i 's/ParallelDownloads = 5/ParallelDownloads = 3/' /etc/pacman.conf
+sed -i 's/ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
 pacman -Sy
 
 echo "================================================================="
@@ -259,7 +259,8 @@ echo "================================================================="
 
  pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
  pacman-key --lsign-key 3056513887B78AEB
- pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+ pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+ pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
  
  sed -i 's/^#Color/Color/' /etc/pacman.conf
  sed -i '/Color/a ILoveCandy' /etc/pacman.conf
