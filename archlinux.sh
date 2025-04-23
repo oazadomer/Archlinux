@@ -407,6 +407,7 @@ if [[ $POWER == "y" ]]; then
     pamac install auto-epp --no-confirm
 
     systemctl enable --now auto-cpufreq
+    sed -i 's/^ExecStart=.*/ExecStart=\/usr\/bin\/grub-btrfsd --syslog --timeshift-auto/' 
 
 else
   echo "Power Optimization Tools Will be Not Installed"
