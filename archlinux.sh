@@ -459,9 +459,11 @@ echo "================================================================="
 
 if [[ $VBOX == "1" ]]; then
     pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needed
+    modprobe vboxdrv; usermod -aG vboxusers $USER
 
 elif [[ $VBOX == "2" ]]; then
       pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needed
+      modprobe vboxdrv; usermod -aG vboxusers $USER
 
 else
    echo "Virtualbox Will Not be Installed"
