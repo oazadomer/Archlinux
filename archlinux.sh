@@ -248,7 +248,7 @@ initrd   /amd-ucode.img
 initrd   /initramfs-linux-lts.img
 initrd=/initramfs-linux-lts.img root="$(ROOT)" rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
- fi
+    fi
 fi   
 
 systemctl enable systemd-boot-update.service
