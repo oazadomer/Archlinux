@@ -311,8 +311,9 @@ elif [[ $DESKTOP == "2" ]]; then
       pacman -S ttf-jetbrains-mono-nerd ttf-cascadia-mono-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts awesome-terminal-fonts --noconfirm --needed
       pamac install thorium-browser-bin megasync-bin crow-translate mailspring-bin acetoneiso local-by-flywheel-bin stacer-bin papirus-folders-nordic --no-confirm
  
-    export TERM="kitty"
-    export TERMINAL="kitty"
+      export TERM="kitty"
+      export TERMINAL="kitty"
+      systemctl enable gdm
     
 elif [[ $DESKTOP == "3" ]]; then
       pacman -S plasma-desktop dolphin dolphin-plugins ark kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk touchegg breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw ktorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp bookworm gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs php nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp docker flatpak bibata-cursor-theme --noconfirm --needed
@@ -320,13 +321,16 @@ elif [[ $DESKTOP == "3" ]]; then
       pacman -S ttf-jetbrains-mono-nerd ttf-cascadia-mono-nerd ttf-firacode-nerd ttf-hack-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts awesome-terminal-fonts --noconfirm --needed
       pamac install thorium-browser-bin megasync-bin crow-translate mailspring-bin acetoneiso local-by-flywheel-bin stacer-bin papirus-folders-nordic --no-confirm
 
-    export TERM="kitty"
-    export TERMINAL="kitty"
-    sed -i 's/Current=/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
+      export TERM="kitty"
+      export TERMINAL="kitty"
+      systemctl enable sddm
+      sed -i 's/Current=/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
     
 else
     echo "Desktop Will Not be Installed"
 fi
+
+systemctl enable ufw
 
 echo "================================================================="
 echo "==                 Sound, Bluetooth, Printer Drivers            =="
@@ -480,7 +484,7 @@ if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]]; then
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 
 elif [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "2" ]]; then
-    pacman -S plymouth
+    pacman -S plymouth --noconfirm --needed
     sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
 
 else
