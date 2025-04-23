@@ -408,10 +408,9 @@ echo "================================================================="
 
 if [[ $POWER == "y" ]]; then
     pacman -S auto-cpufreq envycontrol --noconfirm --needed
-    pamac install auto-epp --no-confirm
+#   pamac install auto-epp --no-confirm
 
     systemctl enable --now auto-cpufreq
-    sed -i 's/^ExecStart=.*/ExecStart=\/usr\/bin\/grub-btrfsd --syslog --timeshift-auto/' 
 
 else
   echo "Power Optimization Tools Will be Not Installed"
@@ -440,7 +439,7 @@ echo "================================================================="
 
 if [[ $DATABASE == "y" ]]; then
     pacman -S postgresql mysql sqlite --noconfirm --needed
-    pamac install mssql-server --no-confirm
+#   pamac install mssql-server --no-confirm
 
 else
    echo "Database Will Not be Installed"
@@ -474,22 +473,22 @@ else
    echo "Virtualbox Will Not be Installed"
 fi
 
-echo "================================================================="
-echo "==           Plymouth Installation and Congratulations         =="
-echo "================================================================="
+# echo "================================================================="
+# echo "==           Plymouth Installation and Congratulations         =="
+# echo "================================================================="
 
-if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]]; then
-    pacman -S plymouth --noconfirm --needed
-    sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
-    grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+# if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]]; then
+#   pacman -S plymouth --noconfirm --needed
+#   sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+#   grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 
-elif [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "2" ]]; then
-    pacman -S plymouth --noconfirm --needed
-    sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+# elif [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "2" ]]; then
+#   pacman -S plymouth --noconfirm --needed
+#   sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
 
-else
-   echo "Plymouth Will Not be Installed"
-fi
+# else
+#  echo "Plymouth Will Not be Installed"
+# fi
 
 echo "================================================================="
 echo "==            Timeshift and Snapshot Configuration             =="               
@@ -499,8 +498,7 @@ if [[ $FILESYSTEM == "1" ]] && [[ $BOOTLOADER == "1" ]]; then
     pacman -S inotify-tools grub-btrfs btrfs-progs timeshift timeshift-autosnap --noconfirm --needed
  
     systemctl enable grub-btrfsd
-    sed -i 's/^ExecStart=.*/ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto/' systemctl edit --full grub-btrfsd
-
+    
 else
     pacman -S timeshift --noconfirm --needed
 fi
@@ -520,8 +518,6 @@ else
    echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /etc/systemd/zram-generator.conf
 fi
 
-systemctl daemon-reload
-systemctl start /dev/zram0
 
 REALEND
 
