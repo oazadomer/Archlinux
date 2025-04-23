@@ -227,9 +227,9 @@ editor no
 EOF
 
 cat <<EOF > /boot/loader/entries/windows.conf
- title    Windows Boot Manager
- linux    /EFI/Microsoft/Boot/bootmgfw.efi
- EOF
+title    Windows Boot Manager
+linux    /EFI/Microsoft/Boot/bootmgfw.efi
+EOF
 
     if [[ $KERNEL == "1" ]]; then
 cat <<EOF > /boot/loader/entries/arch.conf
