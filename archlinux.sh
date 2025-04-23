@@ -6,7 +6,8 @@ echo "================================================================="
 
 pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring --noconfirm --needed
 timedatectl set-ntp true
-# reflector --latest 12 --sort rate --save /etc/pacman.d/mirrorlist
+
+reflector --latest 12 --sort rate --save /etc/pacman.d/mirrorlist
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
 sed -i 's/ParallelDownloads = 5/ParallelDownloads = 3/' /etc/pacman.conf
 pacman -Sy
@@ -207,7 +208,7 @@ if [[ $BOOTLOADER == "1" ]]; then
     sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=5/' /etc/default/grub
     sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
     sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=menu/' /etc/default/grub
-    sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
+    sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
 
     grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -253,26 +254,27 @@ systemctl enable systemd-boot-update.service
 echo "================================================================="
 echo "==                    Enable Multilib Repo                     =="
 echo "================================================================="
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
-sed -i 's/^#Color/Color/' /etc/pacman.conf
-sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
-sed -i 's/ParallelDownloads = 5/ParallelDownloads = 3/' /etc/pacman.conf
-
-echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
-echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
-
-pacman -Sy; pacman -S pamac --noconfirm --needed
-
-sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
-sed -i 's/^#EnableFlatpak/EnableFlatpak/' /etc/pamac.conf      
-sed -i 's/MaxParallelDownloads = 4/MaxParallelDownloads = 3/' /etc/pamac.conf
-
-pacman -Syu --noconfirm
-pamac update --no-confirm
+ pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+ pacman-key --lsign-key 3056513887B78AEB
+ pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+ 
+ sed -i 's/^#Color/Color/' /etc/pacman.conf
+ sed -i '/Color/a ILoveCandy' /etc/pacman.conf
+ sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
+ sed -i 's/ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
+ 
+ echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+ echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
+ 
+ pacman -Sy; pacman -S pamac --noconfirm --needed
+ 
+ sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
+ sed -i 's/^#EnableFlatpak/EnableFlatpak/' /etc/pamac.conf      
+ sed -i 's/MaxParallelDownloads = 4/MaxParallelDownloads = 2/' /etc/pamac.conf
+ 
+ pacman -Syu --noconfirm
+ pamac update --no-confirm
 
 echo "================================================================="
 echo "==                            CPU                              =="
