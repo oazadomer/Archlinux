@@ -495,6 +495,7 @@ if [[ $FILESYSTEM == "1" ]] && [[ $BOOTLOADER == "1" ]]; then
     pacman -S inotify-tools grub-btrfs btrfs-progs timeshift timeshift-autosnap --noconfirm --needed
  
     systemctl enable grub-btrfsd
+    sed -i 's/^ExecStart=.*/  systemctl edit --full grub-btrfsd
 
 else
     pacman -S timeshift --noconfirm --needed
