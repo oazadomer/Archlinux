@@ -329,8 +329,46 @@ elif [[ $DESKTOP == "3" ]]; then
 else
     echo "Desktop Will Not be Installed"
 fi
-
 systemctl enable ufw
+
+# SSSD
+cat <<EOF > /etc/sssd/sssd.conf
+[sssd]
+domains = example.com
+config_file_version = 2
+services = nss, pam
+
+[domain/example.com]
+id_provider = ldap
+ldap_uri = ldap://your-ldap-server
+ldap_search_base = dc=example,dc=com
+EOF
+
+sudo chmod 600 /etc/sssd/sssd.conf
+sudo chown root:root /etc/sssd/sssd.conf
+
+# Ollama
+useradd -r -s /bin/false -U -m -d /usr/share/ollama ollama
+usermod -a -G ollama $(whoami)
+
+cat <<EOF > /etc/systemd/system/ollama.service
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="PATH=$PATH"
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl enable sssd ollama
 
 echo "================================================================="
 echo "==                 Sound, Bluetooth, Printer Drivers            =="
