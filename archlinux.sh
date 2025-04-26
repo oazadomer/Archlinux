@@ -204,18 +204,28 @@ echo "================================================================="
 if [[ $BOOTLOADER == "1" ]]; then
     pacman -S grub efibootmgr --noconfirm --needed
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
-
-    sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=5/' /etc/default/grub
-    sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
-    sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=menu/' /etc/default/grub
-    sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
-
+     
+    if [[ $FILESYSTEM == "1" ]]; then
+        sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
+        sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
+    
+    else
+        sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
+        sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
+    fi
+    
     grub-mkconfig -o /boot/grub/grub.cfg
 
 elif [[ $BOOTLOADER == "2" ]]; then 
       pacman -S efibootmgr --noconfirm --needed
-      sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
-      mkinitcpio -P
+      
+      if [[ $FILESYSTEM == "1" ]]; then
+          sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
+      
+      else
+         sed -i 's/MODULES=.*/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
+      fi
+      
       bootctl --esp-path=/boot install
       rm /boot/loader/loader.conf
 
@@ -249,6 +259,7 @@ initrd   /initramfs-linux-lts.img
 initrd=/initramfs-linux-lts.img root="$(ROOT)" rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
     fi
+    mkinitcpio -P
 fi   
 
 systemctl enable systemd-boot-update.service
@@ -515,18 +526,26 @@ fi
 # echo "==           Plymouth Installation and Congratulations         =="
 # echo "================================================================="
 
-# if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]]; then
-#   pacman -S plymouth --noconfirm --needed
-#   sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
-#   grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]]; then
+    pacman -S plymouth --noconfirm --needed
 
-# elif [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "2" ]]; then
-#   pacman -S plymouth --noconfirm --needed
-#   sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+    if [[ $FILESYSTEM == "1" ]]; then
+        sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    
+    else
+        sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    fi
+    
+    sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+    grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 
-# else
-#  echo "Plymouth Will Not be Installed"
-# fi
+elif [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "2" ]]; then
+      pacman -S plymouth --noconfirm --needed
+      sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+      mkinitcpio -P
+else
+echo "Plymouth Will Not be Installed"
+fi
 
 echo "================================================================="
 echo "==            Timeshift and Snapshot Configuration             =="               
