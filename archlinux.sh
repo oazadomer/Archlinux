@@ -262,7 +262,7 @@ cat <<EOF > /boot/loader/entries/linux.conf
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
-options  root="$(ROOT)" rootflags=subvol=@ rw rootfstype=btrfs quiet splash
+options  root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
 
     elif [[ $KERNEL == "2" ]]; then
@@ -270,7 +270,7 @@ cat <<EOF > /boot/loader/entries/linux-lts.conf
 title    Arch Linux (linux-lts)
 linux    /vmlinuz-linux-lts
 initrd   /initramfs-linux-lts.img
-options root="$(ROOT)" rootflags=subvol=@ rw rootfstype=btrfs quiet splash
+options root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
     fi
     mkinitcpio -P
@@ -540,7 +540,7 @@ fi
 # echo "==           Plymouth Installation and Congratulations         =="
 # echo "================================================================="
 
-if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]]; then
+if [[ $PLYMOUTH == "y" ]] && [[ $BOOTLOADER == "1" ]]; then
     retry_command pacman -S plymouth --noconfirm --needed
 
     if [[ $FILESYSTEM == "1" ]]; then
@@ -553,7 +553,7 @@ if [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "1" ]]; then
     sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 
-elif [[ $PLYMOUTH == "y" ]] && [[ BOOTLOADER == "2" ]]; then
+elif [[ $PLYMOUTH == "y" ]] && [[ $BOOTLOADER == "2" ]]; then
       retry_command pacman -S plymouth --noconfirm --needed
       sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
       mkinitcpio -P
