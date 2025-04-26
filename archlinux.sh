@@ -557,8 +557,9 @@ elif [[ $PLYMOUTH == "y" ]] && [[ $BOOTLOADER == "2" ]]; then
       retry_command pacman -S plymouth --noconfirm --needed
       sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
       mkinitcpio -P
+
 else
-echo "Plymouth Will Not be Installed"
+    echo "Plymouth Will Not be Installed"
 fi
 
 echo "================================================================="
