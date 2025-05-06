@@ -25,7 +25,7 @@ echo "================================================================="
 pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring --noconfirm --needed
 timedatectl set-ntp true
 
-# reflector --latest 12 --sort rate --save /etc/pacman.d/mirrorlist
+reflector --latest 12 --sort rate --save /etc/pacman.d/mirrorlist
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
 sed -i 's/ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
 pacman -Sy
@@ -226,6 +226,7 @@ if [[ $BOOTLOADER == "1" ]]; then
     if [[ $FILESYSTEM == "1" ]]; then
         sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
         sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
+        sed -i 's/^GRUB_GFMODE=.*/GRUB_GFXMODE=1024x768/' /etc/default/grub 
     
     else
         sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
