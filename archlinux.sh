@@ -551,12 +551,12 @@ if [[ $PLYMOUTH == "y" ]] && [[ $BOOTLOADER == "1" ]]; then
         sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
     fi
     
-    sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+    sed -i 's/^HOOKS=.*/HOOKS=(base udev plymouth kms autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 
 elif [[ $PLYMOUTH == "y" ]] && [[ $BOOTLOADER == "2" ]]; then
       retry_command pacman -S plymouth --noconfirm --needed
-      sed -i 's/^HOOKS=.*/HOOKS=(base udev kms plymouth autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+      sed -i 's/^HOOKS=.*/HOOKS=(base udev plymouth kms autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
       mkinitcpio -P
 
 else
