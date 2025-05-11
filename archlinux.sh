@@ -254,6 +254,7 @@ EOF
 
 cat <<EOF > /boot/loader/entries/windows.conf
 title    Windows Boot Manager
+console-mode    0
 linux    /EFI/Microsoft/Boot/bootmgfw.efi
 EOF
 
