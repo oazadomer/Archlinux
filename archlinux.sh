@@ -62,6 +62,7 @@ echo "="
 echo "# Please Choose The Bootloader:"
 echo "1. GRUB"
 echo "2. SYSTEMD-BOOT"
+echo "3. rEFInd"
 read BOOTLOADER
 echo "="
 echo "# Please Enter Your hostname:"
@@ -275,9 +276,20 @@ options root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
     fi
     mkinitcpio -P
-fi   
+    systemctl enable systemd-boot-update.service
 
-systemctl enable systemd-boot-update.service
+elif [[ $BOOTLOADER == "3" ]]; then 
+retry_command pacman -S refind efibootmgr --noconfirm --needed
+refind-install
+
+cat <<EOF > /boot/loader/entries/linux.conf
+title    Arch Linux
+linux    /vmlinuz-linux
+initrd   /initramfs-linux.img
+options  root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
+EOF
+
+fi   
 
 echo "================================================================="
 echo "==                    Enable Multilib Repo                     =="
