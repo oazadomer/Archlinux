@@ -281,12 +281,6 @@ EOF
 elif [[ $BOOTLOADER == "3" ]]; then 
 retry_command pacman -S refind efibootmgr --noconfirm --needed
 refind-install
-
-cat <<EOF > /boot/loader/entries/linux.conf
-title    Arch Linux
-linux    /vmlinuz-linux
-initrd   /initramfs-linux.img
-options  root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
 
 fi   
