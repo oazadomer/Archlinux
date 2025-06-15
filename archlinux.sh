@@ -176,10 +176,10 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap -K /mnt base base-devel linux linux-firmware linux-headers gvim git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                      
+    retry_command pacstrap -K /mnt base base-devel linux linux-firmware linux-headers bash-completion gvim git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                      
 
 elif [[ $KERNEL == "2" ]]; then
-    retry_command pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers gvim git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                                
+    retry_command pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion gvim git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                                
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
