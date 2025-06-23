@@ -61,7 +61,7 @@ read KERNEL
 echo "="
 echo "# Please Choose The Bootloader:"
 echo "1. GRUB"
-echo "2. SYSTEMD-BOOT"
+echo "2. SYSTEMD"
 echo "3. rEFInd"
 read BOOTLOADER
 echo "="
@@ -152,7 +152,7 @@ echo "==            Formating And Mounting The Filesystem            =="
 echo "================================================================="
 
 if [[ $FILESYSTEM == "1" ]]; then
-   mkfs.vfat -F32 -n "EFISYSTEM" "${EFI}"
+   mkfs.vfat -F32 -n "ARCH" "${EFI}"
    mkfs.btrfs -f -L "ROOT" "${ROOT}"
    mount -t btrfs "${ROOT}" /mnt
    btrfs su cr /mnt/@
@@ -164,7 +164,7 @@ if [[ $FILESYSTEM == "1" ]]; then
    mount -t vfat "${EFI}" /mnt/boot/
    
 elif [[ $FILESYSTEM == "2" ]]; then
-   mkfs.vfat -F32 -n "EFISYSTEM" "${EFI}"
+   mkfs.vfat -F32 -n "ARCH" "${EFI}"
    mkfs.ext4 -L "ROOT" "${ROOT}"
    mount -t ext4 "${ROOT}" /mnt
    mkdir /mnt/boot
@@ -232,7 +232,6 @@ if [[ $BOOTLOADER == "1" ]]; then
         sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
         sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
     fi
-    
     grub-mkconfig -o /boot/grub/grub.cfg
 
 elif [[ $BOOTLOADER == "2" ]]; then 
@@ -244,11 +243,11 @@ elif [[ $BOOTLOADER == "2" ]]; then
       else
          sed -i 's/MODULES=.*/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
       fi
-      
       bootctl --esp-path=/boot install
       rm /boot/loader/loader.conf
 
 cat <<EOF > /boot/loader/loader.conf
+default Arch Linux
 timeout 5
 editor no
 EOF
@@ -259,7 +258,7 @@ console-mode    0
 linux    /EFI/Microsoft/Boot/bootmgfw.efi
 EOF
 
-    if [[ $KERNEL == "1" ]]; then
+      if [[ $KERNEL == "1" ]]; then
 cat <<EOF > /boot/loader/entries/linux.conf
 title    Arch Linux
 linux    /vmlinuz-linux
@@ -267,21 +266,20 @@ initrd   /initramfs-linux.img
 options  root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
 
-    elif [[ $KERNEL == "2" ]]; then
+      elif [[ $KERNEL == "2" ]]; then
 cat <<EOF > /boot/loader/entries/linux-lts.conf
 title    Arch Linux (linux-lts)
 linux    /vmlinuz-linux-lts
 initrd   /initramfs-linux-lts.img
 options root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
 EOF
-    fi
-    mkinitcpio -P
-    systemctl enable systemd-boot-update.service
+      fi
+      mkinitcpio -P 
+      systemctl enable systemd-boot-update.service
 
 elif [[ $BOOTLOADER == "3" ]]; then 
 retry_command pacman -S refind efibootmgr --noconfirm --needed
 refind-install
-EOF
 
 fi   
 
