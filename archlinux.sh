@@ -222,7 +222,7 @@ echo "================================================================="
 
 if [[ $BOOTLOADER == "1" ]]; then
     retry_command pacman -S grub efibootmgr --noconfirm --needed
-    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux
+    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
      
     if [[ $FILESYSTEM == "1" ]]; then
         sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
