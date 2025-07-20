@@ -416,16 +416,16 @@ echo "==                   GRAPHIC CARD INSTALLATION                 =="
 echo "================================================================="
 
 if [[ $GRAPHIC == "1" ]]; then
-    retry_command pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu --noconfirm --needed
+    retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-amdgpu --noconfirm --needed
     
 elif [[ $GRAPHIC == "2" ]]; then
-      retry_command pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-intel --noconfirm --needed
+      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-intel --noconfirm --needed
     
 elif [[ $GRAPHIC == "3" ]]; then
-      retry_command pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland xf86-video-amdgpu xf86-video-intel --noconfirm --needed
+      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-amdgpu xf86-video-intel --noconfirm --needed
  
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
-      retry_command pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu --noconfirm --needed
+      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-amdgpu --noconfirm --needed
       retry_command pacman -S nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
      
       if [[ $BOOTLOADER == "1" ]]; then   
@@ -435,7 +435,7 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
       fi
 
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
-      retry_command pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-amdgpu --noconfirm --needed
+      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-amdgpu --noconfirm --needed
       retry_command pacman -S nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 
       if [[ $BOOTLOADER == "1" ]]; then
@@ -445,7 +445,7 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
       fi
       
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
-      retry_command pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel --noconfirm --needed
+      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland  xf86-video-intel --noconfirm --needed
       retry_command pacman -S nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
      
      if [[ $BOOTLOADER == "1" ]]; then 
@@ -455,7 +455,7 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
     fi
     
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
-      retry_command pacman -S xorg-server xorg-xkill xorg-xinput xorg-xinit xf86-input-libinput libwnck3 mesa-utils libinput xorg-xwayland xorg-xlsclients wayland wayland-utils wayland-protocols glfw-wayland egl-wayland xf86-video-intel --noconfirm --needed
+      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-intel --noconfirm --needed
       retry_command pacman -S nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm -needed
 
     if [[ $BOOTLOADER == "1" ]]; then
