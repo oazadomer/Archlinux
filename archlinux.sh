@@ -325,6 +325,7 @@ echo "==                    DESKTOP ENVIRONMENT                      =="
 echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
+    retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
     retry_command pacman -S cinnamon nemo nemo-fileroller ghostty gedit gedit-plugins btop starship yazi gnome-themes-extra gnome-keyring blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs-gtk numlockx touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts simple-scan kdenlive audacity audacious vlc mplayer video-downloader shutter-encoder-bin gnome-screenshot snapshot shotwell gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
     retry_command pacman -S ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
     retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
@@ -336,6 +337,7 @@ if [[ $DESKTOP == "1" ]]; then
     sed -i 's/^#greeter-session=/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
 
 elif [[ $DESKTOP == "2" ]]; then
+      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
       retry_command pacman -S gnome-shell gnome-control-center ghostty gedit gedit-plugins btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan kdenlive audacity audacious vlc mplayer video-downloader shutter-encoder-bin snapshot shotwell gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
       retry_command pacman -S ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
       retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
@@ -346,6 +348,7 @@ elif [[ $DESKTOP == "2" ]]; then
       systemctl enable gdm
     
 elif [[ $DESKTOP == "3" ]]; then
+      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
       retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk touchegg breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
       retry_command pacman -S ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
       retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
@@ -416,17 +419,18 @@ echo "==                   GRAPHIC CARD INSTALLATION                 =="
 echo "================================================================="
 
 if [[ $GRAPHIC == "1" ]]; then
-    retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-amdgpu --noconfirm --needed
+    retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
     
 elif [[ $GRAPHIC == "2" ]]; then
-      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-intel --noconfirm --needed
+      retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
     
 elif [[ $GRAPHIC == "3" ]]; then
-      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-amdgpu xf86-video-intel --noconfirm --needed
+      retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
+      retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
  
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
-      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-amdgpu --noconfirm --needed
-      retry_command pacman -S nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+      retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
+      retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
      
       if [[ $BOOTLOADER == "1" ]]; then   
          sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
@@ -435,8 +439,8 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
       fi
 
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
-      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-amdgpu --noconfirm --needed
-      retry_command pacman -S nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+      retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
+      retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 
       if [[ $BOOTLOADER == "1" ]]; then
         sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
@@ -445,8 +449,8 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
       fi
       
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
-      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland  xf86-video-intel --noconfirm --needed
-      retry_command pacman -S nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+      retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
+      retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
      
      if [[ $BOOTLOADER == "1" ]]; then 
       sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
@@ -455,8 +459,8 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
     fi
     
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
-      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland egl-wayland libwnck3 mesa-utils libinput xorg-wayland xf86-video-intel --noconfirm --needed
-      retry_command pacman -S nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm -needed
+      retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
+      retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm -needed
 
     if [[ $BOOTLOADER == "1" ]]; then
       sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
