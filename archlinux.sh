@@ -92,9 +92,8 @@ echo "2. Intel"
 read CPU
 echo "="
 echo "# Please Choose Your Desktop Environment:"
-echo "1. CINNAMON"
-echo "2. GNOME"
-echo "3. KDE"
+echo "1. GNOME"
+echo "2. KDE"
 echo "n. No Desktop"
 read DESKTOP
 echo "="
@@ -111,11 +110,6 @@ echo "4. AMD and NVIDIA"
 echo "5. INTEL and NVIDIA"
 echo "n. Don't install"
 read GRAPHIC
-echo "="
-echo "# Do You Want to Install Power Optimization Tools?"
-echo "y"
-echo "n"
-read POWER
 echo "="
 echo "# Do You Want To Install Office?"
 echo "1. WPS-Office"
@@ -134,12 +128,6 @@ echo "# Will you Gaming?"
 echo "y"
 echo "n"
 read GAMING
-echo "="
-echo "# Do You Want to Install VirtualBox?"
-echo "1. Yes With Linux Kernel"
-echo "2. Yes With Linux LTS"
-echo "n"
-read VBOX
 echo "="
 echo "# Do You Want to Install Plymouth?"
 echo "y"
@@ -325,21 +313,9 @@ echo "==                    DESKTOP ENVIRONMENT                      =="
 echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
-    retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
-    retry_command pacman -S cinnamon nemo nemo-fileroller ghostty gedit gedit-plugins btop starship yazi gnome-themes-extra gnome-keyring blueman lightdm lightdm-slick-greeter xdg-utils xdg-user-dirs-gtk numlockx touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk transmission-gtk gnome-calculator gnome-calendar gnome-online-accounts simple-scan kdenlive audacity audacious vlc mplayer video-downloader shutter-encoder-bin gnome-screenshot snapshot shotwell gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla mintlocale lightdm-settings brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
-    retry_command pacman -S ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
-    retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#    retry_command pamac install dbgate-bin megasync-bin crow-translate mailspring-bin acetoneiso local-by-flywheel-bin stacer-bin papirus-folders-nordic --no-confirm
-    
-    export TERM="ghostty"
-    export TERMINAL="ghostty"
-    systemctl enable lightdm
-    sed -i 's/^#greeter-session=/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
-
-elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
       retry_command pacman -S gnome-shell gnome-control-center ghostty gedit gedit-plugins btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan kdenlive audacity audacious vlc mplayer video-downloader shutter-encoder-bin snapshot shotwell gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
-      retry_command pacman -S ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
+      retry_command pacman -S envycontrol ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
       retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
 #      retry_command pamac install dbgate-bin megasync-bin crow-translate mailspring-bin acetoneiso local-by-flywheel-bin stacer-bin papirus-folders-nordic --no-confirm
  
@@ -347,10 +323,10 @@ elif [[ $DESKTOP == "2" ]]; then
       export TERMINAL="ghostty"
       systemctl enable gdm
     
-elif [[ $DESKTOP == "3" ]]; then
+elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
       retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk touchegg breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
-      retry_command pacman -S ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
+      retry_command pacman -S envycontrol ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
       retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
 #      retry_command pamac install dbgate-bin megasync-bin crow-translate mailspring-bin acetoneiso local-by-flywheel-bin stacer-bin papirus-folders-nordic --no-confirm
 
@@ -473,20 +449,6 @@ else
 fi
 
 echo "================================================================="
-echo "==                 Power Optimization Tools                    =="
-echo "================================================================="
-
-if [[ $POWER == "y" ]]; then
-    retry_command pacman -S auto-cpufreq envycontrol --noconfirm --needed
-#    retry_commandpamac install auto-epp --no-confirm
-
-    systemctl enable --now auto-cpufreq
-
-else
-  echo "Power Optimization Tools Will be Not Installed"
-fi
-
-echo "================================================================="
 echo "==                      OFFICE INSTALLATION                    =="
 echo "================================================================="
 
@@ -525,22 +487,6 @@ if [[ $GAMING == "y" ]]; then
 
 else
    echo "Gaming Apps and Drivers Will Not be Installed"
-fi
-
-echo "================================================================="
-echo "==                        Virtualbox                           =="
-echo "================================================================="
-
-if [[ $VBOX == "1" ]]; then
-    retry_command pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needed
-    modprobe vboxdrv; usermod -aG vboxusers $USER
-
-elif [[ $VBOX == "2" ]]; then
-      retry_command pacman -S virtualbox virtualbox-host-modules-lts virtualbox-guest-iso virtualbox-guest-utils --noconfirm --needed
-      modprobe vboxdrv; usermod -aG vboxusers $USER
-
-else
-   echo "Virtualbox Will Not be Installed"
 fi
 
 # echo "================================================================="
