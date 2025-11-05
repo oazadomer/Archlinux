@@ -25,9 +25,9 @@ echo "================================================================="
 pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring --noconfirm --needed
 timedatectl set-ntp true
 
-reflector --latest 12 --sort rate --save /etc/pacman.d/mirrorlist
+reflector --latest 6 --sort rate --save /etc/pacman.d/mirrorlist
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
-sed -i 's/ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
+sed -i 's/ParallelDownloads = 5/ParallelDownloads = 3/' /etc/pacman.conf
 pacman -Sy
 
 echo "================================================================="
@@ -164,10 +164,10 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap -K /mnt base base-devel linux linux-firmware linux-headers bash-completion neovim git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                      
+    retry_command pacstrap -K /mnt base base-devel linux linux-firmware linux-headers bash-completion vim git wget curl reflector rsync networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools ntfs-3g openssh cronie ncdu acpid touchegg                           
 
 elif [[ $KERNEL == "2" ]]; then
-    retry_command pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion neovim git python gcc make cmake less wget curl libaio reflector rsync networkmanager usb_modeswitch wireless_tools smartmontools mtools net-tools dosfstools efitools nfs-utils nilfs-utils exfatprogs ntfs-3g ntp openssh cronie pacman-contrib pkgfile rebuild-detector mousetweaks usbutils ncdu os-prober                                                
+    retry_command pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion vim git wget curl reflector rsync networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools ntfs-3g openssh cronie ncdu acpid touchegg                                          
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -202,7 +202,7 @@ echo "================================================================="
 echo "==             Enable Network Service, sshd, fstrim            =="
 echo "================================================================="
 
-systemctl enable NetworkManager sshd fstrim.timer
+systemctl enable NetworkManager sshd fstrim.timer reflector.timer acpid touchegg
 
 echo "================================================================="
 echo "==                  Installing Bootloader                      =="
@@ -314,7 +314,7 @@ echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
-      retry_command pacman -S gnome-shell gnome-control-center ghostty gedit gedit-plugins btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk touchegg f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan kdenlive audacity audacious vlc mplayer video-downloader shutter-encoder-bin snapshot shotwell gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
+      retry_command pacman -S gnome-shell gnome-control-center ghostty gedit gedit-plugins btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan kdenlive audacity audacious mplayer video-downloader shutter-encoder-bin snapshot shotwell gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
       retry_command pacman -S envycontrol ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
       retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
 #      retry_command pamac install dbgate-bin megasync-bin crow-translate mailspring-bin acetoneiso local-by-flywheel-bin stacer-bin papirus-folders-nordic --no-confirm
@@ -325,7 +325,7 @@ if [[ $DESKTOP == "1" ]]; then
     
 elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
-      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk touchegg breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
+      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
       retry_command pacman -S envycontrol ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
       retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
 #      retry_command pamac install dbgate-bin megasync-bin crow-translate mailspring-bin acetoneiso local-by-flywheel-bin stacer-bin papirus-folders-nordic --no-confirm
@@ -382,7 +382,7 @@ echo "==                 Sound, Bluetooth, Printer Drivers            =="
 echo "================================================================="
 
 if [[ $SOUNDBLUETOOTHPRINTER == "y" ]]; then
-    retry_command pacman -S bluez bluez-utils bluez-libs bluez-hid2hci cups pipewire pipewire-audio pipewire-alsa pipewire-pulse gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
+    retry_command pacman -S bluez bluez-utils bluez-libs bluez-hid2hci cups pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
 
     systemctl enable bluetooth cups
 
@@ -490,7 +490,7 @@ else
 fi
 
 # echo "================================================================="
-# echo "==           Plymouth Installation and Congratulations         =="
+# echo "==                           Plymouth                          =="
 # echo "================================================================="
 
 if [[ $PLYMOUTH == "y" ]] && [[ $BOOTLOADER == "1" ]]; then
@@ -552,5 +552,5 @@ echo "================================================================="
 echo "==       Installation Complete. Rebooting in 10 Seconds...     =="
 echo "================================================================="
 
-sleep 10
+sleep 5
 reboot
