@@ -164,10 +164,10 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion vim git wget curl reflector rsync networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools ntfs-3g openssh cronie ncdu acpid touchegg                           
+    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion vim git wget curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie ncdu acpid touchegg                           
 
 elif [[ $KERNEL == "2" ]]; then
-    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion vim git wget curl reflector rsync networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools ntfs-3g openssh cronie ncdu acpid touchegg                                          
+    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion vim git wget curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie ncdu acpid touchegg                                          
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
