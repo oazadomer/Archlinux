@@ -164,10 +164,10 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap -K /mnt base base-devel linux linux-firmware linux-headers bash-completion vim git wget curl reflector rsync networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools ntfs-3g openssh cronie ncdu acpid touchegg                           
+    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion vim git wget curl reflector rsync networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools ntfs-3g openssh cronie ncdu acpid touchegg                           
 
 elif [[ $KERNEL == "2" ]]; then
-    retry_command pacstrap -K /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion vim git wget curl reflector rsync networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools ntfs-3g openssh cronie ncdu acpid touchegg                                          
+    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion vim git wget curl reflector rsync networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools ntfs-3g openssh cronie ncdu acpid touchegg                                          
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -175,7 +175,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 cat <<REALEND > /mnt/next.sh
 
 echo "$HOSTNAME:$HOSTNAMEPASSWORD" | chpasswd
-useradd -mG wheel $USERNAME
+useradd -mG wheel,audio,video,optical,storage $USERNAME
 echo "$USERNAME:$USERNAMEPASSWORD" | chpasswd
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
