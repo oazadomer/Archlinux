@@ -144,11 +144,11 @@ if [[ $FILESYSTEM == "1" ]]; then
    mkfs.btrfs -f -L "ROOT" "${ROOT}"
    mount -t btrfs "${ROOT}" /mnt
    btrfs su cr /mnt/@
-   btrfs su cr /mnt/@.snapshots
+   btrfs su cr /mnt/@snapshots
    umount /mnt
    mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@ "${ROOT}" /mnt
    mkdir -p /mnt/{boot,.snapshots}
-   mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@.snapshots "${ROOT}" /mnt/.snapshots
+   mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@snapshots "${ROOT}" /mnt/.snapshots
    mount -t vfat "${EFI}" /mnt/boot/
    
 elif [[ $FILESYSTEM == "2" ]]; then
