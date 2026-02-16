@@ -49,11 +49,6 @@ echo "="
 echo "# Please Enter Root Partition: ( Example: /dev/sda2 or /dev/nvme0n1p2 ):"
 read ROOT
 echo "="
-echo "# Please Choose File System:"
-echo "1. Btrfs"
-echo "2. Ext4"
-read FILESYSTEM
-echo "="
 echo "# Please Choose The Kernel:"
 echo "1. Linux"
 echo "2. Linux-lts"
@@ -61,8 +56,7 @@ read KERNEL
 echo "="
 echo "# Please Choose The Bootloader:"
 echo "1. GRUB"
-echo "2. SYSTEMD"
-echo "3. rEFInd"
+echo "2. rEFInd"
 read BOOTLOADER
 echo "="
 echo "# Please Enter Your hostname:"
@@ -93,7 +87,6 @@ read CPU
 echo "="
 echo "# Please Choose Your Desktop Environment:"
 echo "1. GNOME"
-echo "2. KDE"
 echo "n. No Desktop"
 read DESKTOP
 echo "="
@@ -112,9 +105,8 @@ echo "n. Don't install"
 read GRAPHIC
 echo "="
 echo "# Do You Want To Install Office?"
-echo "1. WPS-Office"
-echo "2. OnlyOffice"
-echo "3. LibreOffice"
+echo "1. OnlyOffice"
+echo "2. WPS-Office"
 echo "n. Don't Install"
 read OFFICE
 echo "="
@@ -139,7 +131,6 @@ echo "================================================================="
 echo "==            Formating And Mounting The Filesystem            =="
 echo "================================================================="
 
-if [[ $FILESYSTEM == "1" ]]; then
    mkfs.vfat -F32 -n "ARCH" "${EFI}"
    mkfs.btrfs -f -L "ROOT" "${ROOT}"
    mount -t btrfs "${ROOT}" /mnt
@@ -150,14 +141,6 @@ if [[ $FILESYSTEM == "1" ]]; then
    mkdir -p /mnt/{boot,.snapshots}
    mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@snapshots "${ROOT}" /mnt/.snapshots
    mount -t vfat "${EFI}" /mnt/boot/
-   
-elif [[ $FILESYSTEM == "2" ]]; then
-   mkfs.vfat -F32 -n "ARCH" "${EFI}"
-   mkfs.ext4 -L "ROOT" "${ROOT}"
-   mount -t ext4 "${ROOT}" /mnt
-   mkdir /mnt/boot
-   mount -t vfat "${EFI}" /mnt/boot/
-fi
 
 echo "================================================================="
 echo "==                    INSTALLING Arch Linux                    =="
@@ -211,63 +194,15 @@ echo "================================================================="
 if [[ $BOOTLOADER == "1" ]]; then
     retry_command pacman -S grub efibootmgr --noconfirm --needed
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-     
-    if [[ $FILESYSTEM == "1" ]]; then
-        sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
-        sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
     
-    else
-        sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
-        sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
-    fi
+    sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
+    sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
+    
     grub-mkconfig -o /boot/grub/grub.cfg
 
-elif [[ $BOOTLOADER == "2" ]]; then 
-      retry_command pacman -S efibootmgr --noconfirm --needed
-      
-      if [[ $FILESYSTEM == "1" ]]; then
-          sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
-      
-      else
-         sed -i 's/MODULES=.*/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
-      fi
-      bootctl --esp-path=/boot install
-      rm /boot/loader/loader.conf
-
-cat <<EOF > /boot/loader/loader.conf
-default Arch Linux
-timeout 5
-editor no
-EOF
-
-cat <<EOF > /boot/loader/entries/windows.conf
-title    Windows Boot Manager
-console-mode    0
-linux    /EFI/Microsoft/Boot/bootmgfw.efi
-EOF
-
-      if [[ $KERNEL == "1" ]]; then
-cat <<EOF > /boot/loader/entries/linux.conf
-title    Arch Linux
-linux    /vmlinuz-linux
-initrd   /initramfs-linux.img
-options  root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
-EOF
-
-      elif [[ $KERNEL == "2" ]]; then
-cat <<EOF > /boot/loader/entries/linux-lts.conf
-title    Arch Linux (linux-lts)
-linux    /vmlinuz-linux-lts
-initrd   /initramfs-linux-lts.img
-options root=$ROOT rootflags=subvol=@ rw rootfstype=btrfs quiet splash
-EOF
-      fi
-      mkinitcpio -P 
-      systemctl enable systemd-boot-update.service
-
-elif [[ $BOOTLOADER == "3" ]]; then 
-retry_command pacman -S refind efibootmgr --noconfirm --needed
-refind-install
+else [[ $BOOTLOADER == "2" ]]; then 
+      retry_command pacman -S refind efibootmgr --noconfirm --needed
+      refind-install
 
 fi   
 
@@ -314,29 +249,18 @@ echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
-      retry_command pacman -S gnome-shell gnome-control-center ghostty gedit gedit-plugins btop starship yazi gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan kdenlive audacity audacious mplayer video-downloader shutter-encoder-bin snapshot shotwell gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
-      retry_command pacman -S envycontrol ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
-      retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#      retry_command pamac install dbgate-bin megasync-bin crow-translate mailspring-bin acetoneiso local-by-flywheel-bin stacer-bin papirus-folders-nordic --no-confirm
+      retry_command pacman -S gnome-shell gnome-control-center ghostty gedit gedit-plugins btop starship gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut audacity audacious mplayer snapshot shotwell gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs npm yarn ripgrep python-pip pyenv android-tools vala tk brave-bin downgrade dpkg vscodium xclip python-xlib bibata-cursor-theme --noconfirm --needed
+      retry_command pacman -S envycontrol ulauncher acpi ferdium-bin spotify yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
+      retry_command pacman -S ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
+#      retry_command pamac install megasync-bin crow-translate mailspring-bin acetoneiso stacer-bin papirus-folders-nordic --no-confirm
  
       export TERM="ghostty"
       export TERMINAL="ghostty"
-      systemctl enable gdm
-    
-elif [[ $DESKTOP == "2" ]]; then
-      retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
-      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate kitty kitty-shell-integration kitty-terminfo btop starship yazi plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs video-downloader shutter-encoder-bin kamoso flameshot gthumb gimp xournalpp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk filezilla brave-bin downgrade dpkg vscodium postman-bin xclip python-xlib xampp bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
-      retry_command pacman -S envycontrol ulauncher acpi ferdium-bin spotify xpad yay xdg-terminal-exec-git ollama proton-vpn-gtk-app libappindicator-gtk3 gnome-shell-extension-appindicator papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
-      retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#      retry_command pamac install dbgate-bin megasync-bin crow-translate mailspring-bin acetoneiso local-by-flywheel-bin stacer-bin papirus-folders-nordic --no-confirm
-
-      systemctl enable sddm
-      sed -i 's/Current=/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
+      systemctl enable gdm ufw
     
 else
     echo "Desktop Will Not be Installed"
 fi
-systemctl enable ufw
 
 # SSSD
 cat <<EOF > /etc/sssd/sssd.conf
@@ -353,29 +277,6 @@ EOF
 
 sudo chmod 600 /etc/sssd/sssd.conf
 sudo chown root:root /etc/sssd/sssd.conf
-
-# Ollama
-useradd -r -s /bin/false -U -m -d /usr/share/ollama ollama
-usermod -a -G ollama $(whoami)
-
-cat <<EOF > /etc/systemd/system/ollama.service
-[Unit]
-Description=Ollama Service
-After=network-online.target
-
-[Service]
-ExecStart=/usr/bin/ollama serve
-User=ollama
-Group=ollama
-Restart=always
-RestartSec=3
-Environment="PATH=$PATH"
-
-[Install]
-WantedBy=default.target
-EOF
-
-systemctl enable sssd ollama
 
 echo "================================================================="
 echo "==                 Sound, Bluetooth, Printer Drivers            =="
@@ -453,13 +354,10 @@ echo "==                      OFFICE INSTALLATION                    =="
 echo "================================================================="
 
 if [[ $OFFICE == "1" ]]; then
-    retry_command pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
+    retry_command pacman -S onlyoffice-bin --noconfirm --needed
 
 elif [[ $OFFICE == "2" ]]; then
-      retry_command pacman -S onlyoffice-bin --noconfirm --needed
-
-elif [[ $OFFICE == "3" ]]; then
-      retry_command pacman -S libreoffice --noconfirm --needed
+      retry_command pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
 
 else
    echo "Office Will Not be Installed"
@@ -471,7 +369,7 @@ echo "================================================================="
 
 if [[ $DATABASE == "y" ]]; then
     retry_command pacman -S postgresql mysql sqlite --noconfirm --needed
-#    retry_command pamac install mssql-server --no-confirm
+#    retry_command pamac install dbgate-bin
 
 else
    echo "Database Will Not be Installed"
