@@ -394,14 +394,9 @@ fi
 if [[ $PLYMOUTH == "y" ]] && [[ $BOOTLOADER == "1" ]]; then
     retry_command pacman -S plymouth --noconfirm --needed
 
-    if [[ $FILESYSTEM == "1" ]]; then
-        sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
-    
-    else
-        sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
-    fi
-    
+    sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
     sed -i 's/^HOOKS=.*/HOOKS=(base udev plymouth kms autodetect microcode modconf keyboard keymap block filesystems fsck)/' /etc/mkinitcpio.conf
+    
     grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
 
 elif [[ $PLYMOUTH == "y" ]] && [[ $BOOTLOADER == "2" ]]; then
@@ -417,7 +412,7 @@ echo "================================================================="
 echo "==            Timeshift and Snapshot Configuration             =="               
 echo "================================================================="
 
-if [[ $FILESYSTEM == "1" ]] && [[ $BOOTLOADER == "1" ]]; then
+if [[ $BOOTLOADER == "1" ]]; then
     retry_command pacman -S inotify-tools grub-btrfs btrfs-progs timeshift timeshift-autosnap --noconfirm --needed
  
     systemctl enable grub-btrfsd
@@ -433,12 +428,12 @@ echo "================================================================="
 retry_command pacman -S zram-generator  --noconfirm --needed
 
 if [[ $BOOTLOADER == "1" ]]; then
-   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash udev.log_priority=3 zswap.enabled=0"/' /etc/default/grub
+   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3 zswap.enabled=0"/' /etc/default/grub
    echo -e "\n[zram0]\nzram-size=ram" >> /usr/lib/systemd/zram-generator.conf
    echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
 else 
-   echo -e "\n[zram0]\nzram-size=ram" >> /etc/systemd/zram-generator.conf
-   echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /etc/systemd/zram-generator.conf
+   echo -e "\n[zram0]\nzram-size=ram" >> /usr/lib/systemd/zram-generator.conf
+   echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
 fi
 
 
