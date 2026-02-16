@@ -10,9 +10,15 @@ Archlinux Installation Script
 
 4- Partition your Drive to two EFI and ROOT
 
-5- Edit this file : sudo systemctl edit --full grub-btrfsd 
+5- Edit this file : 
+
+sudo systemctl edit --full grub-btrfsd 
  - ExecStart=/usr/bin/grub-btrfsd --syslog /.snapshot 
- -To 
+
+
+- TO
+
+  
  - ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto
 
 6- How to use Envycontrol:
