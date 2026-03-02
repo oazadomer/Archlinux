@@ -9,7 +9,7 @@ curl -L git.io/JYMjD
 
 - OR
 
-- curl https://raw.githubusercontent.com/oazadomer/Archlinux/main/archlinux.sh -o archlinux.sh
+curl https://raw.githubusercontent.com/oazadomer/Archlinux/main/archlinux.sh -o archlinux.sh
 
 3- Run the script by typing: sh archlinux.sh
 
