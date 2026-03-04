@@ -143,10 +143,10 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion zsh vim git wget curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg                           
+    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion zsh zsh-completions gvim git wget curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg                           
 
 elif [[ $KERNEL == "2" ]]; then
-    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion zsh vim git wget curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg                                          
+    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion zsh zsh-completions gvim git wget curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg                                          
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -245,7 +245,7 @@ echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
-      retry_command pacman -S gnome-shell gnome-control-center ghostty gedit gedit-plugins gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut audacity audacious mplayer snapshot shotwell gimp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk brave-bin downgrade dpkg vscodium xclip python-xlib bibata-cursor-theme --noconfirm --needed
+      retry_command pacman -S gnome-shell gnome-control-center ghostty starship gedit gedit-plugins gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan shotcut audacity audacious mplayer snapshot shotwell gimp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk brave-bin downgrade dpkg vscodium xclip python-xlib bibata-cursor-theme --noconfirm --needed
       retry_command pacman -S envycontrol ulauncher acpi ferdium-bin spotify yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 papirus-folders ventoy-bin appimagelauncher --noconfirm --needed
       retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
 #      retry_command pamac install megasync-bin crow-translate mailspring-bin acetoneiso stacer-bin papirus-folders-nordic --no-confirm
@@ -256,7 +256,7 @@ if [[ $DESKTOP == "1" ]]; then
     
 elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
-      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate kitty kitty-shell-integration kitty-terminfo plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs kamoso flameshot gthumb gimp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk brave-bin downgrade dpkg vscodium xclip python-xlib bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
+      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate kitty kitty-shell-integration kitty-terminfo starship plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite kdenlive audacity vlc mplayer ffmpegthumbs kamoso flameshot gthumb gimp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk brave-bin downgrade dpkg vscodium xclip python-xlib bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
       retry_command pacman -S envycontrol acpi ferdium-bin spotify yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
       retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
 #      retry_command pamac install megasync-bin crow-translate mailspring-bin acetoneiso stacer-bin --no-confirm
