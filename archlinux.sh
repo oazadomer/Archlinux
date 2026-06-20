@@ -323,9 +323,6 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
       if [[ $BOOTLOADER == "1" ]]; then   
          sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
          grub-mkconfig -o /boot/grub/grub.cfg
-      
-      else
-       echo "Nothing To Do"
        
       fi
 
@@ -339,9 +336,6 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
       if [[ $BOOTLOADER == "1" ]]; then
         sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
         grub-mkconfig -o /boot/grub/grub.cfg
-      
-      else
-       echo "Nothing To Do"
        
       fi
       
@@ -355,9 +349,6 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
       if [[ $BOOTLOADER == "1" ]]; then 
        sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
        grub-mkconfig -o /boot/grub/grub.cfg
-
-      else
-       echo "Nothing To Do"
        
       fi
     
@@ -371,9 +362,6 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
      if [[ $BOOTLOADER == "1" ]]; then
       sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
       grub-mkconfig -o /boot/grub/grub.cfg
-      
-     else
-      echo "Nothing To Do"
       
      fi
     
