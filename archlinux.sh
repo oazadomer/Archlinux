@@ -133,9 +133,9 @@ echo "================================================================="
    btrfs su cr /mnt/@
    btrfs su cr /mnt/@snapshots
    umount /mnt
-   mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@ "${ROOT}" /mnt
+   mount -o noatime,compress=zstd,subvol=@ "${ROOT}" /mnt
    mkdir -p /mnt/{boot,.snapshots}
-   mount -o defaults,noatime,ssd,compress=zstd,commit=120,subvol=@snapshots "${ROOT}" /mnt/.snapshots
+   mount -o noatime,compress=zstd,subvol=@snapshots "${ROOT}" /mnt/.snapshots
    mount -t vfat "${EFI}" /mnt/boot/
 
 echo "================================================================="
