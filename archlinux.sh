@@ -143,10 +143,10 @@ echo "==                    INSTALLING Arch Linux                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion zsh zsh-completions gvim git wget curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg                           
+    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion zsh zsh-completions gvim git curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg                           
 
 elif [[ $KERNEL == "2" ]]; then
-    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion zsh zsh-completions gvim git wget curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg                                          
+    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion zsh zsh-completions gvim git curl reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg                                          
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -316,42 +316,66 @@ elif [[ $GRAPHIC == "3" ]]; then
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
       retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
       retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
-     
+
+      sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+      mkinitcpio -P
+      
       if [[ $BOOTLOADER == "1" ]]; then   
          sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-         sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
-         grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+         grub-mkconfig -o /boot/grub/grub.cfg
+      
+      else
+       echo "Nothing To Do"
+       
       fi
 
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
       retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
       retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
 
+      sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+      mkinitcpio -P
+      
       if [[ $BOOTLOADER == "1" ]]; then
         sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-        sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
-        grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
+        grub-mkconfig -o /boot/grub/grub.cfg
+      
+      else
+       echo "Nothing To Do"
+       
       fi
       
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
       retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
       retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
-     
-     if [[ $BOOTLOADER == "1" ]]; then 
-      sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-      sed -i 's/MODULES=.*/MODULES=(i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
-      grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
-    fi
+
+      sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+      mkinitcpio -P
+       
+      if [[ $BOOTLOADER == "1" ]]; then 
+       sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
+       grub-mkconfig -o /boot/grub/grub.cfg
+
+      else
+       echo "Nothing To Do"
+       
+      fi
     
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
       retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
       retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm -needed
 
-    if [[ $BOOTLOADER == "1" ]]; then
+      sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+      mkinitcpio -P
+
+     if [[ $BOOTLOADER == "1" ]]; then
       sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-      sed -i 's/MODULES=.*/MODULES=(i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
-      grub-mkconfig -o /boot/grub/grub.cfg; mkinitcpio -P
-    fi
+      grub-mkconfig -o /boot/grub/grub.cfg
+      
+     else
+      echo "Nothing To Do"
+      
+     fi
     
 else
    echo "Graphic Card Will Not be Installed"
@@ -414,13 +438,17 @@ echo "================================================================="
 
 retry_command pacman -S zram-generator  --noconfirm --needed
 
+cat > /etc/systemd/zram-generator.conf << EOF
+[zram0]
+zram-size = ram
+compression-algorithm = zstd
+swap-priority = 100
+EOF
+
 if [[ $BOOTLOADER == "1" ]]; then
-   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3 zswap.enabled=0"/' /etc/default/grub
-   echo -e "\n[zram0]\nzram-size=ram" >> /usr/lib/systemd/zram-generator.conf
-   echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
-else 
-   echo -e "\n[zram0]\nzram-size=ram" >> /usr/lib/systemd/zram-generator.conf
-   echo -e "\ncompression-algorithm=zstd\nswap-priority=60\n" >> /usr/lib/systemd/zram-generator.conf
+   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3 udev.log_priority=3 rd.udev.log_level=3 zswap.enabled=0"/' /etc/default/grub
+   grub-mkconfig -o /boot/grub/grub.cfg
+
 fi
 
 
