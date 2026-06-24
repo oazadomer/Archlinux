@@ -122,6 +122,10 @@ echo "y"
 echo "n"
 read GAMING
 echo "="
+echo "# Do You Want To Install Plymouth?"
+echo "y"
+echo "n"
+echo "="
 
 echo "================================================================="
 echo "==            Formating And Mounting The Filesystem            =="
@@ -136,7 +140,7 @@ echo "================================================================="
    mount -o noatime,compress=zstd,subvol=@ "${ROOT}" /mnt
    mkdir -p /mnt/{boot,.snapshots}
    mount -o noatime,compress=zstd,subvol=@snapshots "${ROOT}" /mnt/.snapshots
-   mount -t vfat "${EFI}" /mnt/boot/
+   mount -t vfat "${EFI}" /mnt/boot
 
 echo "================================================================="
 echo "==                    INSTALLING Arch Linux                    =="
@@ -189,7 +193,7 @@ echo "================================================================="
 
 if [[ $BOOTLOADER == "1" ]]; then
     retry_command pacman -S grub efibootmgr --noconfirm --needed
-    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ARCH
     
     sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
     sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
@@ -198,7 +202,7 @@ if [[ $BOOTLOADER == "1" ]]; then
 
 else [[ $BOOTLOADER == "2" ]]; then 
       retry_command pacman -S refind efibootmgr --noconfirm --needed
-      refind-install
+      refind-install --usedefault "${EFI}"
 
 fi   
 
