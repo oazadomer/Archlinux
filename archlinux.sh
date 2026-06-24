@@ -125,6 +125,7 @@ echo "="
 echo "# Do You Want To Install Plymouth?"
 echo "y"
 echo "n"
+read PLYMOUTH
 echo "="
 
 echo "================================================================="
@@ -412,6 +413,23 @@ else
 fi
 
 echo "================================================================="
+echo "==                      Plymouth Installation                  =="
+echo "================================================================="
+
+if [[ $PLYMOUTH == "y" ]]; then
+    retry_command pacman -S plymouth --noconfirm -- needed
+
+    sed -i 's/^HOOKS=.*/HOOKS=(base udev plymouth autodetect microcode modconf block filesystems fsck)/' /etc/mkinitcpio.conf
+
+    if [[ $BOOTLOADER == "1" ]]; then
+       sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
+    
+    elif [[ $BOOTLOADER == "2" ]]; then
+         echo 'options "splash"' >> /boot/EFI/refind/refind.conf
+    fi
+fi
+
+echo "================================================================="
 echo "==            Timeshift and Snapshot Configuration             =="               
 echo "================================================================="
 
@@ -438,11 +456,11 @@ swap-priority = 100
 EOF
 
 if [[ $BOOTLOADER == "1" ]]; then
-   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3 udev.log_priority=3 rd.udev.log_level=3 zswap.enabled=0"/' /etc/default/grub
+   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3 rd.udev.log_level=3 zswap.enabled=0"/' /etc/default/grub
+   
    grub-mkconfig -o /boot/grub/grub.cfg
 
 fi
-
 
 REALEND
 
@@ -452,5 +470,5 @@ echo "================================================================="
 echo "==       Installation Complete. Rebooting in 10 Seconds...     =="
 echo "================================================================="
 
-sleep 5
+sleep 10
 reboot
