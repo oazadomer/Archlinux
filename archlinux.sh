@@ -250,10 +250,10 @@ echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
-      retry_command pacman -S gnome-shell gnome-control-center ghostty starship gedit gedit-plugins gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan audacity audacious mplayer vlc shotwell gimp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk brave-origin-bin downgrade dpkg vscodium xclip python-xlib bibata-cursor-theme --noconfirm --needed
-      retry_command pacman -S envycontrol ulauncher acpi ferdium-bin spotify yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 papirus-folders ventoy-bin appimagelauncher scratch --noconfirm --needed
-      retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#      retry_command pamac install megasync-bin crow-translate mailspring-bin acetoneiso stacer-bin papirus-folders-nordic --no-confirm
+      retry_command pacman -S gnome-shell gnome-control-center ghostty starship gedit gedit-plugins gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan audacious mplayer vlc shotwell gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk brave-origin-bin dpkg vscodium xclip python-xlib bibata-cursor-theme --noconfirm --needed
+      retry_command pacman -S envycontrol ulauncher acpi ferdium-bin yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
+      retry_command pacman -S ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
+#      retry_command pamac install megasync-bin crow-translate mailspring-bin papirus-folders-nordic --no-confirm
  
       export TERM="ghostty"
       export TERMINAL="ghostty"
@@ -261,10 +261,10 @@ if [[ $DESKTOP == "1" ]]; then
     
 elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
-      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate kitty kitty-shell-integration kitty-terminfo starship plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite audacity vlc mplayer ffmpegthumbs kamoso flameshot gthumb gimp gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk brave-origin-bin downgrade dpkg vscodium xclip python-xlib bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
-      retry_command pacman -S envycontrol acpi ferdium-bin spotify yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher scratch --noconfirm --needed
-      retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#      retry_command pamac install megasync-bin crow-translate mailspring-bin acetoneiso stacer-bin --no-confirm
+      retry_command pacman -S plasma-desktop kitty kitty-shell-integration kitty-terminfo dolphin dolphin-plugins ark kate starship plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen kinfocenter sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite audacity vlc mplayer ffmpegthumbs kamoso flameshot gthumb gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk brave-origin-bin dpkg vscodium xclip python-xlib bibata-cursor-theme kvantum kvantum-qt5 --noconfirm --needed
+      retry_command pacman -S envycontrol acpi ferdium-bin yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
+      retry_command pacman -S ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
+#      retry_command pamac install megasync-bin crow-translate mailspring-bin --no-confirm
       
       export TERM="kitty"
       export TERMINAL="kitty"
