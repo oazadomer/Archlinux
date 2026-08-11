@@ -122,11 +122,6 @@ echo "y"
 echo "n"
 read GAMING
 echo "="
-echo "# Do You Want To Install Plymouth?"
-echo "y"
-echo "n"
-read PLYMOUTH
-echo "="
 
 echo "================================================================="
 echo "==            Formating And Mounting The Filesystem            =="
@@ -410,23 +405,6 @@ if [[ $GAMING == "y" ]]; then
 
 else
    echo "Gaming Apps and Drivers Will Not be Installed"
-fi
-
-echo "================================================================="
-echo "==                      Plymouth Installation                  =="
-echo "================================================================="
-
-if [[ $PLYMOUTH == "y" ]]; then
-    retry_command pacman -S plymouth --noconfirm -- needed
-
-    sed -i 's/^HOOKS=.*/HOOKS=(base udev plymouth autodetect microcode modconf block filesystems fsck)/' /etc/mkinitcpio.conf
-
-    if [[ $BOOTLOADER == "1" ]]; then
-       sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3"/' /etc/default/grub
-    
-    elif [[ $BOOTLOADER == "2" ]]; then
-         echo 'options "splash"' >> /boot/EFI/refind/refind.conf
-    fi
 fi
 
 echo "================================================================="
