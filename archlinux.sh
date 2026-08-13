@@ -248,7 +248,7 @@ if [[ $DESKTOP == "1" ]]; then
       retry_command pacman -S gnome-shell gnome-control-center ghostty starship gedit gedit-plugins gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector btop file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan audacious mplayer vlc shotwell gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk brave-origin-bin dpkg vscodium xclip python-xlib --noconfirm --needed
       retry_command pacman -S mailspring envycontrol ulauncher acpi ferdium-bin yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
       retry_command pacman -S ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#      retry_command pamac install megasync-bin crow-translate papirus-folders-nordic --no-confirm
+#      retry_command pamac install megasync-bin crow-translate --no-confirm
  
       export TERM="ghostty"
       export TERMINAL="ghostty"
