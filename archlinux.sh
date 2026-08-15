@@ -469,15 +469,13 @@ echo "================================================================="
 echo "==       Installation Complete. Rebooting in 10 Seconds...     =="
 echo "================================================================="
 
-echo "To Cancel Reboot Press Ctrl + c"
-
 trap 'printf "\nReboot cancelled.\n"; exit 1' INT
 
 for ((i=10; i>0; i--)); do
-    printf "\rRebooting in %d seconds... Press Ctrl+C to cancel" "$i"
+    printf "\rRebooting in %d seconds. Press Ctrl+C to cancel.   " "$i"
     sleep 1
 done
 
-printf "\rRebooting now...                          \n"
+printf "\rRebooting now...                              \n"
 sudo reboot
 
