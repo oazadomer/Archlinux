@@ -111,6 +111,13 @@ echo "2. WPS-Office"
 echo "n. Don't Install"
 read OFFICE
 echo "="
+echo "Do You Want To Install Programs Like:"
+echo "Media Player, Image and Video Editor"
+echo "E-Mail, Chat, Vscode, Fonts, ProtonVPN, etc"
+echo "y"
+echo "n"
+read PROGRAMS
+echo "="
 echo "# Do You Want to Install Database?"
 echo "Postgresql, Mysql, Sqlite"
 echo "y"
@@ -245,10 +252,7 @@ echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
-      retry_command pacman -S gnome-shell gnome-control-center ghostty starship gedit gedit-plugins gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-menus gnome-screenshot gnome-online-accounts gnome-browser-connector btop file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome transmission-gtk gnome-calculator gnome-calendar simple-scan audacious mplayer vlc shotwell gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk brave-origin-bin dpkg vscodium xclip python-xlib --noconfirm --needed
-      retry_command pacman -S mailspring envycontrol ulauncher acpi ferdium-bin yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
-      retry_command pacman -S ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#      retry_command pamac install megasync-bin crow-translate --no-confirm
+      retry_command pacman -S gnome-shell gnome-control-center gnome-menus ghostty starship gedit gedit-plugins gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-online-accounts transmission-gtk gnome-screenshot gnome-calculator gnome-calendar simple-scan shotwell gparted gnome-browser-connector btop file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk brave-origin-bin dpkg xclip python-xlib --noconfirm --needed
  
       export TERM="ghostty"
       export TERMINAL="ghostty"
@@ -256,10 +260,7 @@ if [[ $DESKTOP == "1" ]]; then
     
 elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
-      retry_command pacman -S plasma-desktop kitty kitty-shell-integration kitty-terminfo dolphin dolphin-plugins ark kate starship plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma qalculate xdg-desktop-portal-gtk xdg-desktop-portal-kde f2fs-tools traceroute gufw qbittorrent merkuro skanlite audacity vlc mplayer ffmpegthumbs kamoso flameshot gthumb gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk brave-origin-bin dpkg vscodium xclip python-xlib kvantum kvantum-qt5 --noconfirm --needed
-      retry_command pacman -S mailspring envycontrol acpi ferdium-bin yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
-      retry_command pacman -S ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#      retry_command pamac install megasync-bin crow-translate --no-confirm
+      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo starship f2fs-tools traceroute gufw qalculate merkuro skanlite qbittorrent ffmpegthumbs kamoso flameshot gthumb gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk brave-origin-bin dpkg vscodium xclip python-xlib kvantum kvantum-qt5 --noconfirm --needed
       
       export TERM="kitty"
       export TERMINAL="kitty"
@@ -367,6 +368,26 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
     
 else
    echo "Graphic Card Will Not be Installed"
+fi
+
+echo "================================================================="
+echo "==                          Programs                           =="
+echo "================================================================="
+
+if [[ $PROGRAMS == "y" ]]; then
+    retry_command pacman -S gimp audacity audacious mplayer mpd rmpc vlc
+    retry_command pacman -S vscodium mailspring envycontrol ulauncher acpi ferdium-bin yay xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
+    retry_command pacman -S ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
+#    retry_command pamac install megasync-bin crow-translate --no-confirm
+
+    if [[ $DESKTOP == "1" ]]; then
+    retry_command pacman -S shotcut
+
+    elif [[ $DESKTOP == "2" ]]; then
+    retry_command pacman -S kdenlive
+
+else
+   echo "Programs Will Not be Installed"
 fi
 
 echo "================================================================="
