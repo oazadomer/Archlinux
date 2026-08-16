@@ -252,7 +252,7 @@ echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
-      retry_command pacman -S gnome-shell gnome-control-center gnome-menus ghostty starship gedit gedit-plugins gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-online-accounts 
+      retry_command pacman -S gnome-shell gnome-control-center gnome-menus ghostty yazi starship gedit gedit-plugins gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-online-accounts 
       retry_command pacman -S catppuccin-cursors-mocha bibata-cursor-theme transmission-gtk gnome-screenshot gnome-calculator gnome-calendar simple-scan shotwell gparted gnome-browser-connector btop file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk brave-origin-bin dpkg xclip python-xlib yay --noconfirm --needed
  
       export TERM="ghostty"
@@ -261,7 +261,7 @@ if [[ $DESKTOP == "1" ]]; then
     
 elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
-      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo starship f2fs-tools traceroute gufw 
+      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark kate plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo yazi starship f2fs-tools traceroute gufw 
       retry_command pacman -S catppuccin-cursors-mocha bibata-cursor-theme qalculate merkuro skanlite qbittorrent ffmpegthumbs kamoso flameshot gthumb gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk brave-origin-bin dpkg vscodium xclip python-xlib kvantum kvantum-qt5 yay --noconfirm --needed
       
       export TERM="kitty"
