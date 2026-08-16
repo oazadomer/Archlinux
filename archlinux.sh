@@ -377,7 +377,7 @@ echo "==                          Programs                           =="
 echo "================================================================="
 
 if [[ $PROGRAMS == "y" ]]; then
-    retry_command pacman -S gimp audacity audacious mplayer vlc
+    retry_command pacman -S gimp audacity audacious mplayer mpd rmpc vlc
     retry_command pacman -S vscodium mailspring envycontrol ulauncher acpi ferdium-bin xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
     retry_command pacman -S ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
 #    retry_command pamac install megasync-bin crow-translate --no-confirm
