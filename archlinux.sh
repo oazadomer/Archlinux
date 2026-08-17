@@ -272,7 +272,7 @@ elif [[ $DESKTOP == "2" ]]; then
 
 elif [[ $DESKTOP == "3" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
-      retry_command pacman -S hyprland hyprpolkitagent waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk powerdevil blueman kwalletmanager kitty kitty-shell-integration kitty-terminfo dolphin dolphin-plugins pavucontrol ark kate yazi starship btop sddm f2fs-tools gufw traceroute --noconfirm --needed
+      retry_command pacman -S hyprland hyprpolkitagent hypridle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk powerdevil blueman kwalletmanager kitty kitty-shell-integration kitty-terminfo dolphin dolphin-plugins pavucontrol ark kate yazi starship btop sddm f2fs-tools gufw traceroute --noconfirm --needed
       retry_command pacman -S catppuccin-cursors-mocha bibata-cursor-theme brave-origin-bin qbittorrent qalculate-gtk nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg xclip python-xlib kvantum kvantum-qt5 yay gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xsane gparted imv --noconfirm --needed
 #      retry_command pamac install hyprmod --noconfirm --needed
       
