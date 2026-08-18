@@ -275,7 +275,7 @@ elif [[ $DESKTOP == "3" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
       retry_command pacman -S hyprland hyprpolkitagent hypridle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi pavucontrol file-roller yazi starship btop sddm f2fs-tools gufw traceroute --noconfirm --needed
       retry_command pacman -S vscodium catppuccin-cursors-mocha brave-origin-bin snapshot gnome-calendar gnome-contacts transmission-gtk qalculate-gtk nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 yay gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xsane gparted imv --noconfirm --needed
-#      retry_command pamac install hyprmod hyprpicker --noconfirm --needed
+#      retry_command pamac install hyprmod hyprpicker --no-confirm --needed
       
       export TERM="kitty"
       export TERMINAL="kitty"
@@ -286,7 +286,7 @@ elif [[ $DESKTOP == "4" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
       retry_command pacman -S niri polkit-gnome swayidle waybar swaync swaybg swaylock wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-wlr xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi pavucontrol file-roller yazi starship btop sddm f2fs-tools gufw traceroute qt5-wayland qt6-wayland --noconfirm --needed
       retry_command pacman -S vscodium catppuccin-cursors-mocha brave-origin-bin snapshot gnome-calendar gnome-contacts transmission-gtk qalculate-gtk nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 yay gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xsane gparted imv --noconfirm --needed
-#      retry_command pamac install wcolorpicker
+#      retry_command pamac install wcolorpicker --no-confirm --needed
      
       export TERM="kitty"
       export TERMINAL="kitty"
@@ -404,13 +404,13 @@ if [[ $PROGRAMS == "y" ]]; then
     retry_command pacman -S gimp audacity audacious mplayer mpd rmpc vlc --noconfirm -needed
     retry_command pacman -S mailspring envycontrol ulauncher acpi ferdium-bin xdg-terminal-exec-git proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
     retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#    retry_command pamac install megasync-bin crow-translate --no-confirm
+#    retry_command pamac install megasync-bin crow-translate --no-confirm --needed
 
     if [[ $DESKTOP == "1" ]]; then
     retry_command pacman -S shotcut --noconfirm -needed
 
-    elif [[ $DESKTOP == "2" ]]; then
-    retry_command pacman -S kdenlive --noconfirm -needed
+    elif [[ $DESKTOP == "2" ]] && [[ $DESKTOP "3" ]] && [[ $DESKTOP == "4" ]]; then
+    retry_command pacman -S kdenlive --noconfirm --needed
 
 else
    echo "Programs Will Not be Installed"
