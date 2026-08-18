@@ -284,7 +284,7 @@ elif [[ $DESKTOP == "3" ]]; then
 
 elif [[ $DESKTOP == "4" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
-      retry_command pacman -S niri polkit-gnome swayidle waybar swaync swaybg swaylock wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-wlr xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi pavucontrol file-roller yazi starship btop sddm f2fs-tools gufw traceroute qt5-wayland qt6-wayland --noconfirm --needed
+      retry_command pacman -S niri polkit-gnome swayidle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-wlr xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi pavucontrol file-roller yazi starship btop sddm f2fs-tools gufw traceroute qt5-wayland qt6-wayland --noconfirm --needed
       retry_command pacman -S vscodium catppuccin-cursors-mocha brave-origin-bin snapshot gnome-calendar gnome-contacts transmission-gtk qalculate-gtk nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 yay gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xsane gparted imv --noconfirm --needed
 #      retry_command pamac install wcolorpicker --no-confirm --needed
      
