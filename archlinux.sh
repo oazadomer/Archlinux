@@ -278,8 +278,7 @@ elif [[ $DESKTOP == "3" ]]; then
       
       export TERM="kitty"
       export TERMINAL="kitty"
-      systemctl enable sddm ufw
-      sed -i 's/Current=/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
+      systemctl enable gdm ufw
     
 else
     echo "Desktop Will Not be Installed"
