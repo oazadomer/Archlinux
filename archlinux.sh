@@ -211,9 +211,9 @@ if [[ $BOOTLOADER == "1" ]]; then
     
     grub-mkconfig -o /boot/grub/grub.cfg
 
-elif [[ $BOOTLOADER == "2"]]; then
+elif [[ $BOOTLOADER == "2" ]]; then
     retry_command pacman -S refind efibootmgr --noconfirm --needed
-    refind-install # --usedefault "${EFI}"
+    refind-install      # --usedefault "${EFI}"
 
 fi   
 
