@@ -351,7 +351,7 @@ elif [[ $GRAPHIC == "3" ]]; then
  
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
       retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
-      retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+      retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
 
       sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
       mkinitcpio -P
@@ -364,7 +364,7 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
 
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
       retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
-      retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+      retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
 
       sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
       mkinitcpio -P
@@ -377,7 +377,7 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
       
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
       retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
-      retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm --needed
+      retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
 
       sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
       mkinitcpio -P
@@ -390,7 +390,7 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
     
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
       retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
-      retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia libxnvctrl libxcrypt-compat --noconfirm -needed
+      retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm -needed
 
       sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
       mkinitcpio -P
