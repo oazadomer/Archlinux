@@ -467,7 +467,7 @@ echo "==            INSTALLING POWER MANAGEMENT TOOLS                =="
 echo "================================================================="
 
 if [[ $POWER == "y" ]]; then
-    retry_command pacman -S auto-cpufreq --noconfirm --needed
+    retry_command pacman -S auto-cpufreq supergfxctl --noconfirm --needed
 
 else
     echo "Power Management Tools Will Not be Installed"
