@@ -204,16 +204,16 @@ echo "================================================================="
 
 if [[ $BOOTLOADER == "1" ]]; then
     retry_command pacman -S grub efibootmgr --noconfirm --needed
-    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ARCH
+    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
     
     sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet udev.log_priority=3"/' /etc/default/grub
     sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
     
     grub-mkconfig -o /boot/grub/grub.cfg
 
-else [[ $BOOTLOADER == "2" ]]; then 
-      retry_command pacman -S refind efibootmgr --noconfirm --needed
-      refind-install --usedefault "${EFI}"
+elif [[ $BOOTLOADER == "2"]]; then
+    retry_command pacman -S refind efibootmgr --noconfirm --needed
+    refind-install --usedefault "${EFI}"
 
 fi   
 
