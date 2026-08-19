@@ -473,6 +473,8 @@ if [[ $POWER == "y" ]]; then
 elif [[ $POWER == "a" ]]; then
       retry_command pacman -S auto-cpufreq supergfxctl rog-control-center asusctl --noconfirm --needed
 
+      systemctl enable asusd
+
 else
     echo "Power Management Tools Will Not be Installed"
 fi
