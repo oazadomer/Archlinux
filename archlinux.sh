@@ -19,7 +19,7 @@ retry_command() {
 }
 
 echo "================================================================="
-echo "==        Welcome To The Arch Linux Installation Script        =="
+echo "==         WELCOME TO THE ARCH LINUX INSTALLATION SCRIPT       =="
 echo "================================================================="
 
 pacman-key --init; pacman-key --populate archlinux; pacman -Sy archlinux-keyring --noconfirm --needed
@@ -31,7 +31,7 @@ sed -i 's/ParallelDownloads = 5/ParallelDownloads = 3/' /etc/pacman.conf
 pacman -Sy
 
 echo "================================================================="
-echo "==                     Partition The Drive                     =="
+echo "==                    PARTITIONING THE DRIVE                   =="
 echo "================================================================="
 echo "="
 echo "Available Disks: "
@@ -131,9 +131,14 @@ echo "y"
 echo "n"
 read GAMING
 echo "="
+echo"# Do You Want to Install Power Management Tools?"
+echo "y"
+echo "n"
+read POWER
+echo "="
 
 echo "================================================================="
-echo "==            Formating And Mounting The Filesystem            =="
+echo "==           FORMATTING AND MOUNTING THE FILESYSTEM            =="
 echo "================================================================="
 
    mkfs.vfat -F32 -n "ARCH" "${EFI}"
@@ -148,7 +153,7 @@ echo "================================================================="
    mount -t vfat "${EFI}" /mnt/boot
 
 echo "================================================================="
-echo "==                    INSTALLING Arch Linux                    =="
+echo "==                    INSTALLING ARCH LINUX                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
@@ -168,7 +173,7 @@ echo "$USERNAME:$USERNAMEPASSWORD" | chpasswd
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
 echo "================================================================="
-echo "==                 Setup Language and Set Locale               =="
+echo "==              SETTING LANGUAGE AND SETTING LOCALE            =="
 echo "================================================================="
 
 sed -i 's/^#$LOCALE/$LOCALE/' /etc/locale.gen
@@ -187,13 +192,13 @@ cat <<EOF > /etc/hosts
 EOF
 
 echo "================================================================="
-echo "==             Enable Network Service, sshd, fstrim            =="
+echo "==        ENABLING NETWORK SERVICE, FSTRIM ACIP, TOUCHEGG      =="
 echo "================================================================="
 
 systemctl enable NetworkManager fstrim.timer reflector.timer acpid touchegg
 
 echo "================================================================="
-echo "==                  Installing Bootloader                      =="
+echo "==                  INSTALLING BOOTLOADER                      =="
 echo "================================================================="
 
 if [[ $BOOTLOADER == "1" ]]; then
@@ -212,7 +217,7 @@ else [[ $BOOTLOADER == "2" ]]; then
 fi   
 
 echo "================================================================="
-echo "==                    Enable Multilib Repo                     =="
+echo "==                  ENABLING MULTILIB REPOS                    =="
 echo "================================================================="
 
  pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
@@ -241,7 +246,7 @@ echo "================================================================="
 # retry_command pamac update --no-confirm
 
 echo "================================================================="
-echo "==                            CPU                              =="
+echo "==                 INSTALLING CPU DRIVERS                      =="
 echo "================================================================="
 
 if [[ $CPU == "1" ]]; then
@@ -252,7 +257,7 @@ elif [[ $CPU == "2" ]]; then
 fi
 
 echo "================================================================="
-echo "==                    DESKTOP ENVIRONMENT                      =="
+echo "==            INSTALLING DESKTOP ENVIRONMENT                   =="
 echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
@@ -317,7 +322,7 @@ sudo chmod 600 /etc/sssd/sssd.conf
 sudo chown root:root /etc/sssd/sssd.conf
 
 echo "================================================================="
-echo "==                 Sound, Bluetooth, Printer Drivers            =="
+echo "==       INSTALLING SOUND, BLUETOOTH, PRINTER DRIVERS          =="
 echo "================================================================="
 
 if [[ $SOUNDBLUETOOTHPRINTER == "y" ]]; then
@@ -330,7 +335,7 @@ else
 fi
 
 echo "================================================================="
-echo "==                   GRAPHIC CARD INSTALLATION                 =="
+echo "==              INSTALLING GRAPHIC CARD DRIVERS                =="
 echo "================================================================="
 
 if [[ $GRAPHIC == "1" ]]; then
@@ -400,7 +405,7 @@ else
 fi
 
 echo "================================================================="
-echo "==                          Programs                           =="
+echo "==                  INSTALLING PROGRAMS                        =="
 echo "================================================================="
 
 if [[ $PROGRAMS == "y" ]]; then
@@ -420,7 +425,7 @@ else
 fi
 
 echo "================================================================="
-echo "==                      OFFICE INSTALLATION                    =="
+echo "==                    INSTALLING OFFICE                        =="
 echo "================================================================="
 
 if [[ $OFFICE == "1" ]]; then
@@ -434,7 +439,7 @@ else
 fi
 
 echo "================================================================="
-echo "==                           DATABASE                          =="
+echo "==                  INSTALLING DATABASE                        =="
 echo "================================================================="
 
 if [[ $DATABASE == "y" ]]; then
@@ -446,7 +451,7 @@ else
 fi
 
 echo "================================================================="
-echo "==                      GAMING INSTALLATION                    =="
+echo "==                INSTALLING GAMING PACKAGES                   =="
 echo "================================================================="
 
 if [[ $GAMING == "y" ]]; then
@@ -458,7 +463,18 @@ else
 fi
 
 echo "================================================================="
-echo "==            Timeshift and Snapshot Configuration             =="               
+echo "==            INSTALLING POWER MANAGEMENT TOOLS                =="
+echo "================================================================="
+
+if [[ $POWER == "y" ]]; then
+    retry_command pacman -S auto-cpufreq --noconfirm --needed
+
+else
+    echo "Power Management Tools Will Not be Installed"
+fi
+
+echo "================================================================="
+echo "==       INSTALLING TIMESHIFT AND SNAPSHOT CONFIGURATION       =="               
 echo "================================================================="
 
 if [[ $BOOTLOADER == "1" ]]; then
@@ -471,7 +487,7 @@ else
 fi
 
 echo "================================================================="
-echo "==                     Zram Configuration                      =="               
+echo "==             INSTALLING ZRAM AND CONFIGURATION               =="               
 echo "================================================================="
 
 retry_command pacman -S zram-generator  --noconfirm --needed
@@ -495,7 +511,7 @@ REALEND
 arch-chroot /mnt sh next.sh
 
 echo "================================================================="
-echo "==       Installation Complete. Rebooting in 10 Seconds...     =="
+echo "==       INSTALLATION COMPLETE. REBOOTING IN 10 SECONDS...     =="
 echo "================================================================="
 
 trap 'printf "\nReboot cancelled.\n"; exit 1' INT
