@@ -133,6 +133,7 @@ read GAMING
 echo "="
 echo"# Do You Want to Install Power Management Tools?"
 echo "y"
+echo "a, If Your Laptop Asus"
 echo "n"
 read POWER
 echo "="
@@ -468,6 +469,9 @@ echo "================================================================="
 
 if [[ $POWER == "y" ]]; then
     retry_command pacman -S auto-cpufreq supergfxctl --noconfirm --needed
+
+elif [[ $POWER == "a" ]]; then
+      retry_command pacman -S auto-cpufreq supergfxctl rog-control-center asusctl --noconfirm --needed
 
 else
     echo "Power Management Tools Will Not be Installed"
