@@ -227,15 +227,18 @@ echo "================================================================="
  
  echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
  echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
+
+ retry_command pacman -Sy --noconfirm
+
+# Pammac Installation:
+# retry_command pacman -Sy; pacman -S pamac --noconfirm --needed
  
- retry_command pacman -Sy; pacman -S pamac --noconfirm --needed
+# sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
+# sed -i 's/^#EnableFlatpak/EnableFlatpak/' /etc/pamac.conf      
+# sed -i 's/MaxParallelDownloads = 4/MaxParallelDownloads = 2/' /etc/pamac.conf
  
- sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
- sed -i 's/^#EnableFlatpak/EnableFlatpak/' /etc/pamac.conf      
- sed -i 's/MaxParallelDownloads = 4/MaxParallelDownloads = 2/' /etc/pamac.conf
- 
- retry_command pacman -Syu --noconfirm
- retry_command pamac update --no-confirm
+# retry_command pacman -Syu --noconfirm
+# retry_command pamac update --no-confirm
 
 echo "================================================================="
 echo "==                            CPU                              =="
@@ -254,7 +257,7 @@ echo "================================================================="
 
 if [[ $DESKTOP == "1" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
-      retry_command pacman -S gnome-shell gnome-control-center gnome-menus ghostty yazi superfile starship gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-online-accounts --noconfirm --needed
+      retry_command pacman -S gnome-shell gnome-control-center gnome-menus ghostty superfile starship gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-online-accounts --noconfirm --needed
       retry_command pacman -S vscodium catppuccin-cursors-mocha transmission-gtk gnome-screenshot gnome-calculator gnome-calendar simple-scan shotwell gparted gnome-browser-connector btop file-roller gdm xdg-utils xdg-user-dirs-gtk f2fs-tools traceroute gufw xdg-desktop-portal-gtk xdg-desktop-portal-gnome gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk brave-origin-bin dpkg yay --noconfirm --needed
  
       export TERM="ghostty"
@@ -263,7 +266,7 @@ if [[ $DESKTOP == "1" ]]; then
     
 elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
-      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo yazi superfile starship f2fs-tools traceroute gufw --noconfirm --needed
+      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo superfile starship f2fs-tools traceroute gufw --noconfirm --needed
       retry_command pacman -S vscodium catppuccin-cursors-mocha qalculate-gtk merkuro skanlite qbittorrent ffmpegthumbs kamoso flameshot gthumb gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk brave-origin-bin dpkg kvantum kvantum-qt5 yay --noconfirm --needed
 
       export TERM="kitty"
@@ -273,7 +276,7 @@ elif [[ $DESKTOP == "2" ]]; then
 
 elif [[ $DESKTOP == "3" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
-      retry_command pacman -S hyprland hyprpolkitagent hypridle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi pavucontrol file-roller yazi superfile starship btop sddm f2fs-tools gufw traceroute --noconfirm --needed
+      retry_command pacman -S hyprland hyprpolkitagent hypridle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi pavucontrol file-roller superfile starship btop sddm f2fs-tools gufw traceroute --noconfirm --needed
       retry_command pacman -S vscodium catppuccin-cursors-mocha brave-origin-bin snapshot gnome-calendar gnome-contacts transmission-gtk qalculate-gtk nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 yay gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xsane gparted imv --noconfirm --needed
 #      retry_command pamac install hyprmod hyprpicker --no-confirm --needed
       
@@ -284,7 +287,7 @@ elif [[ $DESKTOP == "3" ]]; then
 
 elif [[ $DESKTOP == "4" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
-      retry_command pacman -S niri polkit-gnome swayidle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-wlr xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi pavucontrol file-roller yazi superfile starship btop sddm f2fs-tools gufw traceroute qt5-wayland qt6-wayland --noconfirm --needed
+      retry_command pacman -S niri polkit-gnome swayidle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-wlr xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi pavucontrol file-roller superfile starship btop sddm f2fs-tools gufw traceroute qt5-wayland qt6-wayland --noconfirm --needed
       retry_command pacman -S vscodium catppuccin-cursors-mocha brave-origin-bin snapshot gnome-calendar gnome-contacts transmission-gtk qalculate-gtk nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 yay gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs xsane gparted imv --noconfirm --needed
 #      retry_command pamac install wcolorpicker --no-confirm --needed
      
