@@ -341,17 +341,17 @@ echo "==              INSTALLING GRAPHIC CARD DRIVERS                =="
 echo "================================================================="
 
 if [[ $GRAPHIC == "1" ]]; then
-    retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
+    retry_command pacman -S xf86-video-amdgpu mesa rocm-opencl-runtime lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
     
 elif [[ $GRAPHIC == "2" ]]; then
-      retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
+      retry_command pacman -S libva-intel-driver intel-compute-runtime libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
     
 elif [[ $GRAPHIC == "3" ]]; then
-      retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
-      retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
+      retry_command pacman -S xf86-video-amdgpu rocm-opencl-runtime mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
+      retry_command pacman -S libva-intel-driver intel-compute-runtime libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
  
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
-      retry_command pacman -S xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
+      retry_command pacman -S xf86-video-amdgpu rocm-opencl-runtime mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
       retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
 
       sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
@@ -377,7 +377,7 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
       fi
       
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
-      retry_command pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
+      retry_command pacman -S libva-intel-driver intel-compute-runtime libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
       retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils nvidia-dkms lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
 
       sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
