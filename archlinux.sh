@@ -420,10 +420,11 @@ if [[ $PROGRAMS == "y" ]]; then
 #    retry_command pamac install megasync-bin crow-translate --no-confirm --needed
 
     if [[ $DESKTOP == "1" ]]; then
-    retry_command pacman -S shotcut --noconfirm -needed
+        retry_command pacman -S shotcut --noconfirm -needed
 
-    elif [[ $DESKTOP == "2" ]] && [[ $DESKTOP "3" ]] && [[ $DESKTOP == "4" ]]; then
-    retry_command pacman -S kdenlive --noconfirm --needed
+    elif [[ $DESKTOP =~ ^[2-4]$ ]]; then
+          retry_command pacman -S kdenlive --noconfirm --needed
+    fi
 
 else
    echo "Programs Will Not be Installed"
