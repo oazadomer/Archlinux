@@ -93,10 +93,10 @@ echo "4, NIRI"
 echo "n. No Desktop"
 read DESKTOP
 echo "="
-echo "# Do You Want To Install Sound, Bluetooth, Printer Drivers?"
+echo "# Do You Want To Install Printer Drivers?"
 echo "y"
 echo "n"
-read SOUNDBLUETOOTHPRINTER
+read PRINTER
 echo "="
 echo "# Please Choose Your Graphic Card:"
 echo "1. AMD"
@@ -272,7 +272,7 @@ if [[ $DESKTOP == "1" ]]; then
     
 elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
-      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git superfile starship qalculate-gtk merkuro skanlite qbittorrent kamoso flameshot gthumb ffmpegthumbs f2fs-tools traceroute gufw brave-origin-bin yay --noconfirm --needed
+      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git superfile starship qalculate-gtk merkuro skanlite qbittorrent mplayer vlc kamoso flameshot gthumb ffmpegthumbs f2fs-tools traceroute gufw brave-origin-bin yay --noconfirm --needed
       retry_command pacman -S topgrade vscodium catppuccin-cursors-mocha gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk dpkg kvantum kvantum-qt5 --noconfirm --needed
 
       export TERM="kitty"
@@ -282,7 +282,7 @@ elif [[ $DESKTOP == "2" ]]; then
 
 elif [[ $DESKTOP == "3" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
-      retry_command pacman -S hyprland hyprpolkitagent hypridle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar transmission-gtk gnome-calculator f2fs-tools gufw traceroute brave-origin-bin yay --noconfirm --needed
+      retry_command pacman -S hyprland hyprpolkitagent hypridle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar transmission-gtk gnome-calculator mplayer vlc f2fs-tools gufw traceroute brave-origin-bin yay --noconfirm --needed
       retry_command pacman -S topgrade vscodium catppuccin-cursors-mocha nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs gparted --noconfirm --needed
 #      retry_command pamac install hyprmod hyprpicker --no-confirm --needed
       
@@ -293,7 +293,7 @@ elif [[ $DESKTOP == "3" ]]; then
 
 elif [[ $DESKTOP == "4" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
-      retry_command pacman -S niri polkit-gnome swayidle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-wlr xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar gnome-calculator transmission-gtk f2fs-tools gufw traceroute qt5-wayland qt6-wayland brave-origin-bin yay --noconfirm --needed
+      retry_command pacman -S niri polkit-gnome swayidle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-wlr xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar gnome-calculator transmission-gtk mplayer vlc f2fs-tools gufw traceroute qt5-wayland qt6-wayland brave-origin-bin yay --noconfirm --needed
       retry_command pacman -S topgrade vscodium catppuccin-cursors-mocha nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs gparted --noconfirm --needed
 #      retry_command pamac install wcolorpicker --no-confirm --needed
      
@@ -304,6 +304,11 @@ elif [[ $DESKTOP == "4" ]]; then
       
 else
     echo "Desktop Will Not be Installed"
+fi
+
+if [[ $DESKTOP < "5" ]]; then
+    retry_command pacman -S bluez bluez-utils bluez-libs bluez-hid2hci pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
+    systemctl enable bluetooth
 fi
 
 # SSSD
@@ -323,17 +328,15 @@ sudo chmod 600 /etc/sssd/sssd.conf
 sudo chown root:root /etc/sssd/sssd.conf
 
 echo "================================================================="
-echo "==       INSTALLING SOUND, BLUETOOTH, PRINTER DRIVERS          =="
+echo "==                INSTALLING PRINTER DRIVERS                   =="
 echo "================================================================="
 
-if [[ $SOUNDBLUETOOTHPRINTER == "y" ]]; then
-    retry_command pacman -S system-config-printer cups cups-pdf bluez bluez-utils bluez-libs bluez-hid2hci pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
-#    retry_command pamac install davinci-ffmpeg-encoder-plugin
-
-    systemctl enable bluetooth cups
+if [[ $PRINTER == "y" ]]; then
+    retry_command pacman -S system-config-printer cups cups-pdf --noconfirm --needed
+    systemctl enable cups
 
 else
-   echo "Sound, Bluetooth, Printer Drivers Will Not be Installed"
+   echo "Printer Drivers Will Not be Installed"
 fi
 
 echo "================================================================="
