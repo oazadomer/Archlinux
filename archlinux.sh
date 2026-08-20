@@ -88,8 +88,8 @@ echo "="
 echo "# Please Choose Your Desktop Environment:"
 echo "1. GNOME"
 echo "2. KDE"
-echo "3, HYPRLAND"
-echo "4, NIRI"
+echo "3. HYPRLAND"
+echo "4. NIRI"
 echo "n. No Desktop"
 read DESKTOP
 echo "="
@@ -306,7 +306,7 @@ else
     echo "Desktop Will Not be Installed"
 fi
 
-if [[ $DESKTOP < "5" ]]; then
+if [[ $DESKTOP =~ ^[1-4]$ ]]; then
     retry_command pacman -S bluez bluez-utils bluez-libs bluez-hid2hci pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
     systemctl enable bluetooth
 fi
