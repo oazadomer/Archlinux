@@ -158,10 +158,10 @@ echo "==                    INSTALLING ARCH LINUX                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg             
+    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh         
 
 elif [[ $KERNEL == "2" ]]; then
-    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg                                  
+    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh                               
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -196,7 +196,7 @@ echo "================================================================="
 echo "==        ENABLING NETWORK SERVICE, FSTRIM ACIP, TOUCHEGG      =="
 echo "================================================================="
 
-systemctl enable NetworkManager fstrim.timer reflector.timer acpid touchegg
+systemctl enable NetworkManager fstrim.timer reflector.timer acpid touchegg ssh
 
 echo "================================================================="
 echo "==                  INSTALLING BOOTLOADER                      =="
