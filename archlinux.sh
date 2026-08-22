@@ -525,13 +525,11 @@ echo "================================================================="
 echo "==       INSTALLATION COMPLETE. REBOOTING IN 10 SECONDS...     =="
 echo "================================================================="
 
-trap 'printf "\nReboot cancelled.\n"; exit 1' INT
-
 for ((i=10; i>0; i--)); do
-    printf "\rRebooting in %d seconds. Press Ctrl+C to cancel.   " "$i"
+    printf "\rRebooting in %d seconds.   " "$i"
     sleep 1
 done
 
-printf "\rRebooting now...                              \n"
-sudo reboot
+printf "\rRebooting now...
+reboot
 
