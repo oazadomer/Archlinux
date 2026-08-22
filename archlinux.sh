@@ -264,7 +264,7 @@ echo "================================================================="
 if [[ $DESKTOP == "1" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients --noconfirm --needed
       retry_command pacman -S gnome-shell gnome-control-center gnome-menus gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-online-accounts gnome-browser-connector nautilus sushi ghostty superfile starship xdg-utils xdg-user-dirs-gtk xdg-desktop-portal-gtk xdg-desktop-portal-gnome xdg-terminal-exec-git btop file-roller gdm transmission-gtk gnome-screenshot gnome-calculator gnome-calendar gufw simple-scan loupe snapshot audacious mplayer vlc brave-origin-bin yay --noconfirm --needed
-      retry_command pacman -S topgrade zed catppuccin-cursors-mocha gparted f2fs-tools traceroute gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk dpkg --noconfirm --needed
+      retry_command pacman -S fastfetch topgrade vscodium catppuccin-cursors-mocha gparted f2fs-tools traceroute gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn ripgrep python-pip pyenv android-tools vala tk dpkg --noconfirm --needed
      
       export TERM="ghostty"
       export TERMINAL="ghostty"
@@ -273,7 +273,7 @@ if [[ $DESKTOP == "1" ]]; then
 elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients qt5-wayland --noconfirm --needed
       retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git superfile starship qalculate-gtk merkuro skanlite qbittorrent mplayer vlc kamoso flameshot gthumb ffmpegthumbs f2fs-tools traceroute gufw brave-origin-bin yay --noconfirm --needed
-      retry_command pacman -S topgrade zed catppuccin-cursors-mocha gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk dpkg kvantum kvantum-qt5 --noconfirm --needed
+      retry_command pacman -S fastfetch topgrade vscodium catppuccin-cursors-mocha gparted gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-jod npm yarn python-pip pyenv android-tools vala tk dpkg kvantum kvantum-qt5 --noconfirm --needed
 
       export TERM="kitty"
       export TERMINAL="kitty"
@@ -283,7 +283,7 @@ elif [[ $DESKTOP == "2" ]]; then
 elif [[ $DESKTOP == "3" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
       retry_command pacman -S hyprland hyprpolkitagent hypridle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar transmission-gtk gnome-calculator mplayer vlc f2fs-tools gufw traceroute brave-origin-bin yay --noconfirm --needed
-      retry_command pacman -S topgrade zed catppuccin-cursors-mocha nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs gparted --noconfirm --needed
+      retry_command pacman -S fastfetch topgrade vscodium catppuccin-cursors-mocha nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs gparted --noconfirm --needed
 #      retry_command pamac install hyprmod hyprpicker --no-confirm --needed
       
       export TERM="kitty"
@@ -294,7 +294,7 @@ elif [[ $DESKTOP == "3" ]]; then
 elif [[ $DESKTOP == "4" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
       retry_command pacman -S niri polkit-gnome swayidle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-wlr xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar gnome-calculator transmission-gtk mplayer vlc f2fs-tools gufw traceroute qt5-wayland qt6-wayland brave-origin-bin yay --noconfirm --needed
-      retry_command pacman -S topgrade zed catppuccin-cursors-mocha nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs gparted --noconfirm --needed
+      retry_command pacman -S fastfetch topgrade vscodium catppuccin-cursors-mocha nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs gparted --noconfirm --needed
 #      retry_command pamac install wcolorpicker --no-confirm --needed
      
       export TERM="kitty"
