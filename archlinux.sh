@@ -217,31 +217,46 @@ elif [[ $BOOTLOADER == "2" ]]; then
 
 fi   
 
+#!/bin/bash
+
 echo "================================================================="
-echo "==                  ENABLING MULTILIB REPOS                    =="
+echo "==             ENABLING MULTILIB & COMMUNITY REPOS             =="
 echo "================================================================="
 
- pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
- pacman-key --lsign-key 3056513887B78AEB
- pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm --needed
- pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm --needed
- 
- sed -i 's/^#Color/Color/' /etc/pacman.conf
- sed -i '/Color/a ILoveCandy' /etc/pacman.conf
- sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
- sed -i 's/ParallelDownloads = 5/ParallelDownloads = 2/' /etc/pacman.conf
- 
- echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
- echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" >> /etc/pacman.conf
+# 1. Chaotic AUR Key and Setup
+echo "[*] Setting up Chaotic AUR keys..."
+pacman-key --recv-key 3056513887B78AEB --keyserver hkps://keys.openpgp.org
+pacman-key --lsign-key 3056513887B78AEB
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm --needed
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm --needed
 
- retry_command pacman -Sy --noconfirm
+# 2. Archlinuxcn Key Import
+echo "[*] Setting up Archlinuxcn keys..."
+pacman-key --recv-keys F99FFE0FEAE999BD --keyserver hkps://keys.openpgp.org
+pacman-key --lsign-key F99FFE0FEAE999BD
 
-# Pammac Installation:
+# 3. Pacman.conf Tweaks
+# Enable Color
+sed -i 's/^#Color/Color/' /etc/pacman.conf
+# Add ILoveCandy only if it doesn't already exist (prevents duplicates on re-runs)
+grep -q "^ILoveCandy" /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf
+# Set ParallelDownloads to 2 (handles both commented '#ParallelDownloads = 5' and uncommented versions safely)
+sed -i 's/^#*\s*ParallelDownloads\s*=\s*.*/ParallelDownloads = 2/' /etc/pacman.conf
+
+# 4. Append Repositories using echo (Note the backslash before $arch to prevent bash evaluation)
+echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+echo -e "\n[archlinuxcn]\nServer = https://repo.archlinuxcn.org/\$arch" >> /etc/pacman.conf
+
+# 5. Sync and install the archlinuxcn-keyring package
+retry_command pacman -Sy archlinuxcn-keyring --noconfirm
+
+
+# Pamac Installation:
 # retry_command pacman -Sy; pacman -S pamac --noconfirm --needed
  
-# sed -i 's/^#EnableAUR/EnableAUR/' /etc/pamac.conf
-# sed -i 's/^#EnableFlatpak/EnableFlatpak/' /etc/pamac.conf      
-# sed -i 's/MaxParallelDownloads = 4/MaxParallelDownloads = 2/' /etc/pamac.conf
+# sed -i 's/^#*EnableAUR.*/EnableAUR/' /etc/pamac.conf     
+# sed -i 's/^#*\s*MaxParallelDownloads\s*=\s*.*/MaxParallelDownloads = 2/' /etc/pamac.conf
  
 # retry_command pacman -Syu --noconfirm
 # retry_command pamac update --no-confirm
