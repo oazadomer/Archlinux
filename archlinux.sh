@@ -437,21 +437,6 @@ if [[ $DATABASE == "y" ]]; then
     chmod 440 /etc/sudoers.d/99-temp-aur-install
     su - "$USERNAME" -c "yay -S dbgate-bin --noconfirm --needed"
     rm /etc/sudoers.d/99-temp-aur-install
-# SSSD
-cat <<EOF > /etc/sssd/sssd.conf
-[sssd]
-domains = example.com
-config_file_version = 2
-services = nss, pam
-
-[domain/example.com]
-id_provider = ldap
-ldap_uri = ldap://your-ldap-server
-ldap_search_base = dc=example,dc=com
-EOF
-
-sudo chmod 600 /etc/sssd/sssd.conf
-sudo chown root:root /etc/sssd/sssd.conf
 
 else
    echo "Database Will Not be Installed"
