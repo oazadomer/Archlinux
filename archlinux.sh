@@ -278,19 +278,39 @@ elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git superfile starship qalculate-gtk merkuro skanlite qbittorrent mplayer vlc kamoso flameshot gthumb ffmpegthumbs gufw brave-origin-bin yay --noconfirm --needed
       retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 kvantum kvantum-qt5 --noconfirm --needed
 
-      export TERM="kitty"
-      export TERMINAL="kitty"
-      systemctl enable sddm ufw
-      sed -i 's/Current=/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
-
-elif [[ $DESKTOP == "3" ]]; then
-      retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww hyprlock rofi-wayland udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar gnome-calculator transmission-gtk mplayer vlc f2fs-tools gufw traceroute brave-origin-bin yay --noconfirm --needed
-      retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 --noconfirm --needed
+      # 1. Temporarily allow passwordless sudo for the user to prevent the script from hanging
+      echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
+      chmod 440 /etc/sudoers.d/99-temp-aur-install
+      
+      # 2. Install Noctalia SDDM Greeter from AUR (must be run as the normal user, not root)
+      su - "$USERNAME" -c "yay -S sddm-theme-noctalia-git --noconfirm --needed"
+      
+      # 3. Clean up the temporary sudoers file (restores normal password requirement)
+      rm /etc/sudoers.d/99-temp-aur-install
      
       export TERM="kitty"
       export TERMINAL="kitty"
       systemctl enable sddm ufw
-      sed -i 's/Current=/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
+      
+      # 4. Configure SDDM to use the Noctalia theme (Arch Linux recommended drop-in method)
+      mkdir -p /etc/sddm.conf.d
+      echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
+      
+elif [[ $DESKTOP == "3" ]]; then
+      retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww hyprlock rofi-wayland udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar gnome-calculator transmission-gtk mplayer vlc f2fs-tools gufw traceroute brave-origin-bin yay --noconfirm --needed
+      retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 --noconfirm --needed
+      
+      echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
+      chmod 440 /etc/sudoers.d/99-temp-aur-install
+      su - "$USERNAME" -c "yay -S sddm-theme-noctalia-git --noconfirm --needed"
+      rm /etc/sudoers.d/99-temp-aur-install
+     
+      export TERM="kitty"
+      export TERMINAL="kitty"
+      systemctl enable sddm ufw
+      
+      mkdir -p /etc/sddm.conf.d
+      echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
       
 else
     echo "Desktop Will Not be Installed"
@@ -401,12 +421,16 @@ echo "================================================================="
 if [[ $PROGRAMS == "y" ]]; then
     retry_command pacman -S gimp audacity shutter-encoder-bin --noconfirm -needed
     retry_command pacman -S mailspring acpi ferdium-bin proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
-#    retry_command yay -S megasync-bin crow-translate --no-confirm --needed
+
+    echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
+    chmod 440 /etc/sudoers.d/99-temp-aur-install
+    su - "$USERNAME" -c "yay -S megasync-bin crow-translate --noconfirm --needed"
+    rm /etc/sudoers.d/99-temp-aur-install
 
     if [[ $DESKTOP == "1" ]]; then
         retry_command pacman -S shotcut --noconfirm -needed
 
-    elif [[ $DESKTOP =~ ^[2-4]$ ]]; then
+    elif [[ $DESKTOP =~ ^[2-3]$ ]]; then
           retry_command pacman -S kdenlive --noconfirm --needed
     fi
 
@@ -434,7 +458,11 @@ echo "================================================================="
 
 if [[ $DATABASE == "y" ]]; then
     retry_command pacman -S postgresql mysql sqlite --noconfirm --needed
-#    retry_command yay -S dbgate-bin
+
+    echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
+    chmod 440 /etc/sudoers.d/99-temp-aur-install
+    su - "$USERNAME" -c "yay -S dbgate-bin --noconfirm --needed"
+    rm /etc/sudoers.d/99-temp-aur-install
 
 else
    echo "Database Will Not be Installed"
