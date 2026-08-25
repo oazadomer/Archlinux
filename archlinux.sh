@@ -438,6 +438,8 @@ if [[ $DATABASE == "y" ]]; then
     su - "$USERNAME" -c "yay -S dbgate-bin --noconfirm --needed"
     rm /etc/sudoers.d/99-temp-aur-install
 
+    mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+
 else
    echo "Database Will Not be Installed"
 fi
