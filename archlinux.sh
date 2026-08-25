@@ -217,8 +217,6 @@ elif [[ $BOOTLOADER == "2" ]]; then
 
 fi   
 
-#!/bin/bash
-
 echo "================================================================="
 echo "==             ENABLING MULTILIB & COMMUNITY REPOS             =="
 echo "================================================================="
@@ -230,36 +228,21 @@ pacman-key --lsign-key 3056513887B78AEB
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm --needed
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm --needed
 
-# 2. Archlinuxcn Key Import
-echo "[*] Setting up Archlinuxcn keys..."
-pacman-key --recv-keys F99FFE0FEAE999BD --keyserver hkps://keys.openpgp.org
-pacman-key --lsign-key F99FFE0FEAE999BD
-
-# 3. Pacman.conf Tweaks
+# 2. Pacman.conf Tweaks
 # Enable Color
 sed -i 's/^#Color/Color/' /etc/pacman.conf
+
 # Add ILoveCandy only if it doesn't already exist (prevents duplicates on re-runs)
 grep -q "^ILoveCandy" /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf
+
 # Set ParallelDownloads to 2 (handles both commented '#ParallelDownloads = 5' and uncommented versions safely)
 sed -i 's/^#*\s*ParallelDownloads\s*=\s*.*/ParallelDownloads = 2/' /etc/pacman.conf
 
-# 4. Append Repositories using echo (Note the backslash before $arch to prevent bash evaluation)
+# 3. Append Repositorie
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-echo -e "\n[archlinuxcn]\nServer = https://repo.archlinuxcn.org/\$arch" >> /etc/pacman.conf
 
-# 5. Sync and install the archlinuxcn-keyring package
-retry_command pacman -Sy archlinuxcn-keyring --noconfirm
-
-
-# Pamac Installation:
-# retry_command pacman -Sy; pacman -S pamac --noconfirm --needed
- 
-# sed -i 's/^#*EnableAUR.*/EnableAUR/' /etc/pamac.conf     
-# sed -i 's/^#*\s*MaxParallelDownloads\s*=\s*.*/MaxParallelDownloads = 2/' /etc/pamac.conf
- 
-# retry_command pacman -Syu --noconfirm
-# retry_command pamac update --no-confirm
+retry_command pacman -Sy --noconfirm
 
 echo "================================================================="
 echo "==                 INSTALLING CPU DRIVERS                      =="
@@ -299,7 +282,7 @@ elif [[ $DESKTOP == "3" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
       retry_command pacman -S hyprland hyprpolkitagent hypridle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar transmission-gtk gnome-calculator mplayer vlc f2fs-tools gufw traceroute brave-origin-bin yay --noconfirm --needed
       retry_command pacman -S fastfetch topgrade zed catppuccin-cursors-mocha nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs gparted --noconfirm --needed
-#      retry_command pamac install hyprmod hyprpicker --no-confirm --needed
+#      retry_command yay -S hyprmod hyprpicker --no-confirm --needed
       
       export TERM="kitty"
       export TERMINAL="kitty"
@@ -310,7 +293,7 @@ elif [[ $DESKTOP == "4" ]]; then
       retry_command pacman -S wayland wayland-utils wayland-protocols qt6-wayland qt5-wayland glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
       retry_command pacman -S niri polkit-gnome swayidle waybar swaync swaybg swaylock-effects wlogout wireplumber udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist wofi xdg-desktop-portal-wlr xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar gnome-calculator transmission-gtk mplayer vlc f2fs-tools gufw traceroute qt5-wayland qt6-wayland brave-origin-bin yay --noconfirm --needed
       retry_command pacman -S fastfetch topgrade zed catppuccin-cursors-mocha nodejs-lts npm yarn ripgrep python-pip pyenv android-tools vala tk 7zip xz unrar unzip lzop gdb mtpfs dpkg adwaita-qt6 adwaita-qt5 gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs gparted --noconfirm --needed
-#      retry_command pamac install wcolorpicker --no-confirm --needed
+#      retry_command yay -S wcolorpicker --no-confirm --needed
      
       export TERM="kitty"
       export TERMINAL="kitty"
@@ -413,12 +396,12 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
 
       sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
       mkinitcpio -P
-
-     if [[ $BOOTLOADER == "1" ]]; then
+      
+      if [[ $BOOTLOADER == "1" ]]; then
       sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
       grub-mkconfig -o /boot/grub/grub.cfg
       
-     fi
+      fi
     
 else
    echo "Graphic Card Will Not be Installed"
@@ -432,7 +415,7 @@ if [[ $PROGRAMS == "y" ]]; then
     retry_command pacman -S gimp audacity shutter-encoder-bin --noconfirm -needed
     retry_command pacman -S mailspring acpi ferdium-bin proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
     retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
-#    retry_command pamac install megasync-bin crow-translate --no-confirm --needed
+#    retry_command yay -S megasync-bin crow-translate --no-confirm --needed
 
     if [[ $DESKTOP == "1" ]]; then
         retry_command pacman -S shotcut --noconfirm -needed
@@ -465,7 +448,7 @@ echo "================================================================="
 
 if [[ $DATABASE == "y" ]]; then
     retry_command pacman -S postgresql mysql sqlite --noconfirm --needed
-#    retry_command pamac install dbgate-bin
+#    retry_command yay -S dbgate-bin
 
 else
    echo "Database Will Not be Installed"
