@@ -43,32 +43,32 @@ echo "="
 echo "Manual Partitioning..."
 cfdisk "$DISK"
 echo "="
-echo "# Please Enter EFI Partition: ( Example: /dev/sda1 or /dev/nvme0n1p1 ):"
+echo "# Enter EFI Partition: ( Example: /dev/sda1 or /dev/nvme0n1p1 ):"
 read EFI
 echo "="
-echo "# Please Enter Root Partition: ( Example: /dev/sda2 or /dev/nvme0n1p2 ):"
+echo "# Enter Root Partition: ( Example: /dev/sda2 or /dev/nvme0n1p2 ):"
 read ROOT
 echo "="
-echo "# Please Choose The Kernel:"
+echo "# Choose The Kernel:"
 echo "1. Linux"
 echo "2. Linux-lts"
 read KERNEL
 echo "="
-echo "# Please Choose The Bootloader:"
+echo "# Choose The Bootloader:"
 echo "1. GRUB"
 echo "2. rEFInd"
 read BOOTLOADER
 echo "="
-echo "# Please Enter Your hostname:"
+echo "# Enter Your hostname:"
 read HOSTNAME
 echo "="
-echo "# Please Enter Your hostname password:"
+echo "# Enter Your hostname password:"
 read HOSTNAMEPASSWORD
 echo "="
-echo "# Please Enter Your username:"
+echo "# Enter Your username:"
 read USERNAME
 echo "="
-echo "# Please Enter Your username password:"
+echo "# Enter Your username password:"
 read USERNAMEPASSWORD
 echo "="
 echo "# Enter Your Locale ( Example: en_US.UTF-8 ):"
@@ -80,12 +80,12 @@ echo "="
 echo "# Enter your Time Zone: ( Example: Europe/Istanbul )"
 read TIMEZONE
 echo "="
-echo "# Please choose your CPU"
+echo "# choose your CPU"
 echo "1. AMD"
 echo "2. Intel"
 read CPU
 echo "="
-echo "# Please Choose Your Desktop Environment:"
+echo "# Choose Your Desktop Environment:"
 echo "1. GNOME"
 echo "2. KDE"
 echo "3. HYPRLAND + NOCTALIA"
@@ -97,7 +97,7 @@ echo "y"
 echo "n"
 read PRINTER
 echo "="
-echo "# Please Choose Your Graphic Card:"
+echo "# Choose Your Graphic Card:"
 echo "1. AMD"
 echo "2. INTEL"
 echo "3. AMD and INTEL"
@@ -113,14 +113,13 @@ echo "n. Don't Install"
 read OFFICE
 echo "="
 echo "Do You Want To Install Programs Like:"
-echo "Media Player, Image and Video Editor"
-echo "E-Mail, Chat, Vscode, Fonts, ProtonVPN, etc"
+echo "Image and Video Editor, E-Mail, Chat, ProtonVPN, etc"
 echo "y"
 echo "n"
 read PROGRAMS
 echo "="
 echo "# Do You Want to Install Database?"
-echo "Postgresql, Mysql, Sqlite"
+echo "Postgresql, Mysql, Sqlite, dbgate"
 echo "y"
 echo "n"
 read DATABASE
@@ -220,24 +219,15 @@ echo "================================================================="
 echo "==             ENABLING MULTILIB & COMMUNITY REPOS             =="
 echo "================================================================="
 
-# 1. Chaotic AUR Key and Setup
-echo "[*] Setting up Chaotic AUR keys..."
 pacman-key --recv-key 3056513887B78AEB --keyserver hkps://keys.openpgp.org
 pacman-key --lsign-key 3056513887B78AEB
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm --needed
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm --needed
 
-# 2. Pacman.conf Tweaks
-# Enable Color
 sed -i 's/^#Color/Color/' /etc/pacman.conf
-
-# Add ILoveCandy only if it doesn't already exist (prevents duplicates on re-runs)
-grep -q "^ILoveCandy" /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf
-
-# Set ParallelDownloads to 2 (handles both commented '#ParallelDownloads = 5' and uncommented versions safely)
+sed -i '/Color/a ILoveCandy' /etc/pacman.conf
 sed -i 's/^#*\s*ParallelDownloads\s*=\s*.*/ParallelDownloads = 2/' /etc/pacman.conf
 
-# 3. Append Repositorie
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
 
@@ -315,22 +305,6 @@ elif [[ $DESKTOP == "3" ]]; then
 else
     echo "Desktop Will Not be Installed"
 fi
-
-# SSSD
-cat <<EOF > /etc/sssd/sssd.conf
-[sssd]
-domains = example.com
-config_file_version = 2
-services = nss, pam
-
-[domain/example.com]
-id_provider = ldap
-ldap_uri = ldap://your-ldap-server
-ldap_search_base = dc=example,dc=com
-EOF
-
-sudo chmod 600 /etc/sssd/sssd.conf
-sudo chown root:root /etc/sssd/sssd.conf
 
 echo "================================================================="
 echo "==                INSTALLING PRINTER DRIVERS                   =="
@@ -463,6 +437,21 @@ if [[ $DATABASE == "y" ]]; then
     chmod 440 /etc/sudoers.d/99-temp-aur-install
     su - "$USERNAME" -c "yay -S dbgate-bin --noconfirm --needed"
     rm /etc/sudoers.d/99-temp-aur-install
+# SSSD
+cat <<EOF > /etc/sssd/sssd.conf
+[sssd]
+domains = example.com
+config_file_version = 2
+services = nss, pam
+
+[domain/example.com]
+id_provider = ldap
+ldap_uri = ldap://your-ldap-server
+ldap_search_base = dc=example,dc=com
+EOF
+
+sudo chmod 600 /etc/sssd/sssd.conf
+sudo chown root:root /etc/sssd/sssd.conf
 
 else
    echo "Database Will Not be Installed"
