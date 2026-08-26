@@ -392,24 +392,58 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
 
       sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
       mkinitcpio -P
-      
-      if [[ $BOOTLOADER == "1" ]]; then
-          sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-          grub-mkconfig -o /boot/grub/grub.cfg
-      fi
+echo "================================================================="
+echo "==              INSTALLING GRAPHIC CARD DRIVERS                =="
+echo "================================================================="
 
- elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "3" ]]; then
-      retry_command pacman -S libva-intel-driver intel-compute-runtime libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
-      retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
+if [[ $GRAPHIC == "1" ]]; then
+    retry_command pacman -S xf86-video-amdgpu mesa rocm-opencl-runtime lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
+    
+elif [[ $GRAPHIC == "2" ]]; then
+    retry_command pacman -S libva-intel-driver intel-compute-runtime libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
+    
+elif [[ $GRAPHIC == "3" ]]; then
+    retry_command pacman -S xf86-video-amdgpu rocm-opencl-runtime mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
+    retry_command pacman -S libva-intel-driver intel-compute-runtime libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
+ 
+elif [[ $GRAPHIC == "4" && ( $KERNEL == "1" || $KERNEL == "2" || $KERNEL == "3" ) ]]; then
+    retry_command pacman -S xf86-video-amdgpu rocm-opencl-runtime mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon --noconfirm --needed
+    
+    if [[ $KERNEL == "2" ]]; then
+        retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
+    else
+        retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
+    fi
 
-      sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
-      mkinitcpio -P
-      
-      if [[ $BOOTLOADER == "1" ]]; then
-          sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-          grub-mkconfig -o /boot/grub/grub.cfg
-      fi   
+    sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+    mkinitcpio -P
+    
+    systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
+    
+    if [[ $BOOTLOADER == "1" ]]; then   
+        sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprobe.blacklist=nouveau"/' /etc/default/grub
+        grub-mkconfig -o /boot/grub/grub.cfg
+    fi
 
+elif [[ $GRAPHIC == "5" && ( $KERNEL == "1" || $KERNEL == "2" || $KERNEL == "3" ) ]]; then
+    retry_command pacman -S libva-intel-driver intel-compute-runtime libvdpau-va-gl lib32-vulkan-intel vulkan-intel --noconfirm --needed
+    
+    if [[ $KERNEL == "2" ]]; then
+        retry_command pacman -S egl-wayland nvidia-lts nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
+    else
+        retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
+    fi
+
+    sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+    mkinitcpio -P
+    
+    systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
+    
+    if [[ $BOOTLOADER == "1" ]]; then
+        sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprobe.blacklist=nouveau"/' /etc/default/grub
+        grub-mkconfig -o /boot/grub/grub.cfg
+    fi
+    
 else
    echo "Graphic Card Will Not be Installed"
 fi
