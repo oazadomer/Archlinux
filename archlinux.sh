@@ -52,6 +52,7 @@ echo "="
 echo "# Choose The Kernel:"
 echo "1. Linux"
 echo "2. Linux-lts"
+echo "3. Linux-zen"
 read KERNEL
 echo "="
 echo "# Choose The Bootloader:"
@@ -157,10 +158,13 @@ echo "==                    INSTALLING ARCH LINUX                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh         
+    retry_command pacstrap /mnt base base-devel linux linux-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh         
 
 elif [[ $KERNEL == "2" ]]; then
-      retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh                               
+      retry_command pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh      
+
+elif [[ $KERNEL == "3" ]]; then
+      retry_command pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
