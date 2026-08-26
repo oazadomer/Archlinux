@@ -459,13 +459,18 @@ echo "==            INSTALLING POWER MANAGEMENT TOOLS                =="
 echo "================================================================="
 
 if [[ $POWER == "y" ]]; then
-    retry_command pacman -S auto-cpufreq supergfxctl envycontrol --noconfirm --needed
+    retry_command pacman -S auto-cpufreq supergfxctl --noconfirm --needed
+
+    systemctl disable power-profiles-daemon
+    systemctl mask power-profiles-daemon
+    systemctl enable auto-cpufreq
 
 elif [[ $POWER == "a" ]]; then
-      retry_command pacman -S auto-cpufreq supergfxctl envycontrol rog-control-center asusctl --noconfirm --needed
+      retry_command pacman -S auto-cpufreq supergfxctl rog-control-center asusctl --noconfirm --needed
 
-      systemctl enable asusd
-
+      systemctl disable power-profiles-daemon
+      systemctl mask power-profiles-daemon
+      systemctl enable asusd auto-cpufreq
 else
     echo "Power Management Tools Will Not be Installed"
 fi
