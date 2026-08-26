@@ -250,11 +250,11 @@ echo "================================================================="
 
 if [[ $DESKTOP =~ ^[1-3]$ ]]; then
     retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
-    retry_command pacman -S xdg-utils xdg-user-dirs-gtk xdg-desktop-portal-gtk xdg-terminal-exec-git
+    retry_command pacman -S xdg-utils xdg-user-dirs-gtk xdg-desktop-portal-gtk xdg-terminal-exec-git --noconfirm --needed
     retry_command pacman -S topgrade zed catppuccin-cursors-mocha gparted f2fs-tools traceroute gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-krypton npm yarn ripgrep python-pip pyenv android-tools vala tk dpkg tldr ncdu --noconfirm --needed
     retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
     retry_command pacman -S bluez bluez-utils bluez-libs bluez-hid2hci wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
-    retry_command pacman -S brave-origin-bin yay gufw audacious mpv mplayer btop superfile starship
+    retry_command pacman -S brave-origin-bin yay gufw audacious mpv mplayer btop superfile starship --noconfirm --needed
     
     systemctl enable bluetooth ufw
 fi
@@ -279,30 +279,30 @@ elif [[ $DESKTOP == "2" ]]; then
       
       # 3. Clean up the temporary sudoers file (restores normal password requirement)
       rm /etc/sudoers.d/99-temp-aur-install
-     
-      export TERM="kitty"
-      export TERMINAL="kitty"
-      systemctl enable sddm
       
       # 4. Configure SDDM to use the Noctalia theme (Arch Linux recommended drop-in method)
       mkdir -p /etc/sddm.conf.d
       echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
+
+      export TERM="kitty"
+      export TERMINAL="kitty"
+      systemctl enable sddm
       
 elif [[ $DESKTOP == "3" ]]; then
-      retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww hyprlock rofi-wayland udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
+      retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww hyprlock rofi-wayland udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm simple-scan loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
       retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 --noconfirm --needed
       
       echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
       chmod 440 /etc/sudoers.d/99-temp-aur-install
       su - "$USERNAME" -c "yay -S sddm-theme-noctalia-git --noconfirm --needed"
       rm /etc/sudoers.d/99-temp-aur-install
-     
-      export TERM="kitty"
-      export TERMINAL="kitty"
-      systemctl enable sddm
       
       mkdir -p /etc/sddm.conf.d
       echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
+
+      export TERM="kitty"
+      export TERMINAL="kitty"
+      systemctl enable sddm
       
 else
     echo "Desktop Will Not be Installed"
