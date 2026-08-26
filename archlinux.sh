@@ -256,7 +256,7 @@ if [[ $DESKTOP =~ ^[1-3]$ ]]; then
     retry_command pacman -S bluez bluez-utils bluez-libs bluez-hid2hci wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
     retry_command pacman -S brave-origin-bin yay gufw audacious mpv mplayer btop superfile starship
     
-    systemctl enable bluetooth
+    systemctl enable bluetooth ufw
 fi
 
 if [[ $DESKTOP == "1" ]]; then
@@ -264,7 +264,7 @@ if [[ $DESKTOP == "1" ]]; then
      
     export TERM="ghostty"
     export TERMINAL="ghostty"
-    systemctl enable gdm ufw
+    systemctl enable gdm
     
 elif [[ $DESKTOP == "2" ]]; then
       retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen sddm sddm-kcm breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo qalculate-gtk merkuro skanlite qbittorrent kamoso flameshot gthumb ffmpegthumbs --noconfirm --needed
@@ -282,7 +282,7 @@ elif [[ $DESKTOP == "2" ]]; then
      
       export TERM="kitty"
       export TERMINAL="kitty"
-      systemctl enable sddm ufw
+      systemctl enable sddm
       
       # 4. Configure SDDM to use the Noctalia theme (Arch Linux recommended drop-in method)
       mkdir -p /etc/sddm.conf.d
@@ -299,7 +299,7 @@ elif [[ $DESKTOP == "3" ]]; then
      
       export TERM="kitty"
       export TERMINAL="kitty"
-      systemctl enable sddm ufw
+      systemctl enable sddm
       
       mkdir -p /etc/sddm.conf.d
       echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
