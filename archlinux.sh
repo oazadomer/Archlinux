@@ -160,7 +160,7 @@ if [[ $KERNEL == "1" ]]; then
     retry_command pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh         
 
 elif [[ $KERNEL == "2" ]]; then
-    retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh                               
+      retry_command pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh                               
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -211,9 +211,8 @@ if [[ $BOOTLOADER == "1" ]]; then
     grub-mkconfig -o /boot/grub/grub.cfg
 
 elif [[ $BOOTLOADER == "2" ]]; then
-    retry_command pacman -S refind efibootmgr --noconfirm --needed
-    refind-install      # --usedefault "${EFI}"
-
+      retry_command pacman -S refind efibootmgr --noconfirm --needed
+      refind-install      # --usedefault "${EFI}"
 fi   
 
 echo "================================================================="
@@ -242,7 +241,7 @@ if [[ $CPU == "1" ]]; then
     retry_command pacman -S amd-ucode --noconfirm --needed
 
 elif [[ $CPU == "2" ]]; then
-    retry_command pacman -S intel-ucode --noconfirm --needed
+      retry_command pacman -S intel-ucode --noconfirm --needed
 fi
 
 echo "================================================================="
@@ -251,22 +250,24 @@ echo "================================================================="
 
 if [[ $DESKTOP =~ ^[1-3]$ ]]; then
     retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
+    retry_command pacman -S xdg-utils xdg-user-dirs-gtk xdg-desktop-portal-gtk xdg-terminal-exec-git
     retry_command pacman -S topgrade zed catppuccin-cursors-mocha gparted f2fs-tools traceroute gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-krypton npm yarn ripgrep python-pip pyenv android-tools vala tk dpkg tldr ncdu --noconfirm --needed
     retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
     retry_command pacman -S bluez bluez-utils bluez-libs bluez-hid2hci wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
+    retry_command pacman -S brave-origin-bin yay gufw audacious mpv mplayer btop superfile starship
     
     systemctl enable bluetooth
 fi
 
 if [[ $DESKTOP == "1" ]]; then
-      retry_command pacman -S gnome-shell gnome-control-center gnome-menus gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-online-accounts gnome-browser-connector nautilus sushi ghostty superfile starship xdg-utils xdg-user-dirs-gtk xdg-desktop-portal-gtk xdg-desktop-portal-gnome xdg-terminal-exec-git btop file-roller gdm transmission-gtk gnome-screenshot gnome-calculator gnome-calendar gufw simple-scan loupe snapshot audacious mplayer vlc brave-origin-bin yay --noconfirm --needed
+    retry_command pacman -S gnome-shell gnome-control-center gnome-menus gnome-bluetooth gnome-themes-extra gnome-keyring power-profiles-daemon gnome-backgrounds gnome-tweaks gnome-online-accounts gnome-browser-connector nautilus sushi ghostty xdg-desktop-portal-gnome file-roller gdm transmission-gtk gnome-screenshot gnome-calculator gnome-calendar simple-scan loupe snapshot --noconfirm --needed
      
-      export TERM="ghostty"
-      export TERMINAL="ghostty"
-      systemctl enable gdm ufw
+    export TERM="ghostty"
+    export TERMINAL="ghostty"
+    systemctl enable gdm ufw
     
 elif [[ $DESKTOP == "2" ]]; then
-      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen btop sddm sddm-kcm xdg-utils xdg-user-dirs-gtk breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-gtk xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git superfile starship qalculate-gtk merkuro skanlite qbittorrent mplayer vlc kamoso flameshot gthumb ffmpegthumbs gufw brave-origin-bin yay --noconfirm --needed
+      retry_command pacman -S plasma-desktop dolphin dolphin-plugins ark plasma-nm plasma-pa kdeplasma-addons kde-gtk-config powerdevil bluedevil kscreen sddm sddm-kcm breeze-gtk pamac-tray-icon-plasma xdg-desktop-portal-kde kitty kitty-shell-integration kitty-terminfo qalculate-gtk merkuro skanlite qbittorrent kamoso flameshot gthumb ffmpegthumbs --noconfirm --needed
       retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 kvantum kvantum-qt5 --noconfirm --needed
 
       # 1. Temporarily allow passwordless sudo for the user to prevent the script from hanging
@@ -288,7 +289,7 @@ elif [[ $DESKTOP == "2" ]]; then
       echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
       
 elif [[ $DESKTOP == "3" ]]; then
-      retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww hyprlock rofi-wayland udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland xdg-desktop-portal-gtk power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo xdg-terminal-exec-git nautilus sushi file-roller superfile starship btop sddm loupe snapshot gnome-calendar gnome-calculator transmission-gtk mplayer vlc f2fs-tools gufw traceroute brave-origin-bin yay --noconfirm --needed
+      retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww hyprlock rofi-wayland udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
       retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 --noconfirm --needed
       
       echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
@@ -341,9 +342,8 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "1" ]]; then
       mkinitcpio -P
       
       if [[ $BOOTLOADER == "1" ]]; then   
-         sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-         grub-mkconfig -o /boot/grub/grub.cfg
-       
+          sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
+          grub-mkconfig -o /boot/grub/grub.cfg
       fi
 
 elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
@@ -354,9 +354,8 @@ elif [[ $GRAPHIC == "4" ]] && [[ $KERNEL == "2" ]]; then
       mkinitcpio -P
       
       if [[ $BOOTLOADER == "1" ]]; then
-        sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-        grub-mkconfig -o /boot/grub/grub.cfg
-       
+          sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
+          grub-mkconfig -o /boot/grub/grub.cfg
       fi
       
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
@@ -367,9 +366,8 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "1" ]]; then
       mkinitcpio -P
        
       if [[ $BOOTLOADER == "1" ]]; then 
-       sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-       grub-mkconfig -o /boot/grub/grub.cfg
-       
+          sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
+          grub-mkconfig -o /boot/grub/grub.cfg
       fi
     
 elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
@@ -380,9 +378,8 @@ elif [[ $GRAPHIC == "5" ]] && [[ $KERNEL == "2" ]]; then
       mkinitcpio -P
       
       if [[ $BOOTLOADER == "1" ]]; then
-      sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
-      grub-mkconfig -o /boot/grub/grub.cfg
-      
+          sed -i 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1 rd.driver.blacklist=nouveau modprob.blacklist=nouveau"/' /etc/default/grub
+          grub-mkconfig -o /boot/grub/grub.cfg
       fi
     
 else
@@ -500,10 +497,9 @@ swap-priority = 100
 EOF
 
 if [[ $BOOTLOADER == "1" ]]; then
-   sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3 rd.udev.log_level=3 zswap.enabled=0"/' /etc/default/grub
+    sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=btrfs loglevel=3 quiet splash udev.log_priority=3 rd.udev.log_level=3 zswap.enabled=0"/' /etc/default/grub
    
    grub-mkconfig -o /boot/grub/grub.cfg
-
 fi
 
 REALEND
