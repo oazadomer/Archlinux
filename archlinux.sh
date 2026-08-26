@@ -132,7 +132,7 @@ read GAMING
 echo "="
 echo"# Do You Want to Install Power Management Tools?"
 echo "y"
-echo "a, If Your Laptop Asus"
+echo "a, ASUS ROG, TUF"
 echo "n"
 read POWER
 echo "="
@@ -459,7 +459,7 @@ echo "==            INSTALLING POWER MANAGEMENT TOOLS                =="
 echo "================================================================="
 
 if [[ $POWER == "y" ]]; then
-    retry_command pacman -S auto-cpufreq supergfxctl --noconfirm --needed
+    retry_command pacman -S auto-cpufreq envycontrol --noconfirm --needed
 
     systemctl disable power-profiles-daemon
     systemctl mask power-profiles-daemon
@@ -470,7 +470,10 @@ elif [[ $POWER == "a" ]]; then
 
       systemctl disable power-profiles-daemon
       systemctl mask power-profiles-daemon
-      systemctl enable asusd auto-cpufreq
+      systemctl enable asusd auto-cpufreq supergfxd
+
+      supergfxctl -g integrated
+      asusctl -P 80
 else
     echo "Power Management Tools Will Not be Installed"
 fi
