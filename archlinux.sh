@@ -132,8 +132,9 @@ echo "n"
 read GAMING
 echo "="
 echo"# Do You Want to Install Power Management Tools?"
-echo "y"
-echo "a, ASUS ROG, TUF"
+echo "a. For ASUS"
+echo "l. For LENOVO"
+echo "o. For The Rest"
 echo "n"
 read POWER
 echo "="
@@ -467,22 +468,29 @@ echo "================================================================="
 echo "==            INSTALLING POWER MANAGEMENT TOOLS                =="
 echo "================================================================="
 
-if [[ $POWER == "y" ]]; then
-    retry_command pacman -S auto-cpufreq envycontrol --noconfirm --needed
+if [[ $POWER == "a" ]]; then
+    retry_command pacman -S auto-cpufreq supergfxctl rog-control-center asusctl --noconfirm --needed
 
     systemctl disable power-profiles-daemon
     systemctl mask power-profiles-daemon
-    systemctl enable auto-cpufreq
+    systemctl enable asusd auto-cpufreq supergfxd
 
-elif [[ $POWER == "a" ]]; then
-      retry_command pacman -S auto-cpufreq supergfxctl rog-control-center asusctl --noconfirm --needed
+    supergfxctl -g integrated
+    asusctl -P 80
+
+elif [[ $POWER == "l" ]]; then
+      retry_command pacman -S auto-cpufreq envycontrol lenovolegionlinux-dkms-git --noconfirm --needed
 
       systemctl disable power-profiles-daemon
       systemctl mask power-profiles-daemon
-      systemctl enable asusd auto-cpufreq supergfxd
+      systemctl enable auto-cpufreq
 
-      supergfxctl -g integrated
-      asusctl -P 80
+elif [[ $POWER == "o" ]]; then
+      retry_command pacman -S auto-cpufreq envycontrol --noconfirm --needed
+
+      systemctl disable power-profiles-daemon
+      systemctl mask power-profiles-daemon
+      systemctl enable auto-cpufreq
 else
     echo "Power Management Tools Will Not be Installed"
 fi
