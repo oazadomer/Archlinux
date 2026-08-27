@@ -159,13 +159,13 @@ echo "==                    INSTALLING ARCH LINUX                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap /mnt base base-devel linux linux-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh         
+    retry_command pacstrap /mnt base base-devel linux linux-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh exa      
 
 elif [[ $KERNEL == "2" ]]; then
-      retry_command pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh      
+      retry_command pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh exa   
 
 elif [[ $KERNEL == "3" ]]; then
-      retry_command pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh
+      retry_command pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh exa
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
