@@ -346,9 +346,6 @@ elif [[ $GRAPHIC == "4" && ( $KERNEL == "1" || $KERNEL == "2" || $KERNEL == "3" 
     else
         retry_command pacman -S egl-wayland nvidia nvidia-prime nvidia-utils lib32-nvidia-utils nvidia-settings opencl-nvidia cuda libxnvctrl libxcrypt-compat --noconfirm --needed
     fi
-
-    sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
-    mkinitcpio -P
     
     systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
     
@@ -379,6 +376,24 @@ elif [[ $GRAPHIC == "5" && ( $KERNEL == "1" || $KERNEL == "2" || $KERNEL == "3" 
 else
    echo "Graphic Card Will Not be Installed"
 fi
+
+if [[ $CPU == "1" ]]; then
+    sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
+
+elif [[ $CPU == "2" ]]; then
+      sed -i 's/MODULES=.*/MODULES=(btrfs i915)/' /etc/mkinitcpio.conf
+
+elif [[ $CPU == "3" ]]; then
+      sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu i915)/' /etc/mkinitcpio.conf
+    
+elif [[ $CPU == "4" ]]; then
+      sed -i 's/MODULES=.*/MODULES=(btrfs amdgpu nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+
+elif [[ $CPU == "5" == ]]; then
+      sed -i 's/MODULES=.*/MODULES=(btrfs i915 nvidia nvidia_modeset nvidia_drm nvidia_uvm)/' /etc/mkinitcpio.conf
+fi
+
+mkinitcpio -P
 
 echo "================================================================="
 echo "==                  INSTALLING PROGRAMS                        =="
