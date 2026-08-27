@@ -108,8 +108,8 @@ echo "n. Don't install"
 read GRAPHIC
 echo "="
 echo "Do You Want To Install Programs Like:"
-echo "Image and Video Editor, Mailspring, ProtonVPN"
-echo "Megasync, Crow Translater, ferdium ...etc"
+echo "shotcut, gimp, audacity, Mailspring"
+echo "Megasync, Crow Translater, ferdium, ProtonVPN ...etc"
 echo "y"
 echo "n"
 read PROGRAMS
@@ -401,20 +401,13 @@ echo "==                  INSTALLING PROGRAMS                        =="
 echo "================================================================="
 
 if [[ $PROGRAMS == "y" ]]; then
-    retry_command pacman -S gimp audacity shutter-encoder-bin --noconfirm --needed
+    retry_command pacman -S shotcut gimp audacity shutter-encoder-bin --noconfirm --needed
     retry_command pacman -S mailspring acpi ferdium-bin proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
 
     echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
     chmod 440 /etc/sudoers.d/99-temp-aur-install
     su - "$USERNAME" -c "yay -S megasync-bin crow-translate --noconfirm --needed"
     rm /etc/sudoers.d/99-temp-aur-install
-
-    if [[ $DESKTOP == "1" ]]; then
-        retry_command pacman -S shotcut --noconfirm -needed
-
-    elif [[ $DESKTOP =~ ^[2-3]$ ]]; then
-          retry_command pacman -S kdenlive --noconfirm --needed
-    fi
 
 else
    echo "Programs Will Not be Installed"
