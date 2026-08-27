@@ -401,8 +401,8 @@ echo "==                  INSTALLING PROGRAMS                        =="
 echo "================================================================="
 
 if [[ $PROGRAMS == "y" ]]; then
-    retry_command pacman -S shotcut gimp audacity shutter-encoder-bin --noconfirm --needed
-    retry_command pacman -S mailspring acpi ferdium-bin proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
+    retry_command pacman -S shotcut gimp audacity mailspring ferdium-bin --noconfirm --needed
+    retry_command pacman -S acpi proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
 
     echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
     chmod 440 /etc/sudoers.d/99-temp-aur-install
