@@ -294,7 +294,7 @@ elif [[ $DESKTOP == "2" ]]; then
       systemctl enable sddm
       
 elif [[ $DESKTOP == "3" ]]; then
-      retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww hyprlock rofi-wayland udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm simple-scan loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
+      retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww hyprlock rofi udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm simple-scan loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
       retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 --noconfirm --needed
       
       echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
