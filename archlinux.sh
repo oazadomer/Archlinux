@@ -90,6 +90,7 @@ echo "# Choose Your Desktop Environment:"
 echo "1. GNOME"
 echo "2. KDE"
 echo "3. HYPRLAND + NOCTALIA"
+echo "4. QTILE"
 echo "n. NO DESKTOP"
 read DESKTOP
 echo "="
@@ -115,8 +116,9 @@ echo "n"
 read PROGRAMS
 echo "="
 echo "# Do You Want To Install Office?"
-echo "1. OnlyOffice"
-echo "2. WPS-Office"
+echo "l. LibreOffice"
+echo "o. OnlyOffice"
+echo "w. WPS-Office"
 echo "n. Don't Install"
 read OFFICE
 echo "="
@@ -253,7 +255,7 @@ echo "================================================================="
 echo "==            INSTALLING DESKTOP ENVIRONMENT                   =="
 echo "================================================================="
 
-if [[ $DESKTOP =~ ^[1-3]$ ]]; then
+if [[ $DESKTOP =~ ^[1-4]$ ]]; then
     retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
     retry_command pacman -S xdg-utils xdg-user-dirs-gtk xdg-desktop-portal-gtk xdg-terminal-exec-git --noconfirm --needed
     retry_command pacman -S shelly topgrade zed catppuccin-cursors-mocha gparted f2fs-tools traceroute gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-krypton npm yarn ripgrep python-pip pyenv android-tools vala tk dpkg tldr ncdu --noconfirm --needed
@@ -295,6 +297,22 @@ elif [[ $DESKTOP == "2" ]]; then
       
 elif [[ $DESKTOP == "3" ]]; then
       retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww hyprlock rofi udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm simple-scan loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
+      retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 --noconfirm --needed
+      
+      echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
+      chmod 440 /etc/sudoers.d/99-temp-aur-install
+      su - "$USERNAME" -c "yay -S sddm-theme-noctalia-git --noconfirm --needed"
+      rm /etc/sudoers.d/99-temp-aur-install
+      
+      mkdir -p /etc/sddm.conf.d
+      echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
+
+      export TERM="kitty"
+      export TERMINAL="kitty"
+      systemctl enable sddm
+
+elif [[ $DESKTOP == "4" ]]; then
+      retry_command pacman -S qtile polkit-gnome swayidle swaync swaybg swaylock rofi udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-wlr power-profiles-daemon blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm simple-scan loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
       retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 --noconfirm --needed
       
       echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
@@ -417,10 +435,13 @@ echo "================================================================="
 echo "==                    INSTALLING OFFICE                        =="
 echo "================================================================="
 
-if [[ $OFFICE == "1" ]]; then
+if [[ $OFFICE == "l" ]]; then
+    retry_command pacman -S libreoffice-fresh --noconfirm --needed
+
+elif [[ $OFFICE == "o" ]]; then
     retry_command pacman -S onlyoffice-bin --noconfirm --needed
 
-elif [[ $OFFICE == "2" ]]; then
+elif [[ $OFFICE == "w" ]]; then
       retry_command pacman -S wps-office wps-office-all-dicts-win-languages libtiff5 --noconfirm --needed
 
 else
