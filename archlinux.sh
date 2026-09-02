@@ -161,13 +161,13 @@ echo "==                    INSTALLING ARCH LINUX                    =="
 echo "================================================================="
 
 if [[ $KERNEL == "1" ]]; then
-    retry_command pacstrap /mnt base base-devel linux linux-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh exa      
+    retry_command pacstrap /mnt base base-devel linux linux-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager dialog mtools dosfstools ntfs-3g cronie acpid openssh      
 
 elif [[ $KERNEL == "2" ]]; then
-      retry_command pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh exa   
+      retry_command pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager dialog mtools dosfstools ntfs-3g cronie acpid openssh  
 
 elif [[ $KERNEL == "3" ]]; then
-      retry_command pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager mtools dosfstools ntfs-3g cronie acpid touchegg openssh exa
+      retry_command pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager dialog mtools dosfstools ntfs-3g cronie acpid openssh 
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -202,7 +202,7 @@ echo "================================================================="
 echo "==        ENABLING NETWORK SERVICE, FSTRIM ACIP, TOUCHEGG      =="
 echo "================================================================="
 
-systemctl enable NetworkManager fstrim.timer reflector.timer acpid touchegg ssh
+systemctl enable NetworkManager fstrim.timer reflector.timer acpid ssh
 
 echo "================================================================="
 echo "==                  INSTALLING BOOTLOADER                      =="
@@ -257,13 +257,13 @@ echo "================================================================="
 
 if [[ $DESKTOP =~ ^[1-4]$ ]]; then
     retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
-    retry_command pacman -S xdg-utils xdg-user-dirs-gtk xdg-desktop-portal-gtk xdg-terminal-exec-git --noconfirm --needed
+    retry_command pacman -S xdg-utils xdg-user-dirs-gtk xdg-desktop-portal-gtk xdg-terminal-exec-git touchegg exa --noconfirm --needed
     retry_command pacman -S shelly topgrade zed catppuccin-cursors-mocha gparted f2fs-tools traceroute gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs 7zip xz unrar unzip lzop gdb mtpfs nodejs-lts-krypton npm yarn ripgrep python-pip pyenv android-tools vala tk dpkg tldr ncdu --noconfirm --needed
     retry_command pacman -S ttf-jetbrains-mono-nerd ttf-firacode-nerd ttf-ubuntu-font-family ttf-dejavu noto-fonts noto-fonts-emoji ibus-typing-booster ttf-hanazono ttf-ms-fonts --noconfirm --needed
     retry_command pacman -S bluez bluez-utils bluez-libs bluez-hid2hci wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire libpipewire gst-libav gst-plugins-base gst-plugins-bad gst-plugins-ugly gst-plugins-good pavucontrol mediainfo ffmpeg openh264 --noconfirm --needed
     retry_command pacman -S brave-origin-bin yay gufw audacious mpv mplayer btop superfile starship --noconfirm --needed
     
-    systemctl enable bluetooth ufw
+    systemctl enable bluetooth ufw touchegg
 fi
 
 if [[ $DESKTOP == "1" ]]; then
