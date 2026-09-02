@@ -145,7 +145,7 @@ echo "================================================================="
 echo "==           FORMATTING AND MOUNTING THE FILESYSTEM            =="
 echo "================================================================="
 
-   mkfs.vfat -F32 -n "ARCH" "${EFI}"
+   mkfs.fat -F32 -n "ARCH" "${EFI}"
    mkfs.btrfs -f -L "ROOT" "${ROOT}"
    mount -t btrfs "${ROOT}" /mnt
    btrfs su cr /mnt/@
@@ -154,7 +154,7 @@ echo "================================================================="
    mount -o noatime,compress=zstd,subvol=@ "${ROOT}" /mnt
    mkdir -p /mnt/{boot,.snapshots}
    mount -o noatime,compress=zstd,subvol=@snapshots "${ROOT}" /mnt/.snapshots
-   mount -t vfat "${EFI}" /mnt/boot
+   mount "${EFI}" /mnt/boot
 
 echo "================================================================="
 echo "==                    INSTALLING ARCH LINUX                    =="
