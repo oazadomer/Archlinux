@@ -316,7 +316,6 @@ elif [[ $DESKTOP == "3" ]]; then
             retry_command pacman -S qtile python-pywayland swayidle swaylock xdg-desktop-portal-wlr --noconfirm --needed
       fi
 
-
      echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
      chmod 440 /etc/sudoers.d/99-temp-aur-install
      su - "$USERNAME" -c "yay -S sddm-theme-noctalia-git --noconfirm --needed"
