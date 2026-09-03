@@ -89,7 +89,7 @@ echo "="
 echo "# Choose Your Desktop Environment:"
 echo "1. GNOME"
 echo "2. KDE"
-echo "3. Window Manager (choose in next prompt)"
+echo "3. Window Manager, in next prompt you can choose: Hyprland, Hyprland & Noctalia, Niri, Qtile)"
 echo "n. NO DESKTOP"
 read DESKTOP
 if [[ $DESKTOP == "3" ]]; then
