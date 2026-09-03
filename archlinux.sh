@@ -89,10 +89,17 @@ echo "="
 echo "# Choose Your Desktop Environment:"
 echo "1. GNOME"
 echo "2. KDE"
-echo "3. HYPRLAND + NOCTALIA"
-echo "4. QTILE"
+echo "3. Window Manager (choose in next prompt)"
 echo "n. NO DESKTOP"
 read DESKTOP
+if [[ $DESKTOP == "3" ]]; then
+      echo "# Choose Your Window Manager:"
+      echo "1. HYPRLAND"
+      echo "2. HYPRLAND + NOCTALIA"
+      echo "3. NIRI"
+      echo "4. QTILE"
+      read WM
+fi
 echo "="
 echo "# Do You Want To Install Printer Drivers?"
 echo "y"
@@ -255,7 +262,7 @@ echo "================================================================="
 echo "==            INSTALLING DESKTOP ENVIRONMENT                   =="
 echo "================================================================="
 
-if [[ $DESKTOP =~ ^[1-4]$ ]]; then
+if [[ $DESKTOP =~ ^[1-3]$ ]]; then
     retry_command pacman -S wayland wayland-utils wayland-protocols glfw-wayland xorg-xwayland xorg-xlsclients libxkbcommon --noconfirm --needed
     retry_command pacman -S xdg-utils xdg-user-dirs-gtk xdg-desktop-portal-gtk xdg-terminal-exec-git touchegg exa --noconfirm --needed
     retry_command pacman -S shelly topgrade zed catppuccin-cursors-mocha gparted f2fs-tools traceroute gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-gphoto2 gvfs-nfs zip 7zip unzip xz unrar lzop gdb mtpfs nodejs-lts-krypton npm yarn ripgrep python-pip pyenv android-tools vala tk dpkg tldr ncdu --noconfirm --needed
@@ -296,36 +303,31 @@ elif [[ $DESKTOP == "2" ]]; then
       systemctl enable sddm
       
 elif [[ $DESKTOP == "3" ]]; then
-      retry_command pacman -S noctalia hyprland polkit-gnome hypridle waybar swaync swww waypaper hyprlock rofi udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-hyprland power-profiles-daemon upower iwgtk udiskie blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm simple-scan loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
+      retry_command pacman -S polkit-gnome waybar swaync swww waypaper rofi udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist power-profiles-daemon upower iwgtk udiskie blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm simple-scan loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
       retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 --noconfirm --needed
-      
-      echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
-      chmod 440 /etc/sudoers.d/99-temp-aur-install
-      su - "$USERNAME" -c "yay -S sddm-theme-noctalia-git --noconfirm --needed"
-      rm /etc/sudoers.d/99-temp-aur-install
-      
-      mkdir -p /etc/sddm.conf.d
-      echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
 
-      export TERM="kitty"
-      export TERMINAL="kitty"
-      systemctl enable sddm upower
+      if [[ $WM == "1" ]]; then
+          retry_command pacman -S hyprland hypridle hyprlock xdg-desktop-portal-hyprland --noconfirm --needed
+      elif [[ $WM == "2" ]]; then
+            retry_command pacman -S noctalia hyprland hypridle hyprlock xdg-desktop-portal-hyprland --noconfirm --needed
+      elif [[ $WM == "3" ]]; then
+            retry_command pacman -S niri swayidle swaylock xdg-desktop-portal-gnome --noconfirm --needed
+      elif [[ $WM == "4" ]]; then
+            retry_command pacman -S qtile python-pywayland swayidle swaylock xdg-desktop-portal-wlr --noconfirm --needed
+      fi
 
-elif [[ $DESKTOP == "4" ]]; then
-      retry_command pacman -S qtile python-pywayland polkit-gnome swayidle swaync swww waypaper swaylock rofi udisks2 nwg-look qt5ct grim slurp swappy wl-clipboard cliphist xdg-desktop-portal-wlr power-profiles-daemon upower iwgtk udiskie blueman gnome-keyring kitty kitty-shell-integration kitty-terminfo nautilus sushi file-roller sddm simple-scan loupe snapshot gnome-calendar gnome-calculator transmission-gtk --noconfirm --needed
-      retry_command pacman -S qt6-wayland qt5-wayland adwaita-qt6 adwaita-qt5 --noconfirm --needed
-      
-      echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
-      chmod 440 /etc/sudoers.d/99-temp-aur-install
-      su - "$USERNAME" -c "yay -S sddm-theme-noctalia-git --noconfirm --needed"
-      rm /etc/sudoers.d/99-temp-aur-install
-      
-      mkdir -p /etc/sddm.conf.d
-      echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
 
-      export TERM="kitty"
-      export TERMINAL="kitty"
-      systemctl enable sddm upower
+     echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
+     chmod 440 /etc/sudoers.d/99-temp-aur-install
+     su - "$USERNAME" -c "yay -S sddm-theme-noctalia-git --noconfirm --needed"
+     rm /etc/sudoers.d/99-temp-aur-install
+
+     mkdir -p /etc/sddm.conf.d
+     echo -e "[Theme]\nCurrent=noctalia" > /etc/sddm.conf.d/noctalia-theme.conf
+
+     export TERM="kitty"
+     export TERMINAL="kitty"
+     systemctl enable sddm upower
       
 else
     echo "Desktop Will Not be Installed"
