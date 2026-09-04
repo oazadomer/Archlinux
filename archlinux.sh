@@ -177,6 +177,10 @@ elif [[ $KERNEL == "3" ]]; then
       retry_command pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware bash-completion neovim git curl perl make cmake wget gcc gawk reflector rsync networkmanager dialog mtools dosfstools ntfs-3g cronie acpid openssh 
 fi
 
+echo "================================================================="
+echo "==  SETTING SYSTEM HOSTNAME, LANGUAGE, LOCALE, TIME, KEYBOARD   =="
+echo "================================================================="
+
 genfstab -U /mnt >> /mnt/etc/fstab
 
 cat <<REALEND > /mnt/next.sh
@@ -185,10 +189,6 @@ echo "$HOSTNAME:$HOSTNAMEPASSWORD" | chpasswd
 useradd -mG wheel,audio,video,optical,storage $USERNAME
 echo "$USERNAME:$USERNAMEPASSWORD" | chpasswd
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
-
-echo "================================================================="
-echo "==              SETTING LANGUAGE AND SETTING LOCALE            =="
-echo "================================================================="
 
 sed -i 's/^#$LOCALE/$LOCALE/' /etc/locale.gen
 echo "LANG=$LOCALE" >> /etc/locale.conf
@@ -420,7 +420,7 @@ echo "==                  INSTALLING PROGRAMS                        =="
 echo "================================================================="
 
 if [[ $PROGRAMS == "y" ]]; then
-    retry_command pacman -S shotcut gimp audacity mailspring ferdium-bin --noconfirm --needed
+    retry_command pacman -S shotcut gimp audacity mailspring ferdium-bin crow-translate --noconfirm --needed
     retry_command pacman -S acpi proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
 
     echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
