@@ -116,7 +116,7 @@ echo "n. Don't install"
 read GRAPHIC
 echo "="
 echo "Do You Want To Install Programs Like:"
-echo "shotcut, gimp, audacity, Mailspring"
+echo "shotcut, gimp, audacity, Mailspring, Todolist"
 echo "Megasync, Crow Translater, ferdium, ProtonVPN ...etc"
 echo "y"
 echo "n"
@@ -420,7 +420,7 @@ echo "==                  INSTALLING PROGRAMS                        =="
 echo "================================================================="
 
 if [[ $PROGRAMS == "y" ]]; then
-    retry_command pacman -S shotcut gimp audacity mailspring ferdium-bin crow-translate --noconfirm --needed
+    retry_command pacman -S shotcut gimp audacity mailspring ferdium-bin crow-translate super-productivity --noconfirm --needed
     retry_command pacman -S acpi proton-vpn-gtk-app libappindicator-gtk3 ventoy-bin appimagelauncher --noconfirm --needed
 
     echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
