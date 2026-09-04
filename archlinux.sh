@@ -425,7 +425,7 @@ if [[ $PROGRAMS == "y" ]]; then
 
     echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-temp-aur-install
     chmod 440 /etc/sudoers.d/99-temp-aur-install
-    su - "$USERNAME" -c "yay -S megasync-bin crow-translate --noconfirm --needed"
+    su - "$USERNAME" -c "yay -S megasync-bin --noconfirm --needed"
     rm /etc/sudoers.d/99-temp-aur-install
 
 else
